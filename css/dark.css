@@ -1,0 +1,316 @@
+/* ============================================================
+   AHIMSA KIDS — Dark Mode Theme
+   ============================================================
+   All overrides are scoped under [data-theme='dark'].
+   Toggle by adding/removing the attribute on <html> or <body>.
+
+   Design principles:
+   - Deep purple-black backgrounds (not pure black)
+   - Slightly brighter accent colors for contrast on dark
+   - Semi-transparent borders for a softer, layered feel
+   - Muted shadows using rgba for depth without harshness
+   - All text remains WCAG AA readable against dark surfaces
+   ============================================================ */
+
+
+/* -----------------------------------------------------------
+   1. TOKEN OVERRIDES
+   Every design token that changes in dark mode.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] {
+
+  /* --- Backgrounds ---
+     Deep purple tones, never pure black, to maintain
+     the soft warmth of the brand. */
+  --bg-primary: #1A1025;
+  --bg-white: #2A2035;
+
+  /* --- Text ---
+     Light lavender tones for comfortable dark-mode reading. */
+  --text-primary: #F0E8F8;
+  --text-secondary: rgba(240, 232, 248, 0.6);
+
+  /* --- Structural ---
+     Semi-transparent borders and shadows to avoid the
+     harsh look of pure black outlines on dark surfaces. */
+  --border-color: rgba(255, 255, 255, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+
+  /* --- Card Surfaces ---
+     Slightly elevated from the page background to create
+     visual depth and card separation. */
+  --card-white: #2A2035;
+  --card-lavender: #2D2240;
+  --card-mint: #1A3D2A;
+  --card-peach: #3D2A1A;
+
+  /* --- Accent Colors ---
+     Boosted brightness and saturation to pop against
+     dark backgrounds while remaining cohesive. */
+  --accent-mint: #4AE07A;
+  --accent-peach: #FF9B6A;
+  --accent-pink: #FF85C8;
+
+  /* --- Special Surfaces --- */
+  --festival-bg: #2A2035;
+}
+
+
+/* -----------------------------------------------------------
+   2. SMOOTH BACKGROUND TRANSITION
+   The page and body transition smoothly between light and
+   dark modes instead of snapping abruptly.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] body,
+[data-theme='dark'] .page {
+  transition: background-color var(--transition-base),
+              color var(--transition-base);
+}
+
+
+/* -----------------------------------------------------------
+   3. HEADER — Dark Frosted Glass
+   The scrolled header uses a deep purple translucent
+   backdrop instead of the light lavender one.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .header {
+  background: var(--bg-primary);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme='dark'] .header--scrolled {
+  background: rgba(26, 16, 37, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+
+/* -----------------------------------------------------------
+   4. CARDS — Enhanced Border Visibility
+   On dark backgrounds, borders need slightly more opacity
+   to maintain the neo-brutalist card definition.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .card,
+[data-theme='dark'] .tirthankara-card,
+[data-theme='dark'] .kashaya-card,
+[data-theme='dark'] .game-card,
+[data-theme='dark'] .festival-card,
+[data-theme='dark'] .feed-card,
+[data-theme='dark'] .video-section__container {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+/* -----------------------------------------------------------
+   5. BUTTONS — Adjusted for Dark Surfaces
+   Primary (white) buttons become the dark card color.
+   Dark buttons invert to light. Accents remain vivid.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .btn {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme='dark'] .btn--primary {
+  background: var(--bg-white);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .btn--dark {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+
+/* -----------------------------------------------------------
+   6. PILLS — Dark Mode Variants
+   Default pills match the card surface. Active pills
+   use the light text color as background.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .pill {
+  background: var(--bg-white);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .pill--active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+
+/* -----------------------------------------------------------
+   7. AVATARS — Border Adjustment
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .avatar {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+/* -----------------------------------------------------------
+   8. BADGES — Maintain Readability
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .badge {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] .badge--mint {
+  background: var(--accent-mint);
+  color: #1A1A1A;
+}
+
+[data-theme='dark'] .badge--peach {
+  background: var(--accent-peach);
+  color: #1A1A1A;
+}
+
+
+/* -----------------------------------------------------------
+   9. BOTTOM NAVIGATION — Dark Surface
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .bottom-nav {
+  background: var(--bg-white);
+  border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .bottom-nav__icon {
+  background: var(--bg-white);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme='dark'] .bottom-nav__item--active .bottom-nav__icon {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+
+/* -----------------------------------------------------------
+   10. HEADER BUTTONS — Dark Surface
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .header__btn {
+  background: var(--bg-white);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--text-primary);
+}
+
+
+/* -----------------------------------------------------------
+   11. WISDOM CARD — Dark Gradient
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .wisdom__card {
+  background: linear-gradient(135deg, #2A2035 0%, #1A1025 100%);
+}
+
+[data-theme='dark'] .wisdom__dot {
+  background: var(--text-primary);
+  opacity: 0.2;
+}
+
+[data-theme='dark'] .wisdom__dot--active {
+  opacity: 1;
+}
+
+[data-theme='dark'] .wisdom__challenge {
+  background: var(--accent-mint);
+  color: #1A1A1A;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+
+/* -----------------------------------------------------------
+   12. KASHAYA CARDS — Darkened Emotion Colors
+   Each passion retains its color identity but at much
+   lower brightness to sit comfortably on dark backgrounds.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .kashaya-card--anger {
+  background: #3D1A1A;
+}
+
+[data-theme='dark'] .kashaya-card--pride {
+  background: #3D351A;
+}
+
+[data-theme='dark'] .kashaya-card--deceit {
+  background: #2D2240;
+}
+
+[data-theme='dark'] .kashaya-card--greed {
+  background: #1A3D2A;
+}
+
+
+/* -----------------------------------------------------------
+   13. TIRTHANKARA CARD FACT — Dark Variant
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .tirthankara-card__fact {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* -----------------------------------------------------------
+   14. VIDEO SECTION — Dark iframe wrapper
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .video-section__iframe-wrap {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* -----------------------------------------------------------
+   15. FEED CARD MEDIA — Dark Placeholder
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .feed-card__media {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+
+/* -----------------------------------------------------------
+   16. FESTIVAL CARD — Dark Dashed Border
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .festival-card {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* -----------------------------------------------------------
+   17. SIDEBAR NAV — Desktop Dark
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .sidebar-nav {
+  background: var(--bg-white);
+  border-right-color: rgba(255, 255, 255, 0.15);
+}
+
+
+/* -----------------------------------------------------------
+   18. DECORATIVE ELEMENTS — Adjusted Opacity
+   Sparkles and background icons need slightly higher
+   opacity on dark backgrounds to remain visible.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .bg-icon {
+  opacity: 0.03;
+}
+
+[data-theme='dark'] .card__icon {
+  opacity: 0.06;
+}
+
+[data-theme='dark'] .video-section__decor {
+  opacity: 0.03;
+}

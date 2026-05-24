@@ -1,0 +1,146 @@
+/* ============================================================
+   AHIMSA KIDS — Design Tokens
+   ============================================================
+   The single source of truth for every visual value in the
+   design system. All tokens are defined as CSS custom properties
+   on :root for global access.
+
+   Design Language: Soft Neo-Brutalist Pastel
+   ============================================================ */
+
+:root {
+
+  /* ---------------------------------------------------------
+     COLORS — Core Palette
+     Soft pastels with a bold black border system.
+     --------------------------------------------------------- */
+
+  /* Backgrounds */
+  --bg-primary: #E8E4F3;                  /* Lavender — main page background */
+  --bg-white: #FFFFFF;                     /* Pure white — cards, inputs, overlays */
+
+  /* Accent Colors */
+  --accent-pink: #FF69B4;                  /* Hot pink — CTAs, highlights, fun elements */
+  --accent-mint: #98FF98;                  /* Mint green — success, nature, positive actions */
+  --accent-peach: #FFBC99;                 /* Peach — warmth, stories, gentle highlights */
+
+  /* Text */
+  --text-primary: #1A1A1A;                /* Near-black — headings, body text */
+  --text-secondary: rgba(26, 26, 26, 0.6); /* Muted — captions, metadata, subtitles */
+
+  /* Structural */
+  --border-color: #000000;                 /* Pure black — neo-brutalist borders */
+  --shadow-color: #000000;                 /* Pure black — hard offset shadows */
+
+  /* Card Backgrounds */
+  --card-white: #FFFFFF;                   /* Default card surface */
+  --card-lavender: #E8E4F3;               /* Lavender card variant */
+  --card-mint: #98FF98;                    /* Mint card variant */
+  --card-peach: #FFBC99;                   /* Peach card variant */
+
+  /* Special Surfaces */
+  --festival-bg: #FDFBF7;                 /* Warm off-white — festival cards, dashed borders */
+
+
+  /* ---------------------------------------------------------
+     SPACING — 4px Base Grid
+     Consistent spatial rhythm across all components.
+     --------------------------------------------------------- */
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-base: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 40px;
+  --space-4xl: 48px;
+  --space-5xl: 56px;
+
+
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+     Cabinet Grotesk for headings (bold, geometric, playful).
+     Satoshi for body text (clean, highly readable).
+     --------------------------------------------------------- */
+
+  /* Font Families */
+  --font-heading: 'Cabinet Grotesk', sans-serif;
+  --font-body: 'Satoshi', sans-serif;
+
+  /* Font Sizes — Fixed scale for mobile-first design */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 32px;
+
+
+  /* ---------------------------------------------------------
+     BORDERS & SHADOWS
+     The hallmark of Neo-Brutalism: thick borders with
+     hard-offset shadows that compress on interaction.
+     --------------------------------------------------------- */
+
+  --border-width: 2px;
+  --border: 2px solid var(--border-color);
+
+  /* Default shadow — 4px hard offset */
+  --shadow: 4px 4px 0px 0px var(--shadow-color);
+
+  /* Pressed / hover state — shadow compresses */
+  --shadow-hover: 1px 1px 0px 0px var(--shadow-color);
+
+  /* Large shadow — prominent cards, hero elements */
+  --shadow-lg: 6px 6px 0px 0px var(--shadow-color);
+
+
+  /* ---------------------------------------------------------
+     BORDER RADIUS
+     Generously rounded for a soft, child-friendly feel
+     that contrasts with the bold borders.
+     --------------------------------------------------------- */
+
+  --radius-card: 40px;         /* Large cards — hero, content cards */
+  --radius-btn: 16px;          /* Buttons — comfortably rounded */
+  --radius-pill: 24px;         /* Category pills, tags */
+  --radius-avatar: 50%;        /* Circular avatars */
+  --radius-video: 24px;        /* Video containers, media */
+  --radius-squircle: 16px;     /* Icon buttons, nav items */
+
+
+  /* ---------------------------------------------------------
+     TRANSITIONS
+     Snappy micro-interactions for a responsive feel.
+     --------------------------------------------------------- */
+
+  --transition-fast: 180ms ease;    /* Button presses, shadow changes */
+  --transition-base: 300ms ease;    /* Page transitions, color changes */
+  --transition-slow: 500ms ease;    /* Scroll reveals, large animations */
+
+
+  /* ---------------------------------------------------------
+     Z-INDEX SCALE
+     Layered stacking context to prevent z-fighting.
+     --------------------------------------------------------- */
+
+  --z-header: 100;
+  --z-bottom-nav: 100;
+  --z-modal: 200;
+  --z-sparkle: 10;
+
+
+  /* ---------------------------------------------------------
+     LAYOUT — Structural Measurements
+     Mobile-first container with fixed header and bottom nav.
+     --------------------------------------------------------- */
+
+  --header-height: 72px;
+  --bottom-nav-height: 100px;
+  --container-max: 480px;
+  --container-padding: 16px;
+}

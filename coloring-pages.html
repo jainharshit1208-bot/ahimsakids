@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Coloring Pages — Color beautiful Jain symbols and temple designs!">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Coloring Pages 🎨 — Ahimsa Kids</title>
+
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dark.css">
+
+  <style>
+    body {
+      background: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* --- Header --- */
+    .game-header {
+      position: sticky; top: 0;
+      background: var(--bg-primary);
+      border-bottom: var(--border);
+      padding: 12px var(--space-base);
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 100;
+    }
+    [data-theme='dark'] .game-header { background: var(--bg-primary); }
+    .game-header__left { display: flex; align-items: center; gap: var(--space-md); }
+    .game-header__back {
+      width: 40px; height: 40px; border-radius: var(--radius-squircle);
+      background: var(--bg-white); border: var(--border); box-shadow: var(--shadow);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; text-decoration: none; color: var(--text-primary);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .game-header__back:active { transform: translate(2px,2px); box-shadow: var(--shadow-hover); }
+    .game-header__title { font-family: var(--font-heading); font-size: 16px; font-weight: 900; text-transform: uppercase; font-style: italic; }
+    .game-header__subtitle { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; }
+    .game-header__right { display: flex; gap: var(--space-sm); }
+
+    /* --- Template Selector --- */
+    .template-bar {
+      padding: var(--space-md) var(--space-base);
+      max-width: 540px; margin: 0 auto;
+    }
+    .template-bar__label {
+      font-family: var(--font-heading); font-size: 11px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; margin-bottom: var(--space-sm);
+    }
+    .template-scroll {
+      display: flex; gap: var(--space-sm); overflow-x: auto;
+      padding: 4px 0; scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .template-scroll::-webkit-scrollbar { display: none; }
+
+    .template-thumb {
+      min-width: 72px; height: 72px;
+      border: var(--border); border-radius: 20px;
+      background: var(--card-white); box-shadow: 2px 2px 0 var(--shadow-color);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      cursor: pointer; transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      gap: 2px; padding: 4px;
+    }
+    .template-thumb:active { transform: translate(2px,2px); box-shadow: var(--shadow-hover); }
+    .template-thumb--active { background: var(--accent-mint); box-shadow: 0 0 0 2px var(--text-primary), 2px 2px 0 var(--shadow-color); }
+    .template-thumb__icon { font-size: 28px; }
+    .template-thumb__name { font-family: var(--font-heading); font-size: 7px; font-weight: 900; text-transform: uppercase; text-align: center; line-height: 1.1; }
+
+    /* --- Canvas Area --- */
+    .canvas-area {
+      max-width: 540px; margin: 0 auto;
+      padding: 0 var(--space-base) var(--space-md);
+    }
+
+    .canvas-card {
+      background: #FFFFFF; border: var(--border); border-radius: var(--radius-card);
+      box-shadow: var(--shadow); overflow: hidden; position: relative;
+      aspect-ratio: 1 / 1;
+    }
+
+    .canvas-card svg {
+      width: 100%; height: 100%; display: block;
+    }
+
+    .canvas-card svg .colorable {
+      cursor: pointer;
+      transition: filter 0.15s ease;
+      stroke: #1A1A1A;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .canvas-card svg .colorable:hover {
+      filter: brightness(0.95);
+    }
+
+    .canvas-card svg .outline-only {
+      fill: none;
+      stroke: #1A1A1A;
+      stroke-width: 2.5;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+      pointer-events: none;
+    }
+
+    /* --- Toolbar --- */
+    .toolbar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--bg-white); border-top: 3px solid var(--border-color);
+      padding: var(--space-sm) var(--space-base);
+      padding-bottom: max(var(--space-sm), env(safe-area-inset-bottom));
+      z-index: 100;
+    }
+
+    .toolbar__row {
+      display: flex; align-items: center; gap: var(--space-sm);
+      max-width: 540px; margin: 0 auto;
+    }
+
+    .toolbar__row + .toolbar__row { margin-top: var(--space-sm); }
+
+    /* Color swatches */
+    .color-scroll {
+      display: flex; gap: 6px; overflow-x: auto; flex: 1;
+      scrollbar-width: none; -ms-overflow-style: none; padding: 2px;
+    }
+    .color-scroll::-webkit-scrollbar { display: none; }
+
+    .swatch {
+      width: 32px; height: 32px; min-width: 32px;
+      border-radius: 50%; border: 2px solid #000;
+      cursor: pointer; transition: transform 0.15s ease;
+      box-shadow: 1px 1px 0 #000;
+    }
+    .swatch:active { transform: scale(0.9); }
+    .swatch--active {
+      box-shadow: 0 0 0 3px var(--bg-primary), 0 0 0 5px #000;
+      transform: scale(1.1);
+    }
+
+    /* Tool buttons */
+    .tool-btn {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: var(--radius-squircle);
+      background: var(--bg-white); border: var(--border); box-shadow: 2px 2px 0 var(--shadow-color);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .tool-btn:active { transform: translate(1px,1px); box-shadow: 0 0 0 var(--shadow-color); }
+    .tool-btn--active { background: var(--text-primary); color: white; }
+    .tool-btn--danger { background: #FFE4E1; }
+    .tool-btn--save { background: var(--accent-mint); }
+
+    .toolbar__separator {
+      width: 2px; height: 28px; background: var(--border-color); opacity: 0.2;
+      margin: 0 2px; flex-shrink: 0;
+    }
+
+    /* Active color indicator */
+    .active-color-preview {
+      width: 40px; height: 40px; min-width: 40px;
+      border-radius: var(--radius-squircle);
+      border: var(--border); box-shadow: 2px 2px 0 var(--shadow-color);
+      position: relative; overflow: hidden;
+    }
+    .active-color-preview__inner {
+      width: 100%; height: 100%; border-radius: inherit;
+    }
+
+    /* Spacer for toolbar */
+    .toolbar-spacer { height: 100px; }
+
+    /* --- Toast --- */
+    .toast {
+      position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--text-primary); color: white;
+      padding: 10px 20px; border-radius: var(--radius-btn);
+      font-family: var(--font-heading); font-size: 12px; font-weight: 900;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      opacity: 0; transition: opacity 0.3s, transform 0.3s;
+      z-index: 200; pointer-events: none;
+      box-shadow: var(--shadow);
+    }
+    .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* --- Responsive --- */
+    @media (min-width: 500px) {
+      .swatch { width: 36px; height: 36px; min-width: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="game-header">
+    <div class="game-header__left">
+      <a href="index.html" class="game-header__back" aria-label="Back to home">←</a>
+      <div>
+        <div class="game-header__subtitle">AHIMSA KIDS ACTIVITY</div>
+        <div class="game-header__title">COLORING PAGES 🎨</div>
+      </div>
+    </div>
+    <div class="game-header__right">
+      <button class="game-header__back" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+    </div>
+  </header>
+
+  <!-- Template Selector -->
+  <div class="template-bar">
+    <div class="template-bar__label">CHOOSE A DESIGN</div>
+    <div class="template-scroll" id="template-scroll"></div>
+  </div>
+
+  <!-- Canvas Area -->
+  <div class="canvas-area">
+    <div class="canvas-card" id="canvas-card">
+      <!-- SVG injected here by JS -->
+    </div>
+  </div>
+
+  <div class="toolbar-spacer"></div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar__row">
+      <div class="active-color-preview" title="Active color">
+        <div class="active-color-preview__inner" id="active-preview" style="background: #FF69B4;"></div>
+      </div>
+      <div class="toolbar__separator"></div>
+      <div class="color-scroll" id="color-scroll"></div>
+    </div>
+    <div class="toolbar__row">
+      <button class="tool-btn" id="btn-undo" title="Undo" aria-label="Undo">↩️</button>
+      <button class="tool-btn tool-btn--danger" id="btn-clear" title="Clear all" aria-label="Clear all">🗑️</button>
+      <button class="tool-btn tool-btn--save" id="btn-save" title="Save image" aria-label="Save image">💾</button>
+      <div style="flex:1;"></div>
+      <button class="tool-btn" id="btn-random" title="Random colors" aria-label="Random fill">🎲</button>
+      <button class="tool-btn" id="btn-rainbow" title="Rainbow fill" aria-label="Rainbow fill">🌈</button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">Saved!</div>
+
+  <script src="js/theme.js"></script>
+  <script>
+    /* ============================================================
+       TEMPLATES — SVG Coloring Designs
+       ============================================================ */
+
+    const TEMPLATES = [
+      {
+        id: 'lotus',
+        name: 'Lotus',
+        icon: '🪷',
+        svg: () => {
+          const petals = [];
+          const petalColors = ['#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF','#FFFFFF'];
+          // Outer petals
+          for (let i = 0; i < 8; i++) {
+            const angle = (i * 45) - 90;
+            const rad = angle * Math.PI / 180;
+            const cx = 200 + Math.cos(rad) * 75;
+            const cy = 200 + Math.sin(rad) * 75;
+            petals.push(`<ellipse class="colorable" data-region="petal-${i}" fill="${petalColors[i]}" cx="${cx}" cy="${cy}" rx="38" ry="60" transform="rotate(${angle + 90} ${cx} ${cy})"/>`);
+          }
+          // Inner petals
+          for (let i = 0; i < 8; i++) {
+            const angle = (i * 45) - 67.5;
+            const rad = angle * Math.PI / 180;
+            const cx = 200 + Math.cos(rad) * 40;
+            const cy = 200 + Math.sin(rad) * 40;
+            petals.push(`<ellipse class="colorable" data-region="inner-petal-${i}" fill="#FFFFFF" cx="${cx}" cy="${cy}" rx="22" ry="36" transform="rotate(${angle + 90} ${cx} ${cy})"/>`);
+          }
+          return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Water -->
+            <ellipse class="colorable" data-region="water" fill="#FFFFFF" cx="200" cy="340" rx="160" ry="35"/>
+            <!-- Stem -->
+            <path class="colorable" data-region="stem" fill="#FFFFFF" d="M195 270 Q190 310 185 350 L215 350 Q210 310 205 270 Z"/>
+            <!-- Leaves -->
+            <ellipse class="colorable" data-region="leaf-l" fill="#FFFFFF" cx="145" cy="320" rx="50" ry="18" transform="rotate(-15 145 320)"/>
+            <ellipse class="colorable" data-region="leaf-r" fill="#FFFFFF" cx="255" cy="320" rx="50" ry="18" transform="rotate(15 255 320)"/>
+            <!-- Outer petals -->
+            ${petals.join('\n')}
+            <!-- Center -->
+            <circle class="colorable" data-region="center" fill="#FFFFFF" cx="200" cy="200" r="25"/>
+            <!-- Center dots -->
+            <circle class="colorable" data-region="center-dot" fill="#FFFFFF" cx="200" cy="200" r="10"/>
+          </svg>`;
+        }
+      },
+      {
+        id: 'hand',
+        name: 'Ahimsa',
+        icon: '✋',
+        svg: () => `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Palm -->
+          <path class="colorable" data-region="palm" fill="#FFFFFF" d="M140 350 Q120 280 125 220 Q130 180 150 160 L150 90 Q150 70 165 70 Q180 70 180 90 L180 150 L180 70 Q180 50 195 50 Q210 50 210 70 L210 150 L210 60 Q210 40 225 40 Q240 40 240 60 L240 150 L240 80 Q240 60 255 60 Q270 60 270 80 L270 190 Q310 170 320 180 Q330 190 290 230 Q270 260 265 280 Q260 310 260 350 Z"/>
+          <!-- Wheel circle -->
+          <circle class="colorable" data-region="wheel" fill="#FFFFFF" cx="205" cy="230" r="45"/>
+          <!-- Wheel inner -->
+          <circle class="colorable" data-region="wheel-inner" fill="#FFFFFF" cx="205" cy="230" r="28"/>
+          <!-- Wheel center -->
+          <circle class="colorable" data-region="wheel-center" fill="#FFFFFF" cx="205" cy="230" r="12"/>
+          <!-- Wheel spokes (decorative) -->
+          ${[0,45,90,135,180,225,270,315].map(a => {
+            const r1 = a * Math.PI / 180;
+            return `<line class="outline-only" x1="${205+Math.cos(r1)*12}" y1="${230+Math.sin(r1)*12}" x2="${205+Math.cos(r1)*45}" y2="${230+Math.sin(r1)*45}"/>`;
+          }).join('\n')}
+          <!-- Finger lines -->
+          <line class="outline-only" x1="180" y1="90" x2="180" y2="155"/>
+          <line class="outline-only" x1="210" y1="70" x2="210" y2="155"/>
+          <line class="outline-only" x1="240" y1="80" x2="240" y2="155"/>
+        </svg>`
+      },
+      {
+        id: 'temple',
+        name: 'Temple',
+        icon: '🛕',
+        svg: () => `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Base platform -->
+          <rect class="colorable" data-region="base" fill="#FFFFFF" x="60" y="340" width="280" height="30" rx="4"/>
+          <!-- Steps -->
+          <rect class="colorable" data-region="steps" fill="#FFFFFF" x="80" y="310" width="240" height="30" rx="4"/>
+          <!-- Main body -->
+          <rect class="colorable" data-region="body" fill="#FFFFFF" x="100" y="180" width="200" height="130" rx="4"/>
+          <!-- Left pillar -->
+          <rect class="colorable" data-region="pillar-l" fill="#FFFFFF" x="110" y="200" width="25" height="110" rx="3"/>
+          <!-- Right pillar -->
+          <rect class="colorable" data-region="pillar-r" fill="#FFFFFF" x="265" y="200" width="25" height="110" rx="3"/>
+          <!-- Door -->
+          <path class="colorable" data-region="door" fill="#FFFFFF" d="M175 310 L175 250 Q200 220 225 250 L225 310 Z"/>
+          <!-- Upper section -->
+          <path class="colorable" data-region="upper" fill="#FFFFFF" d="M90 180 L200 110 L310 180 Z"/>
+          <!-- Dome -->
+          <path class="colorable" data-region="dome" fill="#FFFFFF" d="M160 120 Q200 50 240 120 Z"/>
+          <!-- Spire -->
+          <path class="colorable" data-region="spire" fill="#FFFFFF" d="M195 55 L200 20 L205 55 Z"/>
+          <!-- Flag -->
+          <path class="colorable" data-region="flag" fill="#FFFFFF" d="M205 20 L240 30 L205 42 Z"/>
+          <!-- Windows -->
+          <circle class="colorable" data-region="window-l" fill="#FFFFFF" cx="145" cy="240" r="15"/>
+          <circle class="colorable" data-region="window-r" fill="#FFFFFF" cx="255" cy="240" r="15"/>
+          <!-- Decorative element on top -->
+          <circle class="colorable" data-region="top-jewel" fill="#FFFFFF" cx="200" cy="85" r="10"/>
+        </svg>`
+      },
+      {
+        id: 'peacock',
+        name: 'Peacock',
+        icon: '🦚',
+        svg: () => {
+          const tailFeathers = [];
+          for (let i = 0; i < 9; i++) {
+            const angle = -80 + i * 20;
+            const rad = angle * Math.PI / 180;
+            const cx = 200 + Math.cos(rad) * 110;
+            const cy = 180 + Math.sin(rad) * 110;
+            tailFeathers.push(`<ellipse class="colorable" data-region="feather-${i}" fill="#FFFFFF" cx="${cx}" cy="${cy}" rx="28" ry="55" transform="rotate(${angle + 90} ${cx} ${cy})"/>`);
+            // Eye on feather
+            tailFeathers.push(`<circle class="colorable" data-region="feather-eye-${i}" fill="#FFFFFF" cx="${cx + Math.cos(rad)*15}" cy="${cy + Math.sin(rad)*15}" r="10"/>`);
+          }
+          return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tail feathers -->
+            ${tailFeathers.join('\n')}
+            <!-- Body -->
+            <ellipse class="colorable" data-region="body" fill="#FFFFFF" cx="200" cy="300" rx="40" ry="55"/>
+            <!-- Neck -->
+            <path class="colorable" data-region="neck" fill="#FFFFFF" d="M190 255 Q185 220 190 190 Q195 180 200 180 Q205 180 210 190 Q215 220 210 255 Z"/>
+            <!-- Head -->
+            <circle class="colorable" data-region="head" fill="#FFFFFF" cx="200" cy="170" r="22"/>
+            <!-- Beak -->
+            <path class="colorable" data-region="beak" fill="#FFFFFF" d="M218 165 L240 170 L218 175 Z"/>
+            <!-- Crown -->
+            <line class="outline-only" x1="195" y1="150" x2="190" y2="130"/>
+            <line class="outline-only" x1="200" y1="150" x2="200" y2="125"/>
+            <line class="outline-only" x1="205" y1="150" x2="210" y2="130"/>
+            <circle class="colorable" data-region="crown-1" fill="#FFFFFF" cx="190" cy="128" r="5"/>
+            <circle class="colorable" data-region="crown-2" fill="#FFFFFF" cx="200" cy="123" r="5"/>
+            <circle class="colorable" data-region="crown-3" fill="#FFFFFF" cx="210" cy="128" r="5"/>
+            <!-- Eye -->
+            <circle class="outline-only" cx="207" cy="167" r="4"/>
+            <circle fill="#1A1A1A" cx="207" cy="167" r="2"/>
+            <!-- Feet -->
+            <path class="colorable" data-region="feet" fill="#FFFFFF" d="M185 350 L175 370 M185 350 L185 370 M185 350 L195 370 M215 350 L205 370 M215 350 L215 370 M215 350 L225 370"/>
+          </svg>`;
+        }
+      },
+      {
+        id: 'diya',
+        name: 'Diya',
+        icon: '🪔',
+        svg: () => `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Glow rays -->
+          ${[0,30,60,90,120,150,180,210,240,270,300,330].map((a,i) => {
+            const rad = a * Math.PI / 180;
+            return `<line class="colorable" data-region="ray-${i}" stroke="#FFFFFF" stroke-width="3" fill="none" x1="${200+Math.cos(rad)*90}" y1="${180+Math.sin(rad)*90}" x2="${200+Math.cos(rad)*110}" y2="${180+Math.sin(rad)*110}"/>`;
+          }).join('\n')}
+          <!-- Outer flame -->
+          <path class="colorable" data-region="flame-outer" fill="#FFFFFF" d="M200 80 Q230 130 220 170 Q210 190 200 190 Q190 190 180 170 Q170 130 200 80 Z"/>
+          <!-- Inner flame -->
+          <path class="colorable" data-region="flame-inner" fill="#FFFFFF" d="M200 120 Q215 150 210 175 Q205 185 200 185 Q195 185 190 175 Q185 150 200 120 Z"/>
+          <!-- Lamp bowl -->
+          <path class="colorable" data-region="bowl" fill="#FFFFFF" d="M140 210 Q140 190 155 190 L245 190 Q260 190 260 210 Q260 250 230 260 L170 260 Q140 250 140 210 Z"/>
+          <!-- Oil -->
+          <ellipse class="colorable" data-region="oil" fill="#FFFFFF" cx="200" cy="200" rx="50" ry="12"/>
+          <!-- Wick -->
+          <rect class="colorable" data-region="wick" fill="#FFFFFF" x="197" y="185" width="6" height="18" rx="2"/>
+          <!-- Stand -->
+          <path class="colorable" data-region="stand" fill="#FFFFFF" d="M170 260 L165 290 Q165 300 180 300 L220 300 Q235 300 235 290 L230 260 Z"/>
+          <!-- Base -->
+          <ellipse class="colorable" data-region="stand-base" fill="#FFFFFF" cx="200" cy="305" rx="55" ry="12"/>
+          <!-- Decorative band on bowl -->
+          <path class="colorable" data-region="band" fill="#FFFFFF" d="M148 230 Q148 225 155 225 L245 225 Q252 225 252 230 L252 240 Q252 245 245 245 L155 245 Q148 245 148 240 Z"/>
+          <!-- Base platform -->
+          <rect class="colorable" data-region="platform" fill="#FFFFFF" x="130" y="330" width="140" height="20" rx="10"/>
+          <!-- Rangoli dots around base -->
+          <circle class="colorable" data-region="dot-1" fill="#FFFFFF" cx="140" cy="360" r="6"/>
+          <circle class="colorable" data-region="dot-2" fill="#FFFFFF" cx="170" cy="365" r="6"/>
+          <circle class="colorable" data-region="dot-3" fill="#FFFFFF" cx="200" cy="368" r="6"/>
+          <circle class="colorable" data-region="dot-4" fill="#FFFFFF" cx="230" cy="365" r="6"/>
+          <circle class="colorable" data-region="dot-5" fill="#FFFFFF" cx="260" cy="360" r="6"/>
+        </svg>`
+      },
+      {
+        id: 'mandala',
+        name: 'Mandala',
+        icon: '🕉️',
+        svg: () => {
+          const rings = [];
+          // Outer ring segments
+          for (let i = 0; i < 12; i++) {
+            const a1 = i * 30; const a2 = (i+1) * 30;
+            const r = 150;
+            const x1 = 200 + r * Math.cos(a1*Math.PI/180);
+            const y1 = 200 + r * Math.sin(a1*Math.PI/180);
+            const x2 = 200 + r * Math.cos(a2*Math.PI/180);
+            const y2 = 200 + r * Math.sin(a2*Math.PI/180);
+            rings.push(`<path class="colorable" data-region="outer-${i}" fill="#FFFFFF" d="M200 200 L${x1} ${y1} A${r} ${r} 0 0 1 ${x2} ${y2} Z"/>`);
+          }
+          // Middle ring petals
+          for (let i = 0; i < 8; i++) {
+            const a = i * 45;
+            const rad = a * Math.PI / 180;
+            const cx = 200 + Math.cos(rad) * 80;
+            const cy = 200 + Math.sin(rad) * 80;
+            rings.push(`<ellipse class="colorable" data-region="mid-${i}" fill="#FFFFFF" cx="${cx}" cy="${cy}" rx="18" ry="35" transform="rotate(${a+90} ${cx} ${cy})"/>`);
+          }
+          // Inner ring
+          for (let i = 0; i < 6; i++) {
+            const a = i * 60;
+            const rad = a * Math.PI / 180;
+            const cx = 200 + Math.cos(rad) * 40;
+            const cy = 200 + Math.sin(rad) * 40;
+            rings.push(`<circle class="colorable" data-region="inner-${i}" fill="#FFFFFF" cx="${cx}" cy="${cy}" r="15"/>`);
+          }
+          return `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer circle -->
+            <circle class="outline-only" cx="200" cy="200" r="155"/>
+            ${rings.join('\n')}
+            <!-- Center -->
+            <circle class="colorable" data-region="center-ring" fill="#FFFFFF" cx="200" cy="200" r="30"/>
+            <circle class="colorable" data-region="center" fill="#FFFFFF" cx="200" cy="200" r="15"/>
+          </svg>`;
+        }
+      }
+    ];
+
+    /* ============================================================
+       COLOR PALETTE
+       ============================================================ */
+    const COLORS = [
+      '#FF69B4', '#FF85C8', '#FFB6C1',          // pinks
+      '#FF6347', '#FF8C42', '#FFBC99',           // reds/peach
+      '#FFD700', '#FFF176', '#FFEB3B',           // yellows
+      '#98FF98', '#4AE07A', '#2E7D32',           // greens
+      '#87CEEB', '#42A5F5', '#1565C0',           // blues
+      '#CE93D8', '#9C27B0', '#E8E4F3',           // purples
+      '#8D6E63', '#BCAAA4',                       // browns
+      '#FFFFFF', '#E0E0E0', '#9E9E9E', '#1A1A1A', // greys
+    ];
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+    let activeColor = COLORS[0];
+    let currentTemplate = 0;
+    let history = []; // undo stack: [{region, oldColor}]
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    initTheme();
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    renderTemplateThumbs();
+    renderColorPalette();
+    loadTemplate(0);
+
+    // Tool buttons
+    document.getElementById('btn-undo').addEventListener('click', undo);
+    document.getElementById('btn-clear').addEventListener('click', clearAll);
+    document.getElementById('btn-save').addEventListener('click', saveImage);
+    document.getElementById('btn-random').addEventListener('click', randomFill);
+    document.getElementById('btn-rainbow').addEventListener('click', rainbowFill);
+
+    /* ============================================================
+       RENDER
+       ============================================================ */
+
+    function renderTemplateThumbs() {
+      const container = document.getElementById('template-scroll');
+      container.innerHTML = TEMPLATES.map((t, i) => `
+        <div class="template-thumb ${i === 0 ? 'template-thumb--active' : ''}" data-index="${i}">
+          <span class="template-thumb__icon">${t.icon}</span>
+          <span class="template-thumb__name">${t.name}</span>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('.template-thumb').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const idx = parseInt(thumb.dataset.index);
+          loadTemplate(idx);
+          container.querySelectorAll('.template-thumb').forEach(t => t.classList.remove('template-thumb--active'));
+          thumb.classList.add('template-thumb--active');
+        });
+      });
+    }
+
+    function renderColorPalette() {
+      const container = document.getElementById('color-scroll');
+      container.innerHTML = COLORS.map(c =>
+        `<div class="swatch ${c === activeColor ? 'swatch--active' : ''}" data-color="${c}" style="background:${c};" aria-label="Color ${c}"></div>`
+      ).join('');
+
+      container.querySelectorAll('.swatch').forEach(sw => {
+        sw.addEventListener('click', () => {
+          activeColor = sw.dataset.color;
+          container.querySelectorAll('.swatch').forEach(s => s.classList.remove('swatch--active'));
+          sw.classList.add('swatch--active');
+          document.getElementById('active-preview').style.background = activeColor;
+        });
+      });
+    }
+
+    function loadTemplate(index) {
+      currentTemplate = index;
+      history = [];
+      const card = document.getElementById('canvas-card');
+      card.innerHTML = TEMPLATES[index].svg();
+
+      // Attach click handlers to colorable regions
+      card.querySelectorAll('.colorable').forEach(region => {
+        region.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const oldColor = region.getAttribute('fill') || region.getAttribute('stroke');
+          const attr = region.tagName === 'line' ? 'stroke' : 'fill';
+          history.push({ region, attr, oldColor });
+          region.setAttribute(attr, activeColor);
+        });
+      });
+    }
+
+    /* ============================================================
+       TOOLS
+       ============================================================ */
+
+    function undo() {
+      if (history.length === 0) return;
+      const last = history.pop();
+      last.region.setAttribute(last.attr, last.oldColor);
+    }
+
+    function clearAll() {
+      loadTemplate(currentTemplate);
+      showToast('Cleared! 🧹');
+    }
+
+    function randomFill() {
+      const card = document.getElementById('canvas-card');
+      card.querySelectorAll('.colorable').forEach(region => {
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const attr = region.tagName === 'line' ? 'stroke' : 'fill';
+        region.setAttribute(attr, color);
+      });
+      showToast('Random colors! 🎲');
+    }
+
+    function rainbowFill() {
+      const card = document.getElementById('canvas-card');
+      const regions = card.querySelectorAll('.colorable');
+      const rainbow = ['#FF6347','#FF8C42','#FFD700','#98FF98','#42A5F5','#9C27B0','#FF69B4'];
+      regions.forEach((region, i) => {
+        const color = rainbow[i % rainbow.length];
+        const attr = region.tagName === 'line' ? 'stroke' : 'fill';
+        region.setAttribute(attr, color);
+      });
+      showToast('Rainbow! 🌈');
+    }
+
+    function saveImage() {
+      const svgEl = document.querySelector('#canvas-card svg');
+      if (!svgEl) return;
+
+      const svgData = new XMLSerializer().serializeToString(svgEl);
+      const canvas = document.createElement('canvas');
+      canvas.width = 800;
+      canvas.height = 800;
+      const ctx = canvas.getContext('2d');
+
+      // White background
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, 800, 800);
+
+      const img = new Image();
+      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, 800, 800);
+        URL.revokeObjectURL(url);
+
+        const link = document.createElement('a');
+        link.download = `ahimsa-kids-${TEMPLATES[currentTemplate].id}-coloring.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Saved! 💾');
+      };
+      img.src = url;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 2000);
+    }
+  </script>
+</body>
+</html>

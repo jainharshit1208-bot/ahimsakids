@@ -1,0 +1,289 @@
+/* ============================================================
+   AHIMSA KIDS — Animations & Keyframes
+   ============================================================
+   A playful yet refined animation library. Every animation
+   is designed to feel organic and child-friendly without
+   being distracting or overwhelming.
+   ============================================================ */
+
+
+/* -----------------------------------------------------------
+   1. KEYFRAMES — Floating & Drifting
+   Gentle vertical movement for decorative elements.
+   ----------------------------------------------------------- */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+
+/* -----------------------------------------------------------
+   2. KEYFRAMES — Sparkle & Shimmer
+   Twinkling effects for decorative stars and highlights.
+   ----------------------------------------------------------- */
+
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+
+/* -----------------------------------------------------------
+   3. KEYFRAMES — Slide Entrances
+   Directional reveal animations for scroll-triggered content.
+   ----------------------------------------------------------- */
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+/* -----------------------------------------------------------
+   4. KEYFRAMES — Scale & Pulse
+   Rhythmic breathing effects for attention elements.
+   ----------------------------------------------------------- */
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+}
+
+
+/* -----------------------------------------------------------
+   5. KEYFRAMES — Rotation & Wiggle
+   Playful rotational movement for interactive elements.
+   ----------------------------------------------------------- */
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes rotateGentle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* -----------------------------------------------------------
+   6. KEYFRAMES — Fade
+   Simple opacity transition.
+   ----------------------------------------------------------- */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* ============================================================
+   UTILITY CLASSES
+   Apply these directly to elements for common animations.
+   ============================================================ */
+
+
+/* -----------------------------------------------------------
+   7. Scroll-Triggered Animation
+   Elements start hidden and animate in when .animated is
+   added via JavaScript (Intersection Observer).
+   ----------------------------------------------------------- */
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* -----------------------------------------------------------
+   8. Continuous Animation Classes
+   Infinite loops for decorative and ambient elements.
+   ----------------------------------------------------------- */
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.sparkle-anim {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.pulse-anim {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+
+/* -----------------------------------------------------------
+   9. Interaction-Triggered Animations
+   Play on hover or tap for tactile feedback.
+   ----------------------------------------------------------- */
+
+.wiggle-on-hover:hover {
+  animation: wiggle 0.4s ease;
+}
+
+
+/* -----------------------------------------------------------
+   10. One-Shot Animations
+   Play once on mount — great for page transitions.
+   ----------------------------------------------------------- */
+
+.bounce-in {
+  animation: bounceIn 0.6s ease;
+}
+
+
+/* ============================================================
+   STAGGERED ANIMATION DELAYS
+   Apply to sibling elements for cascading entrance effects.
+   Use with any animation utility class above.
+
+   Example:
+     <div class="animate-on-scroll delay-1">First</div>
+     <div class="animate-on-scroll delay-2">Second</div>
+     <div class="animate-on-scroll delay-3">Third</div>
+   ============================================================ */
+
+.delay-1 {
+  animation-delay: 0.1s;
+}
+
+.delay-2 {
+  animation-delay: 0.2s;
+}
+
+.delay-3 {
+  animation-delay: 0.3s;
+}
+
+.delay-4 {
+  animation-delay: 0.4s;
+}
+
+.delay-5 {
+  animation-delay: 0.5s;
+}

@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Ahimsa Kids — A magical Jain learning world for children. Learn Ahimsa, Jain values, Tirthankaras, and more through fun stories, games, and videos.">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Ahimsa Kids — Learn Jain Values Through Fun &amp; Stories 🌸</title>
+
+  <!-- Fonts from Fontshare & Google Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+
+  <!-- CSS files in order -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/sections.css">
+  <link rel="stylesheet" href="css/dark.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       SECTION 1: STICKY HEADER
+       ============================================================ -->
+  <header class="header" id="header" role="banner">
+    <div class="header__left">
+      <div class="avatar avatar--lg avatar--mint" aria-hidden="true">
+        <img src="assets/mascot.jpg" alt="Ahimsa Kids Mascot" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+      </div>
+      <div class="header__info">
+        <span class="header__label" data-en="AHIMSA KIDS" data-hi="अहिंसा किड्स">AHIMSA KIDS</span>
+        <h1 class="header__title" data-en="WELCOME, LITTLE SOUL ✨" data-hi="स्वागत है, प्यारी आत्मा ✨">WELCOME, LITTLE SOUL ✨</h1>
+      </div>
+    </div>
+    <div class="header__right">
+      <button class="header__btn" id="lang-toggle" aria-label="Toggle Language">🇮🇳</button>
+      <button class="header__btn" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+      <button class="header__btn" id="search-btn" aria-label="Search">🔍</button>
+    </div>
+  </header>
+
+  <div class="page">
+
+    <!-- ============================================================
+         SECTION 2: HERO INTERACTION HUB
+         ============================================================ -->
+    <!-- ============================================================
+         SECTION 2: DYNAMIC 3D HERO CAROUSEL
+         ============================================================ -->
+    <section class="hero-carousel" id="home" aria-label="Ahimsa Kids Learning Experience">
+      
+      <!-- Grain overlay -->
+      <div class="hero-carousel__noise">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.08"/>
+        </svg>
+      </div>
+
+      <!-- Giant Ghost Text -->
+      <div class="hero-carousel__ghost-text" id="hero-ghost-text">AHIMSA</div>
+
+      <!-- Top Left Branding (Absolute, placed over carousel but under standard header) -->
+      <div class="hero-carousel__branding">
+        <span class="hero-carousel__label">AHIMSA KIDS</span>
+        <h2 class="hero-carousel__tagline">LEARN • PLAY • GROW ✨</h2>
+      </div>
+
+      <!-- 3D Carousel Container -->
+      <div class="hero-carousel__track" id="hero-track">
+        
+        <!-- Slide 1 -->
+        <div class="hero-slide" data-index="0">
+          <img src="assets/mascot_hero.png" alt="Ahimsa Mascot" draggable="false">
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="hero-slide" data-index="1">
+          <img src="assets/mascot_namaste.png" alt="Mascot in Namaste Pose" draggable="false">
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slide" data-index="2">
+          <img src="assets/hero_kashaya.png" alt="Kashaya Guide" draggable="false">
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="hero-slide" data-index="3">
+          <img src="assets/slide4.png" alt="Jain Stories Guide" draggable="false">
+        </div>
+      </div>
+
+      <!-- Bottom Left Content & Navigation -->
+      <div class="hero-carousel__content">
+        <h3 class="hero-carousel__title" id="hero-title">LEARN AHIMSA 🌱</h3>
+        <p class="hero-carousel__desc hidden sm-block">Discover Jain wisdom through stories, compassion, videos, and spiritual adventures made for kids.</p>
+        <div class="hero-carousel__actions">
+          <button class="hero-nav-btn" id="hero-prev" aria-label="Previous slide">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button class="hero-nav-btn" id="hero-next" aria-label="Next slide">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+          <button class="btn btn--primary" id="hero-cta">START LEARNING</button>
+        </div>
+      </div>
+
+      <!-- Bottom Right YouTube Link -->
+      <a href="https://youtu.be/__NairBmZTE?si=GMgZ0Rz56OlrNtqn" target="_blank" class="hero-carousel__yt-link">
+        WATCH TODAY'S STORY 🎥
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="hero-yt-icon"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+
+    </section>
+
+    <!-- ============================================================
+         SECTION 3: FEATURED VIDEO SECTION
+         ============================================================ -->
+    <section class="section video-section animate-on-scroll" id="watch" aria-label="Featured video">
+      <div class="section-header">
+        <span class="section-header__label" data-en="WATCH &amp; LEARN" data-hi="देखें और सीखें">WATCH &amp; LEARN</span>
+        <h2 class="section-header__title" data-en="Ahimsa song" data-hi="अहिंसा गीत">Ahimsa song</h2>
+        <p class="section-header__subtitle" data-en="Learn Jain values through fun animated storytelling." data-hi="मजेदार एनिमेटेड कहानियों से जैन मूल्य सीखें।">Learn Jain values through fun animated storytelling.</p>
+      </div>
+
+      <div class="video-section__container">
+        <div class="video-section__iframe-wrap">
+          <iframe
+            data-src="https://www.youtube.com/embed/__NairBmZTE"
+            title="Ahimsa Kids Featured Video"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="video-section__actions">
+          <a href="https://www.youtube.com/@Ahimsa_Kids" target="_blank" class="btn btn--primary" data-en="WATCH MORE VIDEOS" data-hi="और वीडियो देखें">WATCH MORE VIDEOS</a>
+          <button class="btn btn--mint" data-en="START LEARNING" data-hi="सीखना शुरू करें">START LEARNING</button>
+        </div>
+        <div class="video-section__decor" aria-hidden="true">▶️</div>
+      </div>
+
+      <!-- Floating decorations -->
+      <span class="sparkle float" style="top: 10%; right: 5%; font-size: 20px;" aria-hidden="true">✨</span>
+      <span class="lotus float-slow" style="bottom: 15%; left: 3%; font-size: 24px;" aria-hidden="true">🌸</span>
+    </section>
+
+
+
+    <!-- ============================================================
+         SECTION 5: MEET THE 24 TIRTHANKARAS
+         ============================================================ -->
+    <section class="section tirthankaras animate-on-scroll" id="tirthankaras" aria-label="The 24 Tirthankaras">
+      <div class="section-header">
+        <span class="section-header__label" data-en="DISCOVER THEM ALL" data-hi="सभी को जानें">DISCOVER THEM ALL</span>
+        <h2 class="section-header__title" data-en="MEET THE 24 TIRTHANKARAS ✨" data-hi="24 तीर्थंकरों से मिलें ✨">MEET THE 24 TIRTHANKARAS ✨</h2>
+      </div>
+
+      <div class="tirthankaras__carousel carousel-drag hide-scrollbar" role="list" aria-label="24 Tirthankaras carousel">
+
+        <!-- 1. Rishabhdev (Adinath) -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">1</div>
+          <div class="tirthankara-card__symbol" aria-label="Bull">🐂</div>
+          <div class="tirthankara-card__name" data-en="Rishabhdev (Adinath)" data-hi="ऋषभदेव (आदिनाथ)">Rishabhdev (Adinath)</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ayodhya" data-hi="जन्मस्थान: अयोध्या">Birthplace: Ayodhya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught humanity the first arts of civilization, agriculture, and cooking." data-hi="मानवता को सभ्यता, कृषि और खाना पकाने की पहली कलाएँ सिखाईं।">Taught humanity the first arts of civilization, agriculture, and cooking.</div>
+          <div class="tirthankara-card__fact" data-en="He is considered the first Tirthankara and king!" data-hi="उन्हें पहले तीर्थंकर और राजा माना जाता है!">He is considered the first Tirthankara and king!</div>
+        </div>
+
+        <!-- 2. Ajitanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">2</div>
+          <div class="tirthankara-card__symbol" aria-label="Elephant">🐘</div>
+          <div class="tirthankara-card__name" data-en="Ajitanath" data-hi="अजितनाथ">Ajitanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ayodhya" data-hi="जन्मस्थान: अयोध्या">Birthplace: Ayodhya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught that true victory is over oneself, not others." data-hi="सिखाया कि सच्ची जीत स्वयं पर होती है, दूसरों पर नहीं।">Taught that true victory is over oneself, not others.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'unconquerable'!" data-hi="उनके नाम का अर्थ है 'अजेय'!">His name means 'unconquerable'!</div>
+        </div>
+
+        <!-- 3. Sambhavanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">3</div>
+          <div class="tirthankara-card__symbol" aria-label="Horse">🐴</div>
+          <div class="tirthankara-card__name" data-en="Sambhavanath" data-hi="संभवनाथ">Sambhavanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Shravasti" data-hi="जन्मस्थान: श्रावस्ती">Birthplace: Shravasti</div>
+          <div class="tirthankara-card__teaching" data-en="Taught patience and self-control as paths to liberation." data-hi="धैर्य और आत्म-संयम को मुक्ति का मार्ग बताया।">Taught patience and self-control as paths to liberation.</div>
+          <div class="tirthankara-card__fact" data-en="He practiced austerities for 14 years!" data-hi="उन्होंने 14 वर्षों तक तपस्या की!">He practiced austerities for 14 years!</div>
+        </div>
+
+        <!-- 4. Abhinandannath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">4</div>
+          <div class="tirthankara-card__symbol" aria-label="Monkey">🐒</div>
+          <div class="tirthankara-card__name" data-en="Abhinandannath" data-hi="अभिनंदननाथ">Abhinandannath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ayodhya" data-hi="जन्मस्थान: अयोध्या">Birthplace: Ayodhya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught that joy comes from within, not from material things." data-hi="सिखाया कि खुशी भीतर से आती है, भौतिक चीज़ों से नहीं।">Taught that joy comes from within, not from material things.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'one who brings joy'!" data-hi="उनके नाम का अर्थ है 'आनंद लाने वाला'!">His name means 'one who brings joy'!</div>
+        </div>
+
+        <!-- 5. Sumatinath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">5</div>
+          <div class="tirthankara-card__symbol" aria-label="Curlew bird">🦅</div>
+          <div class="tirthankara-card__name" data-en="Sumatinath" data-hi="सुमतिनाथ">Sumatinath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ayodhya" data-hi="जन्मस्थान: अयोध्या">Birthplace: Ayodhya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught wisdom and good counsel to all beings." data-hi="सभी प्राणियों को ज्ञान और अच्छी सलाह दी।">Taught wisdom and good counsel to all beings.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'one with a good mind'!" data-hi="उनके नाम का अर्थ है 'अच्छी बुद्धि वाला'!">His name means 'one with a good mind'!</div>
+        </div>
+
+        <!-- 6. Padmaprabha -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">6</div>
+          <div class="tirthankara-card__symbol" aria-label="Lotus">🪷</div>
+          <div class="tirthankara-card__name" data-en="Padmaprabha" data-hi="पद्मप्रभ">Padmaprabha</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Kaushambi" data-hi="जन्मस्थान: कौशाम्बी">Birthplace: Kaushambi</div>
+          <div class="tirthankara-card__teaching" data-en="Taught purity of heart, like a lotus rising from mud." data-hi="कमल की तरह कीचड़ से उठकर हृदय की शुद्धता सिखाई।">Taught purity of heart, like a lotus rising from mud.</div>
+          <div class="tirthankara-card__fact" data-en="His body glowed like a red lotus!" data-hi="उनका शरीर लाल कमल की तरह चमकता था!">His body glowed like a red lotus!</div>
+        </div>
+
+        <!-- 7. Suparshvanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">7</div>
+          <div class="tirthankara-card__symbol" aria-label="Swastika — symbol of well-being">✡️</div>
+          <div class="tirthankara-card__name" data-en="Suparshvanath" data-hi="सुपार्श्वनाथ">Suparshvanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Varanasi" data-hi="जन्मस्थान: वाराणसी">Birthplace: Varanasi</div>
+          <div class="tirthankara-card__teaching" data-en="Taught auspiciousness and right conduct." data-hi="शुभता और सम्यक आचरण सिखाया।">Taught auspiciousness and right conduct.</div>
+          <div class="tirthankara-card__fact" data-en="He had a swastika symbol, meaning well-being!" data-hi="उनका प्रतीक स्वस्तिक था, जिसका अर्थ है कल्याण!">He had a swastika symbol, meaning well-being!</div>
+        </div>
+
+        <!-- 8. Chandraprabha -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">8</div>
+          <div class="tirthankara-card__symbol" aria-label="Moon">🌙</div>
+          <div class="tirthankara-card__name" data-en="Chandraprabha" data-hi="चंद्रप्रभ">Chandraprabha</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Chandrapuri" data-hi="जन्मस्थान: चंद्रपुरी">Birthplace: Chandrapuri</div>
+          <div class="tirthankara-card__teaching" data-en="Taught that inner light dispels all darkness." data-hi="सिखाया कि भीतर का प्रकाश सारे अंधकार को दूर करता है।">Taught that inner light dispels all darkness.</div>
+          <div class="tirthankara-card__fact" data-en="His body glowed like the moon!" data-hi="उनका शरीर चंद्रमा की तरह चमकता था!">His body glowed like the moon!</div>
+        </div>
+
+        <!-- 9. Pushpadanta (Suvidhinath) -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">9</div>
+          <div class="tirthankara-card__symbol" aria-label="Crocodile">🐊</div>
+          <div class="tirthankara-card__name" data-en="Pushpadanta (Suvidhinath)" data-hi="पुष्पदंत (सुविधिनाथ)">Pushpadanta (Suvidhinath)</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Kakandi" data-hi="जन्मस्थान: काकंदी">Birthplace: Kakandi</div>
+          <div class="tirthankara-card__teaching" data-en="Taught proper conduct and righteous living." data-hi="उचित आचरण और धार्मिक जीवन सिखाया।">Taught proper conduct and righteous living.</div>
+          <div class="tirthankara-card__fact" data-en="He is also known as Suvidhinath!" data-hi="उन्हें सुविधिनाथ के नाम से भी जाना जाता है!">He is also known as Suvidhinath!</div>
+        </div>
+
+        <!-- 10. Sheetalnath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">10</div>
+          <div class="tirthankara-card__symbol" aria-label="Wishing tree">🌳</div>
+          <div class="tirthankara-card__name" data-en="Sheetalnath" data-hi="शीतलनाथ">Sheetalnath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Bhaddilapura" data-hi="जन्मस्थान: भद्दिलपुर">Birthplace: Bhaddilapura</div>
+          <div class="tirthankara-card__teaching" data-en="Taught calmness and coolness of mind." data-hi="मन की शांति और शीतलता सिखाई।">Taught calmness and coolness of mind.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'the cool one' — he brought peace!" data-hi="उनके नाम का अर्थ है 'शीतल' — उन्होंने शांति दी!">His name means 'the cool one' — he brought peace!</div>
+        </div>
+
+        <!-- 11. Shreyansnath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">11</div>
+          <div class="tirthankara-card__symbol" aria-label="Rhinoceros">🦏</div>
+          <div class="tirthankara-card__name" data-en="Shreyansnath" data-hi="श्रेयांसनाथ">Shreyansnath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Simhapuri" data-hi="जन्मस्थान: सिंहपुरी">Birthplace: Simhapuri</div>
+          <div class="tirthankara-card__teaching" data-en="Taught seeking the good and noble path." data-hi="अच्छे और श्रेष्ठ मार्ग की खोज सिखाई।">Taught seeking the good and noble path.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'one who seeks the best'!" data-hi="उनके नाम का अर्थ है 'श्रेष्ठ की खोज करने वाला'!">His name means 'one who seeks the best'!</div>
+        </div>
+
+        <!-- 12. Vasupujya -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">12</div>
+          <div class="tirthankara-card__symbol" aria-label="Buffalo">🦬</div>
+          <div class="tirthankara-card__name" data-en="Vasupujya" data-hi="वासुपूज्य">Vasupujya</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Champapuri" data-hi="जन्मस्थान: चम्पापुरी">Birthplace: Champapuri</div>
+          <div class="tirthankara-card__teaching" data-en="Taught worship of true wealth — knowledge and virtue." data-hi="सच्चे धन — ज्ञान और सद्गुण की पूजा सिखाई।">Taught worship of true wealth — knowledge and virtue.</div>
+          <div class="tirthankara-card__fact" data-en="He lived a royal life before renouncing it all!" data-hi="उन्होंने सब त्यागने से पहले शाही जीवन जिया!">He lived a royal life before renouncing it all!</div>
+        </div>
+
+        <!-- 13. Vimalanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">13</div>
+          <div class="tirthankara-card__symbol" aria-label="Boar">🐗</div>
+          <div class="tirthankara-card__name" data-en="Vimalanath" data-hi="विमलनाथ">Vimalanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Kampilya" data-hi="जन्मस्थान: काम्पिल्य">Birthplace: Kampilya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught purity and cleanliness of body, mind, and soul." data-hi="शरीर, मन और आत्मा की शुद्धता और स्वच्छता सिखाई।">Taught purity and cleanliness of body, mind, and soul.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'the pure one'!" data-hi="उनके नाम का अर्थ है 'विमल' यानी शुद्ध!">His name means 'the pure one'!</div>
+        </div>
+
+        <!-- 14. Anantanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">14</div>
+          <div class="tirthankara-card__symbol" aria-label="Porcupine">🦔</div>
+          <div class="tirthankara-card__name" data-en="Anantanath" data-hi="अनंतनाथ">Anantanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ayodhya" data-hi="जन्मस्थान: अयोध्या">Birthplace: Ayodhya</div>
+          <div class="tirthankara-card__teaching" data-en="Taught the infinite nature of the soul." data-hi="आत्मा के अनंत स्वरूप की शिक्षा दी।">Taught the infinite nature of the soul.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'the infinite one'!" data-hi="उनके नाम का अर्थ है 'अनंत'!">His name means 'the infinite one'!</div>
+        </div>
+
+        <!-- 15. Dharmanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">15</div>
+          <div class="tirthankara-card__symbol" aria-label="Thunderbolt">⚡</div>
+          <div class="tirthankara-card__name" data-en="Dharmanath" data-hi="धर्मनाथ">Dharmanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Ratnapuri" data-hi="जन्मस्थान: रत्नपुरी">Birthplace: Ratnapuri</div>
+          <div class="tirthankara-card__teaching" data-en="Taught that dharma (righteousness) is the true support." data-hi="सिखाया कि धर्म (धार्मिकता) ही सच्चा सहारा है।">Taught that dharma (righteousness) is the true support.</div>
+          <div class="tirthankara-card__fact" data-en="He was known for his unwavering commitment to truth!" data-hi="वे सत्य के प्रति अपनी अटल प्रतिबद्धता के लिए जाने जाते थे!">He was known for his unwavering commitment to truth!</div>
+        </div>
+
+        <!-- 16. Shantinath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">16</div>
+          <div class="tirthankara-card__symbol" aria-label="Deer">🦌</div>
+          <div class="tirthankara-card__name" data-en="Shantinath" data-hi="शांतिनाथ">Shantinath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Hastinapura" data-hi="जन्मस्थान: हस्तिनापुर">Birthplace: Hastinapura</div>
+          <div class="tirthankara-card__teaching" data-en="Taught peace as the highest goal of life." data-hi="शांति को जीवन का सर्वोच्च लक्ष्य बताया।">Taught peace as the highest goal of life.</div>
+          <div class="tirthankara-card__fact" data-en="He was a great king (Chakravarti) before becoming a monk!" data-hi="वे मुनि बनने से पहले एक महान चक्रवर्ती राजा थे!">He was a great king (Chakravarti) before becoming a monk!</div>
+        </div>
+
+        <!-- 17. Kunthunath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">17</div>
+          <div class="tirthankara-card__symbol" aria-label="Goat">🐐</div>
+          <div class="tirthankara-card__name" data-en="Kunthunath" data-hi="कुंथुनाथ">Kunthunath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Hastinapura" data-hi="जन्मस्थान: हस्तिनापुर">Birthplace: Hastinapura</div>
+          <div class="tirthankara-card__teaching" data-en="Taught humility and surrender of ego." data-hi="विनम्रता और अहंकार के त्याग की शिक्षा दी।">Taught humility and surrender of ego.</div>
+          <div class="tirthankara-card__fact" data-en="He was also a Chakravarti (universal monarch)!" data-hi="वे भी एक चक्रवर्ती (सार्वभौम सम्राट) थे!">He was also a Chakravarti (universal monarch)!</div>
+        </div>
+
+        <!-- 18. Aranath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">18</div>
+          <div class="tirthankara-card__symbol" aria-label="Fish">🐟</div>
+          <div class="tirthankara-card__name" data-en="Aranath" data-hi="अरनाथ">Aranath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Hastinapura" data-hi="जन्मस्थान: हस्तिनापुर">Birthplace: Hastinapura</div>
+          <div class="tirthankara-card__teaching" data-en="Taught liberation through detachment." data-hi="वैराग्य के माध्यम से मुक्ति की शिक्षा दी।">Taught liberation through detachment.</div>
+          <div class="tirthankara-card__fact" data-en="He was the third Tirthankara who was also a Chakravarti!" data-hi="वे तीसरे तीर्थंकर थे जो चक्रवर्ती भी थे!">He was the third Tirthankara who was also a Chakravarti!</div>
+        </div>
+
+        <!-- 19. Mallinath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">19</div>
+          <div class="tirthankara-card__symbol" aria-label="Water pot">🏺</div>
+          <div class="tirthankara-card__name" data-en="Mallinath" data-hi="मल्लिनाथ">Mallinath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Mithila" data-hi="जन्मस्थान: मिथिला">Birthplace: Mithila</div>
+          <div class="tirthankara-card__teaching" data-en="Taught equality and that the soul has no gender." data-hi="समानता सिखाई और कि आत्मा का कोई लिंग नहीं होता।">Taught equality and that the soul has no gender.</div>
+          <div class="tirthankara-card__fact" data-en="According to Shvetambar tradition, Mallinath was female!" data-hi="श्वेतांबर परंपरा के अनुसार, मल्लिनाथ स्त्री थीं!">According to Shvetambar tradition, Mallinath was female!</div>
+        </div>
+
+        <!-- 20. Munisuvrata -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">20</div>
+          <div class="tirthankara-card__symbol" aria-label="Tortoise">🐢</div>
+          <div class="tirthankara-card__name" data-en="Munisuvrata" data-hi="मुनिसुव्रत">Munisuvrata</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Rajgriha" data-hi="जन्मस्थान: राजगृह">Birthplace: Rajgriha</div>
+          <div class="tirthankara-card__teaching" data-en="Taught silence, meditation, and inner peace." data-hi="मौन, ध्यान और आंतरिक शांति सिखाई।">Taught silence, meditation, and inner peace.</div>
+          <div class="tirthankara-card__fact" data-en="His name means 'one with a sage's vows'!" data-hi="उनके नाम का अर्थ है 'मुनि के व्रत वाला'!">His name means 'one with a sage's vows'!</div>
+        </div>
+
+        <!-- 21. Naminath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">21</div>
+          <div class="tirthankara-card__symbol" aria-label="Blue lotus">🪷</div>
+          <div class="tirthankara-card__name" data-en="Naminath" data-hi="नमिनाथ">Naminath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Mithila" data-hi="जन्मस्थान: मिथिला">Birthplace: Mithila</div>
+          <div class="tirthankara-card__teaching" data-en="Taught bowing to truth and humility." data-hi="सत्य और विनम्रता के समक्ष झुकना सिखाया।">Taught bowing to truth and humility.</div>
+          <div class="tirthankara-card__fact" data-en="He was related to Lord Krishna's family!" data-hi="वे भगवान कृष्ण के परिवार से संबंधित थे!">He was related to Lord Krishna's family!</div>
+        </div>
+
+        <!-- 22. Neminath (Arishtanemi) -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">22</div>
+          <div class="tirthankara-card__symbol" aria-label="Conch shell">🐚</div>
+          <div class="tirthankara-card__name" data-en="Neminath (Arishtanemi)" data-hi="नेमिनाथ (अरिष्टनेमि)">Neminath (Arishtanemi)</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Shauripur (Dwarka)" data-hi="जन्मस्थान: शौरीपुर (द्वारका)">Birthplace: Shauripur (Dwarka)</div>
+          <div class="tirthankara-card__teaching" data-en="Taught compassion for all animals and non-violence." data-hi="सभी जीवों के प्रति करुणा और अहिंसा सिखाई।">Taught compassion for all animals and non-violence.</div>
+          <div class="tirthankara-card__fact" data-en="He was cousin of Lord Krishna and refused to marry when he saw animals being killed for his wedding feast!" data-hi="वे भगवान कृष्ण के चचेरे भाई थे और उन्होंने विवाह से इनकार कर दिया जब उन्होंने अपने विवाह भोज के लिए पशुओं को मारते देखा!">He was cousin of Lord Krishna and refused to marry when he saw animals being killed for his wedding feast!</div>
+        </div>
+
+        <!-- 23. Parshvanath -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">23</div>
+          <div class="tirthankara-card__symbol" aria-label="Serpent">🐍</div>
+          <div class="tirthankara-card__name" data-en="Parshvanath" data-hi="पार्श्वनाथ">Parshvanath</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Varanasi" data-hi="जन्मस्थान: वाराणसी">Birthplace: Varanasi</div>
+          <div class="tirthankara-card__teaching" data-en="Taught the four vows: Ahimsa, Truth, Non-stealing, Non-attachment." data-hi="चार व्रत सिखाए: अहिंसा, सत्य, अस्तेय, अपरिग्रह।">Taught the four vows: Ahimsa, Truth, Non-stealing, Non-attachment.</div>
+          <div class="tirthankara-card__fact" data-en="A cobra spread its hood to protect him during meditation!" data-hi="ध्यान के दौरान एक नाग ने उनकी रक्षा के लिए अपना फन फैलाया!">A cobra spread its hood to protect him during meditation!</div>
+        </div>
+
+        <!-- 24. Mahavir (Vardhamana) -->
+        <div class="tirthankara-card" role="listitem">
+          <div class="tirthankara-card__badge">24</div>
+          <div class="tirthankara-card__symbol" aria-label="Lion">🦁</div>
+          <div class="tirthankara-card__name" data-en="Mahavir (Vardhamana)" data-hi="महावीर (वर्धमान)">Mahavir (Vardhamana)</div>
+          <div class="tirthankara-card__place" data-en="Birthplace: Kundalpur (Vaishali)" data-hi="जन्मस्थान: कुंडलपुर (वैशाली)">Birthplace: Kundalpur (Vaishali)</div>
+          <div class="tirthankara-card__teaching" data-en="Taught the complete path to liberation through Ahimsa, Truth, Non-stealing, Celibacy, and Non-attachment." data-hi="अहिंसा, सत्य, अस्तेय, ब्रह्मचर्य और अपरिग्रह के माध्यम से मुक्ति का संपूर्ण मार्ग सिखाया।">Taught the complete path to liberation through Ahimsa, Truth, Non-stealing, Celibacy, and Non-attachment.</div>
+          <div class="tirthankara-card__fact" data-en="He is the most recent Tirthankara, born around 599 BCE, and gave us the Panch Mahavrats!" data-hi="वे सबसे हाल के तीर्थंकर हैं, लगभग 599 ईसा पूर्व जन्मे, और उन्होंने हमें पंच महाव्रत दिए!">He is the most recent Tirthankara, born around 599 BCE, and gave us the Panch Mahavrats!</div>
+        </div>
+
+      </div><!-- /.tirthankaras__carousel -->
+    </section>
+
+    <!-- ============================================================
+         SECTION 6: FOUR KASHAYAS CORNER 🔥
+         ============================================================ -->
+    <section class="section kashayas animate-on-scroll" id="kashayas" aria-label="Four Kashayas">
+      <div class="section-header">
+        <span class="section-header__label" data-en="UNDERSTAND YOUR EMOTIONS" data-hi="अपनी भावनाओं को समझें">UNDERSTAND YOUR EMOTIONS</span>
+        <h2 class="section-header__title" data-en="FOUR KASHAYAS CORNER 🔥" data-hi="चार कषाय कोना 🔥">FOUR KASHAYAS CORNER 🔥</h2>
+      </div>
+
+      <div class="kashayas__grid">
+        <!-- Krodh — Anger -->
+        <div class="kashaya-card kashaya-card--anger">
+          <span class="kashaya-card__emoji" aria-hidden="true">😡</span>
+          <div class="kashaya-card__title" data-en="KRODH" data-hi="क्रोध">KRODH</div>
+          <div class="kashaya-card__hindi">Anger</div>
+          <div class="kashaya-card__quote" data-en="&quot;Anger burns your own inner peace before it hurts anyone else.&quot;" data-hi="&quot;क्रोध किसी को नुकसान पहुँचाने से पहले आपकी अपनी शांति जलाता है।&quot;">"Anger burns your own inner peace before it hurts anyone else."</div>
+          <button class="btn btn--sm btn--primary kashaya-card__btn" data-en="LEARN MORE" data-hi="और जानें">LEARN MORE</button>
+        </div>
+
+        <!-- Maan — Pride -->
+        <div class="kashaya-card kashaya-card--pride">
+          <span class="kashaya-card__emoji" aria-hidden="true">👑</span>
+          <div class="kashaya-card__title" data-en="MAAN" data-hi="मान">MAAN</div>
+          <div class="kashaya-card__hindi">Pride</div>
+          <div class="kashaya-card__quote" data-en="&quot;Pride hides your true self behind a mask of false greatness.&quot;" data-hi="&quot;अहंकार झूठी महानता के पीछे आपके असली रूप को छुपाता है।&quot;">"Pride hides your true self behind a mask of false greatness."</div>
+          <button class="btn btn--sm btn--primary kashaya-card__btn" data-en="LEARN MORE" data-hi="और जानें">LEARN MORE</button>
+        </div>
+
+        <!-- Maya — Deceit -->
+        <div class="kashaya-card kashaya-card--deceit">
+          <span class="kashaya-card__emoji" aria-hidden="true">🎭</span>
+          <div class="kashaya-card__title" data-en="MAYA" data-hi="माया">MAYA</div>
+          <div class="kashaya-card__hindi">Deceit</div>
+          <div class="kashaya-card__quote" data-en="&quot;Deceit creates a web of confusion that traps your own soul.&quot;" data-hi="&quot;छल भ्रम का जाल बनाता है जो आपकी अपनी आत्मा को फँसाता है।&quot;">"Deceit creates a web of confusion that traps your own soul."</div>
+          <button class="btn btn--sm btn--primary kashaya-card__btn" data-en="LEARN MORE" data-hi="और जानें">LEARN MORE</button>
+        </div>
+
+        <!-- Lobh — Greed -->
+        <div class="kashaya-card kashaya-card--greed">
+          <span class="kashaya-card__emoji" aria-hidden="true">💰</span>
+          <div class="kashaya-card__title" data-en="LOBH" data-hi="लोभ">LOBH</div>
+          <div class="kashaya-card__hindi">Greed</div>
+          <div class="kashaya-card__quote" data-en="&quot;Greed is a hunger that never feels full, no matter how much you have.&quot;" data-hi="&quot;लोभ एक ऐसी भूख है जो कभी नहीं भरती, चाहे कितना भी हो।&quot;">"Greed is a hunger that never feels full, no matter how much you have."</div>
+          <button class="btn btn--sm btn--primary kashaya-card__btn" data-en="LEARN MORE" data-hi="और जानें">LEARN MORE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7: LEARN THROUGH FUN 🎮
+         ============================================================ -->
+    <section class="section games animate-on-scroll" id="play" aria-label="Educational games">
+      <div class="section-header">
+        <span class="section-header__label" data-en="GAMIFIED LEARNING" data-hi="खेल-खेल में सीखें">GAMIFIED LEARNING</span>
+        <h2 class="section-header__title" data-en="LEARN THROUGH FUN 🎮" data-hi="मज़े से सीखें 🎮">LEARN THROUGH FUN 🎮</h2>
+      </div>
+
+      <div class="games__grid">
+        <!-- Jain Quizzes -->
+        <div class="game-card">
+          <div class="game-card__icon" aria-hidden="true">🧠</div>
+          <div class="badge badge--mint game-card__badge">Easy</div>
+          <div class="game-card__title" data-en="JAIN QUIZZES" data-hi="जैन प्रश्नोत्तरी">JAIN QUIZZES</div>
+          <div class="game-card__desc" data-en="Test your knowledge of Jain values and teachings!" data-hi="जैन मूल्यों और शिक्षाओं के बारे में अपने ज्ञान की परीक्षा लें!">Test your knowledge of Jain values and teachings!</div>
+          <button class="btn btn--sm btn--dark" data-en="PLAY" data-hi="खेलें">PLAY</button>
+        </div>
+
+        <!-- Match the Symbol -->
+        <div class="game-card">
+          <div class="game-card__icon" aria-hidden="true">🔗</div>
+          <div class="badge badge--peach game-card__badge">Medium</div>
+          <div class="game-card__title" data-en="MATCH THE SYMBOL" data-hi="प्रतीक मिलाएँ">MATCH THE SYMBOL</div>
+          <div class="game-card__desc" data-en="Match Tirthankaras with their Lanchhan symbols!" data-hi="तीर्थंकरों को उनके लांछन से मिलाएँ!">Match Tirthankaras with their Lanchhan symbols!</div>
+          <a href="match-the-symbol.html" class="btn btn--sm btn--dark" data-en="PLAY" data-hi="खेलें">PLAY</a>
+        </div>
+
+        <!-- Karma Challenge -->
+        <div class="game-card">
+          <div class="game-card__icon" aria-hidden="true">⚖️</div>
+          <div class="badge badge--pink game-card__badge">Hard</div>
+          <div class="game-card__title" data-en="KARMA CHALLENGE" data-hi="कर्म चुनौती">KARMA CHALLENGE</div>
+          <div class="game-card__desc" data-en="Learn how actions create karma through fun scenarios!" data-hi="मज़ेदार परिदृश्यों से जानें कि कर्म कैसे बनता है!">Learn how actions create karma through fun scenarios!</div>
+          <button class="btn btn--sm btn--dark" data-en="PLAY" data-hi="खेलें">PLAY</button>
+        </div>
+
+        <!-- Coloring Pages -->
+        <div class="game-card">
+          <div class="game-card__icon" aria-hidden="true">🎨</div>
+          <div class="badge badge--lavender game-card__badge">Creative</div>
+          <div class="game-card__title" data-en="COLORING PAGES" data-hi="रंग भरें">COLORING PAGES</div>
+          <div class="game-card__desc" data-en="Color beautiful Jain symbols and temple designs!" data-hi="सुंदर जैन प्रतीकों और मंदिर डिज़ाइनों में रंग भरें!">Color beautiful Jain symbols and temple designs!</div>
+          <a href="coloring-pages.html" class="btn btn--sm btn--dark" data-en="PLAY" data-hi="खेलें">PLAY</a>
+        </div>
+
+        <!-- Daily Kindness Tracker — full-width -->
+        <div class="game-card" style="grid-column: 1 / -1;">
+          <div class="game-card__icon" aria-hidden="true">💖</div>
+          <div class="badge badge--mint game-card__badge">Daily</div>
+          <div class="game-card__title" data-en="DAILY KINDNESS TRACKER" data-hi="दैनिक दयालुता ट्रैकर">DAILY KINDNESS TRACKER</div>
+          <div class="game-card__desc" data-en="Track your daily acts of kindness and compassion! Build a streak and become an Ahimsa Champion!" data-hi="अपनी दैनिक दयालुता और करुणा को ट्रैक करें! स्ट्रीक बनाएं और अहिंसा चैंपियन बनें!">Track your daily acts of kindness and compassion! Build a streak and become an Ahimsa Champion!</div>
+          <button class="btn btn--sm btn--mint" data-en="START TRACKING" data-hi="ट्रैकिंग शुरू करें">START TRACKING</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 8: JAIN FESTIVALS & KALYANAKS 🎊
+         ============================================================ -->
+    <section class="section festivals animate-on-scroll" id="festivals" aria-label="Jain festivals and Kalyanaks">
+      <div class="section-header">
+        <span class="section-header__label" data-en="CELEBRATE TOGETHER" data-hi="साथ मनाएँ">CELEBRATE TOGETHER</span>
+        <h2 class="section-header__title" data-en="JAIN FESTIVALS &amp; KALYANAKS 🎊" data-hi="जैन त्योहार और कल्याणक 🎊">JAIN FESTIVALS &amp; KALYANAKS 🎊</h2>
+      </div>
+
+      <div class="festivals__scroll carousel-drag hide-scrollbar" role="list" aria-label="Festivals carousel">
+
+        <!-- Mahavir Jayanti -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--peach festival-card__badge" data-en="Major Festival" data-hi="प्रमुख त्योहार">Major Festival</span>
+          <div class="festival-card__title" data-en="MAHAVIR JAYANTI" data-hi="महावीर जयंती">MAHAVIR JAYANTI</div>
+          <div class="festival-card__details" data-en="Celebrates the birth of Lord Mahavir, the 24th Tirthankara. Grand processions, temple worship, and charity mark this joyous day. Falls in March-April (Chaitra Shukla Trayodashi)." data-hi="भगवान महावीर के जन्म का उत्सव। भव्य जुलूस, मंदिर पूजा और दान इस शुभ दिन की विशेषता है। चैत्र शुक्ल त्रयोदशी (मार्च-अप्रैल) में मनाया जाता है।">Celebrates the birth of Lord Mahavir, the 24th Tirthankara. Grand processions, temple worship, and charity mark this joyous day. Falls in March-April.</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">🙏</div>
+              <div class="avatar avatar--sm avatar--peach" aria-hidden="true">🎉</div>
+              <div class="avatar avatar--sm avatar--pink" aria-hidden="true">🌸</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paryushan -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--mint festival-card__badge" data-en="8-Day Festival" data-hi="8-दिवसीय त्योहार">8-Day Festival</span>
+          <div class="festival-card__title" data-en="PARYUSHAN" data-hi="पर्युषण">PARYUSHAN</div>
+          <div class="festival-card__details" data-en="The most important Jain festival — 8 days of self-reflection, fasting, prayer, and forgiveness. Ends with the powerful Kshamavani (forgiveness) day." data-hi="सबसे महत्वपूर्ण जैन त्योहार — 8 दिन आत्म-चिंतन, उपवास, प्रार्थना और क्षमा का। क्षमावाणी दिवस के साथ समाप्त होता है।">The most important Jain festival — 8 days of self-reflection, fasting, prayer, and forgiveness. Ends with the powerful Kshamavani day.</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--lavender" aria-hidden="true">📿</div>
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">🕊️</div>
+              <div class="avatar avatar--sm avatar--peach" aria-hidden="true">🙏</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kshamavani -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--pink festival-card__badge" data-en="Forgiveness Day" data-hi="क्षमा दिवस">Forgiveness Day</span>
+          <div class="festival-card__title" data-en="KSHAMAVANI" data-hi="क्षमावाणी">KSHAMAVANI</div>
+          <div class="festival-card__details" data-en="A beautiful day when everyone asks for forgiveness from each other saying 'Micchami Dukkadam' — meaning 'May my wrong actions be forgiven.'" data-hi="एक सुंदर दिन जब सभी एक-दूसरे से 'मिच्छामि दुक्कडम्' कहकर क्षमा माँगते हैं — अर्थात 'मेरे गलत कर्म क्षमा हों।'">A beautiful day when everyone asks for forgiveness saying 'Micchami Dukkadam' — 'May my wrong actions be forgiven.'</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">💛</div>
+              <div class="avatar avatar--sm avatar--pink" aria-hidden="true">🤝</div>
+              <div class="avatar avatar--sm avatar--lavender" aria-hidden="true">✨</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Janma Kalyanak -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--lavender festival-card__badge" data-en="Kalyanak" data-hi="कल्याणक">Kalyanak</span>
+          <div class="festival-card__title" data-en="JANMA KALYANAK" data-hi="जन्म कल्याणक">JANMA KALYANAK</div>
+          <div class="festival-card__details" data-en="Celebrates the auspicious birth of a Tirthankara. According to Jain texts, Indra himself performs the holy bathing ceremony (Abhishek) of the newborn Tirthankara." data-hi="तीर्थंकर के शुभ जन्म का उत्सव। जैन ग्रंथों के अनुसार, इंद्र स्वयं नवजात तीर्थंकर का अभिषेक करते हैं।">Celebrates the auspicious birth of a Tirthankara. Indra himself performs the Abhishek ceremony of the newborn.</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--peach" aria-hidden="true">👶</div>
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">🌟</div>
+              <div class="avatar avatar--sm avatar--pink" aria-hidden="true">🎊</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Diksha Kalyanak -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--lavender festival-card__badge" data-en="Kalyanak" data-hi="कल्याणक">Kalyanak</span>
+          <div class="festival-card__title" data-en="DIKSHA KALYANAK" data-hi="दीक्षा कल्याणक">DIKSHA KALYANAK</div>
+          <div class="festival-card__details" data-en="Celebrates when a Tirthankara renounces worldly life and becomes a monk. This marks the beginning of their spiritual journey toward Kevalgyan (omniscience)." data-hi="जब तीर्थंकर सांसारिक जीवन का त्याग कर मुनि बनते हैं, उसका उत्सव। केवलज्ञान की ओर उनकी आध्यात्मिक यात्रा की शुरुआत।">Celebrates when a Tirthankara renounces worldly life and begins the spiritual journey toward Kevalgyan.</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--lavender" aria-hidden="true">🧘</div>
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">✨</div>
+              <div class="avatar avatar--sm avatar--peach" aria-hidden="true">📿</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kevalgyan Kalyanak -->
+        <div class="festival-card" role="listitem">
+          <span class="badge badge--lavender festival-card__badge" data-en="Kalyanak" data-hi="कल्याणक">Kalyanak</span>
+          <div class="festival-card__title" data-en="KEVALGYAN KALYANAK" data-hi="केवलज्ञान कल्याणक">KEVALGYAN KALYANAK</div>
+          <div class="festival-card__details" data-en="Celebrates when a Tirthankara attains Kevalgyan (infinite/omniscient knowledge). This is the moment of ultimate spiritual awakening and complete understanding of the universe." data-hi="जब तीर्थंकर केवलज्ञान (अनंत ज्ञान) प्राप्त करते हैं, उसका उत्सव। यह परम आध्यात्मिक जागरण और ब्रह्मांड की पूर्ण समझ का क्षण है।">Celebrates when a Tirthankara attains infinite knowledge — the ultimate spiritual awakening.</div>
+          <div class="festival-card__footer">
+            <div class="avatar-stack">
+              <div class="avatar avatar--sm avatar--mint" aria-hidden="true">🌟</div>
+              <div class="avatar avatar--sm avatar--peach" aria-hidden="true">💫</div>
+              <div class="avatar avatar--sm avatar--pink" aria-hidden="true">🕉️</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.festivals__scroll -->
+    </section>
+
+    <!-- ============================================================
+         SECTION 9: DAILY JAIN WISDOM 🌼
+         ============================================================ -->
+    <section class="section wisdom animate-on-scroll" id="wisdom" aria-label="Daily Jain wisdom">
+      <div class="section-header">
+        <span class="section-header__label" data-en="DAILY INSPIRATION" data-hi="दैनिक प्रेरणा">DAILY INSPIRATION</span>
+        <h2 class="section-header__title" data-en="DAILY JAIN WISDOM 🌼" data-hi="दैनिक जैन ज्ञान 🌼">DAILY JAIN WISDOM 🌼</h2>
+      </div>
+
+      <div class="wisdom__card" style="transition: opacity 0.3s ease, transform 0.3s ease;">
+        <div class="wisdom__quote" data-en="&quot;Ahimsa Paramo Dharma&quot; — Non-violence is the highest duty 🙏" data-hi="&quot;अहिंसा परमो धर्मः&quot; — अहिंसा सबसे बड़ा धर्म है 🙏">"Ahimsa Paramo Dharma" — Non-violence is the highest duty 🙏</div>
+        <div class="wisdom__lesson" data-en="Every living being wants to be happy. When we practice non-violence, we help everyone find peace." data-hi="हर जीव सुखी रहना चाहता है। जब हम अहिंसा का पालन करते हैं, तो हम सबको शांति पाने में मदद करते हैं।">Every living being wants to be happy. When we practice non-violence, we help everyone find peace.</div>
+        <div class="wisdom__challenge" data-en="🌼 Speak gently to everyone today" data-hi="🌼 आज सबसे मधुर वाणी में बोलें">🌼 Speak gently to everyone today</div>
+        <div class="wisdom__dots" role="tablist" aria-label="Wisdom quotes navigation">
+          <span class="wisdom__dot wisdom__dot--active" role="tab" aria-selected="true" aria-label="Quote 1"></span>
+          <span class="wisdom__dot" role="tab" aria-selected="false" aria-label="Quote 2"></span>
+          <span class="wisdom__dot" role="tab" aria-selected="false" aria-label="Quote 3"></span>
+          <span class="wisdom__dot" role="tab" aria-selected="false" aria-label="Quote 4"></span>
+          <span class="wisdom__dot" role="tab" aria-selected="false" aria-label="Quote 5"></span>
+        </div>
+
+        <!-- Decorative elements -->
+        <span class="sparkle float" style="top: 10%; left: 10%; font-size: 16px;" aria-hidden="true">✨</span>
+        <span class="sparkle float-slow" style="bottom: 15%; right: 10%; font-size: 14px;" aria-hidden="true">🌟</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 10: SOCIAL LEARNING FEED
+         ============================================================ -->
+    <section class="section feed animate-on-scroll" id="learn" aria-label="Stories of compassion feed">
+      <div class="section-header">
+        <span class="section-header__label" data-en="LEARNING FEED" data-hi="लर्निंग फीड">LEARNING FEED</span>
+        <h2 class="section-header__title" data-en="STORIES OF COMPASSION 🌸" data-hi="करुणा की कहानियाँ 🌸">STORIES OF COMPASSION 🌸</h2>
+      </div>
+
+      <!-- Feed Card 1 — Guruji's Corner -->
+      <article class="feed-card">
+        <div class="feed-card__header">
+          <div class="avatar avatar--mint" aria-hidden="true">🙏</div>
+          <div>
+            <div class="feed-card__author" data-en="Guruji's Corner" data-hi="गुरुजी का कोना">Guruji's Corner</div>
+            <div class="feed-card__time" data-en="2 hours ago" data-hi="2 घंटे पहले">2 hours ago</div>
+          </div>
+        </div>
+        <div class="feed-card__content" data-en="Why Bhagwan Mahavir chose compassion over anger 🌼 — The story of how he stood still while thorns pierced his feet, teaching us that true strength is in patience." data-hi="भगवान महावीर ने क्रोध की जगह करुणा क्यों चुनी 🌼 — कैसे उन्होंने काँटों से भरे रास्ते पर भी शांत रहकर हमें सिखाया कि सच्ची ताकत धैर्य में है।">Why Bhagwan Mahavir chose compassion over anger 🌼 — The story of how he stood still while thorns pierced his feet, teaching us that true strength is in patience.</div>
+        <div class="feed-card__media" aria-hidden="true">🌿</div>
+        <div class="feed-card__footer">
+          <span class="feed-card__action" data-action="like" role="button" aria-label="Like this post">❤️ <span class="count">42</span></span>
+          <span class="feed-card__action" data-action="save" role="button" aria-label="Save this post">📚 <span class="count">18</span></span>
+          <span class="feed-card__action" data-action="share" role="button" aria-label="Share this post">🔁 <span class="count">7</span></span>
+        </div>
+      </article>
+
+      <!-- Feed Card 2 — Story Time -->
+      <article class="feed-card">
+        <div class="feed-card__header">
+          <div class="avatar avatar--peach" aria-hidden="true">📖</div>
+          <div>
+            <div class="feed-card__author" data-en="Story Time" data-hi="कहानी का समय">Story Time</div>
+            <div class="feed-card__time" data-en="5 hours ago" data-hi="5 घंटे पहले">5 hours ago</div>
+          </div>
+        </div>
+        <div class="feed-card__content" data-en="The beautiful story of Parshvanath and the cobra 🐍 — When forest fires raged, a great serpent spread its hood to protect the meditating Tirthankara. Kindness returns to those who give it!" data-hi="पार्श्वनाथ और नाग की सुंदर कहानी 🐍 — जब जंगल में आग लगी, तो एक महान सर्प ने ध्यान करते तीर्थंकर की रक्षा के लिए अपना फन फैलाया। दयालुता उनके पास लौटती है जो इसे देते हैं!">The beautiful story of Parshvanath and the cobra 🐍 — When forest fires raged, a great serpent spread its hood to protect the meditating Tirthankara. Kindness returns to those who give it!</div>
+        <div class="feed-card__media" aria-hidden="true">🐍</div>
+        <div class="feed-card__footer">
+          <span class="feed-card__action" data-action="like" role="button" aria-label="Like this post">❤️ <span class="count">89</span></span>
+          <span class="feed-card__action" data-action="save" role="button" aria-label="Save this post">📚 <span class="count">34</span></span>
+          <span class="feed-card__action" data-action="share" role="button" aria-label="Share this post">🔁 <span class="count">12</span></span>
+        </div>
+      </article>
+
+      <!-- Feed Card 3 — Ahimsa Heroes -->
+      <article class="feed-card">
+        <div class="feed-card__header">
+          <div class="avatar avatar--lavender" aria-hidden="true">🌟</div>
+          <div>
+            <div class="feed-card__author" data-en="Ahimsa Heroes" data-hi="अहिंसा नायक">Ahimsa Heroes</div>
+            <div class="feed-card__time" data-en="1 day ago" data-hi="1 दिन पहले">1 day ago</div>
+          </div>
+        </div>
+        <div class="feed-card__content" data-en="Did you know? 🌱 Jain monks walk barefoot and sweep the path before them to avoid harming even the tiniest creatures. That's how deeply Jains respect ALL life!" data-hi="क्या आप जानते हैं? 🌱 जैन मुनि नंगे पैर चलते हैं और अपने रास्ते को झाड़ते हैं ताकि छोटे से छोटे जीव को भी नुकसान न पहुँचे। जैन सभी जीवन का इतना गहरा सम्मान करते हैं!">Did you know? 🌱 Jain monks walk barefoot and sweep the path to avoid harming even the tiniest creatures. That's how deeply Jains respect ALL life!</div>
+        <div class="feed-card__media" aria-hidden="true">🧘</div>
+        <div class="feed-card__footer">
+          <span class="feed-card__action" data-action="like" role="button" aria-label="Like this post">❤️ <span class="count">156</span></span>
+          <span class="feed-card__action" data-action="save" role="button" aria-label="Save this post">📚 <span class="count">67</span></span>
+          <span class="feed-card__action" data-action="share" role="button" aria-label="Share this post">🔁 <span class="count">23</span></span>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         SECTION 12: FOOTER
+         ============================================================ -->
+    <footer class="section footer animate-on-scroll" id="parents" aria-label="Footer">
+      <div class="footer__card">
+        <div class="footer__image">
+          <img src="assets/footer-family.jpg" alt="Grandmother reading Jain stories to children" loading="lazy">
+        </div>
+        <div class="footer__content">
+          <div class="section-header">
+            <span class="section-header__label" data-en="MADE WITH LOVE" data-hi="प्यार से बनाया गया">MADE WITH LOVE</span>
+            <h2 class="section-header__title" data-en="PASS ON THE WISDOM 🌸" data-hi="ज्ञान आगे बढ़ाएँ 🌸">PASS ON THE WISDOM 🌸</h2>
+          </div>
+          <p class="footer__text" data-en="Ahimsa Kids is a labor of love — designed to help families share the timeless values of Jainism with the next generation through stories, play, and togetherness." data-hi="अहिंसा किड्स प्यार से बनाया गया है — परिवारों को कहानियों, खेल और साथ मिलकर अगली पीढ़ी को जैन धर्म के शाश्वत मूल्य साझा करने में मदद करने के लिए।">Ahimsa Kids is a labor of love — designed to help families share the timeless values of Jainism with the next generation through stories, play, and togetherness.</p>
+          <p class="footer__tagline" data-en="🙏 Micchami Dukkadam" data-hi="🙏 मिच्छामि दुक्कडम्">🙏 Micchami Dukkadam</p>
+          <div class="footer__links">
+            <span class="badge badge--mint">Ahimsa</span>
+            <span class="badge badge--peach">Compassion</span>
+            <span class="badge badge--pink">Kindness</span>
+            <span class="badge badge--lavender">Wisdom</span>
+          </div>
+          <p class="footer__copy" data-en="© 2026 Ahimsa Kids. Spreading love & Jain values. ✨" data-hi="© 2026 अहिंसा किड्स। प्यार और जैन मूल्यों का प्रसार। ✨">© 2026 Ahimsa Kids. Spreading love & Jain values. ✨</p>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /.page -->
+
+  <!-- ============================================================
+       SECTION 11: FIXED BOTTOM NAVIGATION
+       (Outside .page div as required)
+       ============================================================ -->
+  <nav class="bottom-nav" id="bottom-nav" role="navigation" aria-label="Main navigation">
+    <div class="bottom-nav__item bottom-nav__item--active" data-section="home" role="button" tabindex="0" aria-label="Go to Home section" aria-current="true">
+      <div class="bottom-nav__icon" aria-hidden="true">🏠</div>
+      <span class="bottom-nav__label" data-en="Home" data-hi="होम">Home</span>
+    </div>
+    <div class="bottom-nav__item" data-section="learn" role="button" tabindex="0" aria-label="Go to Learn section">
+      <div class="bottom-nav__icon" aria-hidden="true">📚</div>
+      <span class="bottom-nav__label" data-en="Learn" data-hi="सीखें">Learn</span>
+    </div>
+    <div class="bottom-nav__item" data-section="watch" role="button" tabindex="0" aria-label="Go to Watch section">
+      <div class="bottom-nav__icon" aria-hidden="true">🎥</div>
+      <span class="bottom-nav__label" data-en="Watch" data-hi="देखें">Watch</span>
+    </div>
+    <div class="bottom-nav__item" data-section="play" role="button" tabindex="0" aria-label="Go to Play section">
+      <div class="bottom-nav__icon" aria-hidden="true">🎮</div>
+      <span class="bottom-nav__label" data-en="Play" data-hi="खेलें">Play</span>
+    </div>
+    <div class="bottom-nav__item" data-section="parents" role="button" tabindex="0" aria-label="Go to Parents section">
+      <div class="bottom-nav__icon" aria-hidden="true">👤</div>
+      <span class="bottom-nav__label" data-en="Parents" data-hi="माता-पिता">Parents</span>
+    </div>
+  </nav>
+
+  <!-- JS files in order -->
+  <script src="js/theme.js"></script>
+  <script src="js/language.js"></script>
+  <script src="js/carousel.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

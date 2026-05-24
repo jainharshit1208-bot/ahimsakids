@@ -1,0 +1,1217 @@
+/* ============================================================
+   AHIMSA KIDS — Section Layouts
+   ============================================================
+   Page-level structure and section-specific styles.
+   Each section is a self-contained layout block that
+   composes components from components.css.
+
+   Mobile-first with responsive breakpoints at 768px and 1024px.
+   ============================================================ */
+
+
+/* ============================================================
+   1. MAIN LAYOUT
+   ============================================================
+   Page wrapper with fixed header/bottom-nav clearance.
+   ============================================================ */
+
+.page {
+  background: var(--bg-primary);
+  min-height: 100vh;
+  padding-top: var(--header-height);
+  padding-bottom: calc(var(--bottom-nav-height) + 20px);
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+.section {
+  padding: var(--space-xl) var(--container-padding);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  position: relative;
+}
+
+.section + .section {
+  margin-top: var(--space-sm);
+}
+
+
+/* ============================================================
+   2. HEADER
+   ============================================================
+   Fixed top bar with logo, greeting, and action buttons.
+   Gains a frosted-glass effect when the page is scrolled.
+   ============================================================ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: var(--bg-primary);
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--container-padding);
+  z-index: var(--z-header);
+  transition: background var(--transition-base),
+              backdrop-filter var(--transition-base);
+}
+
+/* Frosted glass effect after scrolling */
+.header--scrolled {
+  backdrop-filter: blur(10px);
+  background: rgba(232, 228, 243, 0.9);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.header__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__label {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.6;
+}
+
+.header__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.header__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-squircle);
+  background: var(--bg-white);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  font-size: 18px;
+}
+
+.header__btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+
+/* ============================================================
+   3. HERO CAROUSEL (DYNAMIC 3D FULL-VIEWPORT)
+   ============================================================
+   A 100vh hero section replacing the standard hero.
+   ============================================================ */
+
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 500px;
+  overflow: hidden;
+  background-color: #FFBC99; /* initial bg */
+  transition: background-color 650ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-body);
+  /* Break out of standard section padding */
+  margin: 0 !important;
+  margin-top: -72px !important; /* pull under header */
+  border-bottom: var(--border);
+}
+
+.hero-carousel__noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.4;
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+.hero-carousel__ghost-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 18%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+  font-family: 'Anton', sans-serif;
+  /* Use container width scaling so long words never overflow */
+  font-size: clamp(30px, 14vw, 240px);
+  width: 100%;
+  padding: 0 16px;
+  text-align: center;
+  word-break: break-word;
+  white-space: normal;
+  font-weight: 900;
+  color: white;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.hero-carousel__branding {
+  position: absolute;
+  top: max(88px, env(safe-area-inset-top) + 24px); /* offset for standard header */
+  left: 16px;
+  z-index: 60;
+  color: white;
+}
+
+@media (min-width: 640px) {
+  .hero-carousel__branding {
+    left: 32px;
+  }
+}
+
+.hero-carousel__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.hero-carousel__tagline {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hero-carousel__track {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.hero-slide {
+  position: absolute;
+  aspect-ratio: 0.6 / 1;
+  transform: translateX(-50%) scale(1);
+  left: 50%;
+  bottom: 6%;
+  height: 86%;
+  opacity: 0;
+  transition: transform 650ms cubic-bezier(0.4, 0, 0.2, 1),
+              filter 650ms cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 650ms cubic-bezier(0.4, 0, 0.2, 1),
+              left 650ms cubic-bezier(0.4, 0, 0.2, 1),
+              bottom 650ms cubic-bezier(0.4, 0, 0.2, 1),
+              height 650ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, filter, opacity, left, bottom, height;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+}
+
+/* Slide Roles - Desktop */
+.hero-slide.is-center {
+  transform: translateX(-50%) scale(1.68);
+  filter: blur(0px);
+  opacity: 1;
+  z-index: 20;
+  left: 50%;
+  height: 86%;
+  bottom: 6%;
+}
+
+.hero-slide.is-left {
+  transform: translateX(-50%) scale(1);
+  filter: blur(2px);
+  opacity: 0.85;
+  z-index: 10;
+  left: 15%;
+  height: 80%;
+  bottom: 12%;
+}
+
+.hero-slide.is-right {
+  transform: translateX(-50%) scale(1);
+  filter: blur(2px);
+  opacity: 0.85;
+  z-index: 10;
+  left: 85%;
+  height: 80%;
+  bottom: 12%;
+}
+
+.hero-slide.is-back {
+  transform: translateX(-50%) scale(1);
+  filter: blur(4px);
+  opacity: 1; /* per original spec */
+  z-index: 5;
+  left: 50%;
+  height: 22%;
+  bottom: 12%;
+}
+
+/* Slide Roles - Mobile adjustments */
+@media (max-width: 639px) {
+  .hero-slide.is-center {
+    transform: translateX(-50%) scale(1.25);
+    height: 60%;
+    bottom: 22%;
+  }
+  .hero-slide.is-left {
+    left: 20%;
+    height: 16%;
+    bottom: 32%;
+  }
+  .hero-slide.is-right {
+    left: 80%;
+    height: 16%;
+    bottom: 32%;
+  }
+  .hero-slide.is-back {
+    height: 13%;
+    bottom: 32%;
+  }
+}
+
+.hero-carousel__content {
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  right: 16px;
+  z-index: 60;
+  max-width: 360px;
+  /* Added semi-transparent dark plate to ensure legibility */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px;
+  border-radius: 16px;
+}
+
+@media (min-width: 640px) {
+  .hero-carousel__content {
+    bottom: 80px;
+    left: 40px;
+    max-width: 400px;
+  }
+}
+
+.hero-carousel__title {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: white;
+  opacity: 0.95;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+@media (min-width: 640px) {
+  .hero-carousel__title {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+}
+
+.hero-carousel__desc {
+  color: white;
+  opacity: 0.85;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.sm-block {
+  display: none;
+}
+@media (min-width: 640px) {
+  .sm-block {
+    display: block;
+  }
+}
+
+.hero-carousel__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-nav-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 150ms, background-color 150ms;
+}
+
+@media (min-width: 640px) {
+  .hero-nav-btn {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.hero-nav-btn:hover {
+  transform: scale(1.08);
+  background-color: rgba(255,255,255,0.12);
+}
+
+.hero-nav-btn:active {
+  transform: scale(0.95);
+}
+
+.hero-carousel__yt-link {
+  position: absolute;
+  bottom: 24px;
+  right: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(20px, 4vw, 56px);
+  font-weight: 400;
+  color: white;
+  opacity: 0.95;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 200ms;
+}
+
+@media (min-width: 640px) {
+  .hero-carousel__yt-link {
+    bottom: 80px;
+    right: 40px;
+  }
+}
+
+.hero-carousel__yt-link:hover {
+  opacity: 1;
+}
+
+.hero-yt-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@media (min-width: 640px) {
+  .hero-yt-icon {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ============================================================
+   4. VIDEO SECTION
+   ============================================================
+   Featured video with 16:9 aspect ratio, action buttons
+   below, and a decorative watermark in the corner.
+   ============================================================ */
+
+.video-section__container {
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 16:9 responsive iframe wrapper */
+.video-section__iframe-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  border-radius: var(--radius-video);
+  border: var(--border);
+  overflow: hidden;
+  background: #000;
+}
+
+.video-section__iframe-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-section__actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.video-section__actions .btn {
+  flex: 1;
+}
+
+/* Large decorative icon in corner */
+.video-section__decor {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  font-size: 150px;
+  opacity: 0.04;
+  pointer-events: none;
+  transform: rotate(12deg);
+}
+
+
+/* ============================================================
+   5. CATEGORIES
+   ============================================================
+   Horizontally scrollable pill row with hidden scrollbar.
+   ============================================================ */
+
+.categories__scroll {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding: var(--space-sm) 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.categories__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ============================================================
+   6. TIRTHANKARAS CAROUSEL
+   ============================================================
+   Horizontal scroll carousel of Tirthankara profile cards.
+   Cards are fixed-width with scroll snapping for clean stops.
+   ============================================================ */
+
+.tirthankaras__carousel {
+  display: flex;
+  gap: var(--space-base);
+  overflow-x: auto;
+  padding: var(--space-sm) 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.tirthankaras__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Individual Tirthankara Card --- */
+
+.tirthankara-card {
+  min-width: 200px;
+  max-width: 200px;
+  scroll-snap-align: start;
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.tirthankara-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Numbered badge in top-right corner */
+.tirthankara-card__badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-pink);
+  color: white;
+  border: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+}
+
+.tirthankara-card__symbol {
+  font-size: 48px;
+  margin-bottom: var(--space-sm);
+}
+
+.tirthankara-card__name {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-base);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.tirthankara-card__place {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.tirthankara-card__teaching {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+  margin-bottom: var(--space-sm);
+}
+
+.tirthankara-card__fact {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  background: var(--card-lavender);
+  padding: var(--space-sm);
+  border-radius: var(--space-sm);
+}
+
+
+/* ============================================================
+   7. KASHAYAS (Four Passions)
+   ============================================================
+   2-column grid of emotion cards, each with a unique
+   background color tied to the passion it represents.
+   ============================================================ */
+
+.kashayas__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.kashaya-card {
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  text-align: center;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  cursor: pointer;
+}
+
+.kashaya-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* --- Kashaya Color Variants --- */
+
+.kashaya-card--anger {
+  background: #FFE4E1; /* Misty rose — anger/krodh */
+}
+
+.kashaya-card--pride {
+  background: #FFF3CD; /* Pale gold — pride/maan */
+}
+
+.kashaya-card--deceit {
+  background: #E8E4F3; /* Lavender — deceit/maya */
+}
+
+.kashaya-card--greed {
+  background: #D4EDDA; /* Pale green — greed/lobh */
+}
+
+/* --- Kashaya Card Elements --- */
+
+.kashaya-card__emoji {
+  font-size: 48px;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.kashaya-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-base);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.kashaya-card__hindi {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.kashaya-card__quote {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  margin-bottom: var(--space-md);
+  line-height: 1.4;
+}
+
+.kashaya-card__btn {
+  width: 100%;
+}
+
+
+/* ============================================================
+   8. GAMES
+   ============================================================
+   2-column grid of interactive game cards with icons,
+   titles, descriptions, and difficulty badges.
+   ============================================================ */
+
+.games__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.game-card {
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.game-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.game-card__icon {
+  font-size: 40px;
+  margin-bottom: var(--space-sm);
+}
+
+.game-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.game-card__desc {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  line-height: 1.4;
+}
+
+.game-card__badge {
+  margin-bottom: var(--space-sm);
+}
+
+
+/* ============================================================
+   9. FESTIVALS
+   ============================================================
+   Horizontally scrollable festival cards with dashed borders
+   and warm off-white backgrounds.
+   ============================================================ */
+
+.festivals__scroll {
+  display: flex;
+  gap: var(--space-base);
+  overflow-x: auto;
+  padding: var(--space-sm) 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.festivals__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.festival-card {
+  min-width: 260px;
+  max-width: 260px;
+  background: var(--festival-bg);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.festival-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.festival-card__badge {
+  align-self: flex-start;
+  margin-bottom: var(--space-md);
+}
+
+.festival-card__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: var(--space-sm);
+}
+
+.festival-card__details {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-md);
+  flex: 1;
+}
+
+.festival-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+
+/* ============================================================
+   10. WISDOM / DAILY QUOTE
+   ============================================================
+   A prominent quote card with gradient background,
+   large shadow, and swipeable dot indicators.
+   ============================================================ */
+
+.wisdom__card {
+  background: linear-gradient(135deg, #FFFFFF 0%, #E8E4F3 100%);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2xl);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.wisdom__quote {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.3;
+  margin-bottom: var(--space-base);
+}
+
+.wisdom__lesson {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.wisdom__challenge {
+  display: inline-block;
+  background: var(--accent-mint);
+  border: var(--border);
+  border-radius: var(--radius-btn);
+  padding: var(--space-sm) var(--space-base);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+/* Swipe indicator dots */
+.wisdom__dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.wisdom__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-color);
+  opacity: 0.2;
+  transition: opacity var(--transition-fast);
+}
+
+.wisdom__dot--active {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   11. COMMUNITY FEED
+   ============================================================
+   Vertically stacked content cards with author info,
+   media blocks, and social actions (like, comment, share).
+   ============================================================ */
+
+.feed-card {
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-base);
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.feed-card:hover {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.feed-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.feed-card__author {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+}
+
+.feed-card__time {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.feed-card__content {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-base);
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: var(--space-md);
+}
+
+.feed-card__media {
+  border-radius: var(--radius-video);
+  border: var(--border);
+  overflow: hidden;
+  margin-bottom: var(--space-md);
+  aspect-ratio: 16 / 9;
+  background: var(--card-lavender);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+
+.feed-card__footer {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.feed-card__action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.feed-card__action:active {
+  transform: scale(0.95);
+}
+
+
+/* ============================================================
+   12. RESPONSIVE — TABLET (≥ 768px)
+   ============================================================
+   Wider container, scaled-up typography and spacing.
+   ============================================================ */
+
+@media (min-width: 768px) {
+
+  /* Expand the container */
+  :root {
+    --container-max: 720px;
+    --container-padding: 24px;
+  }
+
+  /* Scale up heading sizes */
+  .section-header__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .header__title {
+    font-size: var(--font-size-xl);
+  }
+
+  /* Taller hero cards */
+  .hero .card {
+    height: 280px;
+  }
+
+  /* Larger wisdom quote text */
+  .wisdom__quote {
+    font-size: var(--font-size-xl);
+  }
+
+  .wisdom__card {
+    padding: var(--space-3xl);
+  }
+
+  /* Wider tirthankara cards */
+  .tirthankara-card {
+    min-width: 240px;
+    max-width: 240px;
+  }
+
+  /* Wider festival cards */
+  .festival-card {
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  /* More spacing between sections */
+  .section + .section {
+    margin-top: var(--space-base);
+  }
+}
+
+
+/* ============================================================
+   13. RESPONSIVE — DESKTOP (≥ 1024px)
+   ============================================================
+   Full-width layout, multi-column grids, sidebar navigation
+   replaces bottom nav.
+   ============================================================ */
+
+@media (min-width: 1024px) {
+
+  /* Wider container for desktop */
+  :root {
+    --container-max: 960px;
+    --container-padding: 32px;
+  }
+
+  /* Hide mobile bottom nav on desktop */
+  .bottom-nav {
+    display: none;
+  }
+
+  /* Remove bottom-nav clearance from page */
+  .page {
+    padding-bottom: var(--space-3xl);
+  }
+
+  /* Desktop sidebar navigation (shown instead of bottom nav) */
+  .sidebar-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: var(--header-height);
+    bottom: 0;
+    width: 80px;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-top: var(--space-xl);
+    background: var(--bg-white);
+    border-right: var(--border);
+    z-index: var(--z-bottom-nav);
+  }
+
+  /* Shift page content right to make room for sidebar */
+  .page--with-sidebar {
+    margin-left: 80px;
+  }
+
+  /* 2-column layout for hero section */
+  .hero__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .hero .card {
+    height: 300px;
+  }
+
+  /* 3-column games grid */
+  .games__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* 4-column kashayas grid */
+  .kashayas__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* Feed in 2-column masonry-style layout */
+  .feed-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  /* Scale up heading typography */
+  .section-header__title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .header__title {
+    font-size: var(--font-size-2xl);
+  }
+
+  /* More generous section spacing */
+  .section + .section {
+    margin-top: var(--space-lg);
+  }
+}
+
+/* Hide sidebar on mobile — only shown on desktop */
+.sidebar-nav {
+  display: none;
+}
+
+
+/* ============================================================
+   14. FOOTER
+   ============================================================
+   Warm closing section with family illustration, tagline,
+   value badges, and copyright.
+   ============================================================ */
+
+.footer__card {
+  background: var(--card-white);
+  border: var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.footer__image {
+  width: 100%;
+  overflow: hidden;
+}
+
+.footer__image img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.footer__content {
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.footer__content .section-header {
+  margin-bottom: var(--space-base);
+}
+
+.footer__text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-base);
+}
+
+.footer__tagline {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.footer__copy {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .footer__image img {
+    height: 320px;
+  }
+
+  .footer__content {
+    padding: var(--space-2xl);
+  }
+}

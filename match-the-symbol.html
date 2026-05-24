@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Match the Symbol — Match Tirthankaras with their Lanchhan symbols in this fun memory game!">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Match the Symbol 🔗 — Ahimsa Kids</title>
+
+  <!-- Fonts from Fontshare -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- Reuse base CSS -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dark.css">
+
+  <style>
+    /* ============================================================
+       MATCH THE SYMBOL — Game Styles
+       ============================================================ */
+
+    body {
+      background: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* --- Game Header --- */
+    .game-header {
+      position: sticky;
+      top: 0;
+      background: var(--bg-primary);
+      border-bottom: var(--border);
+      padding: 12px var(--space-base);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      transition: background var(--transition-base);
+    }
+
+    [data-theme='dark'] .game-header {
+      background: var(--bg-primary);
+    }
+
+    .game-header__left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .game-header__back {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-squircle);
+      background: var(--bg-white);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .game-header__back:active {
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .game-header__title {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      letter-spacing: -0.02em;
+    }
+
+    .game-header__subtitle {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+    }
+
+    /* --- Stats Bar --- */
+    .stats-bar {
+      display: flex;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-base);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .stat-pill {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-pill);
+      box-shadow: 2px 2px 0 var(--shadow-color);
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .stat-pill__icon {
+      font-size: 16px;
+    }
+
+    .stat-pill--highlight {
+      background: var(--accent-mint);
+    }
+
+    /* --- Difficulty Selector --- */
+    .difficulty-screen {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-base);
+      text-align: center;
+    }
+
+    .difficulty-screen__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: var(--space-sm);
+    }
+
+    .difficulty-screen__subtitle {
+      font-family: var(--font-body);
+      font-size: var(--font-size-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .difficulty-screen__icon {
+      font-size: 80px;
+      display: block;
+      margin-bottom: var(--space-xl);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .difficulty-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .difficulty-card {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      padding: var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-base);
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+      text-align: left;
+    }
+
+    .difficulty-card:active {
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .difficulty-card:nth-child(1) { background: var(--accent-mint); }
+    .difficulty-card:nth-child(2) { background: var(--accent-peach); }
+    .difficulty-card:nth-child(3) { background: var(--accent-pink); color: white; }
+
+    .difficulty-card__emoji {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .difficulty-card__info {
+      flex: 1;
+    }
+
+    .difficulty-card__name {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .difficulty-card__desc {
+      font-size: var(--font-size-sm);
+      opacity: 0.8;
+      margin-top: 2px;
+    }
+
+    /* --- Game Board --- */
+    .game-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-base);
+      padding-bottom: var(--space-3xl);
+    }
+
+    .game-board {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .game-board--easy {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .game-board--medium {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .game-board--hard {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* --- Card --- */
+    .game-card {
+      aspect-ratio: 3 / 4;
+      perspective: 600px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .game-card__inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .game-card.flipped .game-card__inner {
+      transform: rotateY(180deg);
+    }
+
+    .game-card.matched .game-card__inner {
+      transform: rotateY(180deg);
+    }
+
+    .game-card.matched {
+      pointer-events: none;
+    }
+
+    .game-card__face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border: var(--border);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      overflow: hidden;
+    }
+
+    /* Card Back (face-down) */
+    .game-card__back {
+      background: var(--card-lavender);
+      box-shadow: var(--shadow);
+    }
+
+    .game-card__back-icon {
+      font-size: 32px;
+      opacity: 0.4;
+    }
+
+    .game-card__back-label {
+      font-family: var(--font-heading);
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.3;
+      margin-top: 4px;
+    }
+
+    /* Card Front (face-up) */
+    .game-card__front {
+      transform: rotateY(180deg);
+      box-shadow: var(--shadow);
+    }
+
+    .game-card__front--symbol {
+      background: var(--accent-mint);
+    }
+
+    .game-card__front--name {
+      background: var(--accent-peach);
+    }
+
+    .game-card__emoji {
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .game-card__name {
+      font-family: var(--font-heading);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.2;
+      margin-top: 4px;
+    }
+
+    .game-card__label {
+      font-family: var(--font-body);
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+      margin-top: 2px;
+    }
+
+    /* Matched state */
+    .game-card.matched .game-card__front {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 2px #22c55e, var(--shadow);
+    }
+
+    .game-card.matched .game-card__front::after {
+      content: '✓';
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      font-size: 12px;
+      font-weight: 900;
+      color: #22c55e;
+    }
+
+    /* Wrong guess shake */
+    @keyframes cardShake {
+      0%, 100% { transform: rotateY(180deg) translateX(0); }
+      20% { transform: rotateY(180deg) translateX(-6px); }
+      40% { transform: rotateY(180deg) translateX(6px); }
+      60% { transform: rotateY(180deg) translateX(-4px); }
+      80% { transform: rotateY(180deg) translateX(4px); }
+    }
+
+    .game-card.wrong .game-card__inner {
+      animation: cardShake 0.5s ease;
+    }
+
+    .game-card.wrong .game-card__front {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 2px #ef4444, var(--shadow);
+    }
+
+    /* --- Win Screen --- */
+    .win-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: var(--space-xl);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .win-screen.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .win-card {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2xl);
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      animation: bounceIn 0.6s ease;
+    }
+
+    .win-card__emoji {
+      font-size: 72px;
+      display: block;
+      margin-bottom: var(--space-base);
+    }
+
+    .win-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: var(--space-sm);
+    }
+
+    .win-card__message {
+      font-family: var(--font-body);
+      font-size: var(--font-size-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+
+    .win-card__stats {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .win-stat {
+      background: var(--card-lavender);
+      border: var(--border);
+      border-radius: var(--radius-btn);
+      padding: var(--space-sm) var(--space-base);
+      text-align: center;
+    }
+
+    .win-stat__value {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: 900;
+    }
+
+    .win-stat__label {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .win-card__actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    /* --- Confetti --- */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 300;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* --- Helpers --- */
+    .hidden { display: none !important; }
+
+    /* Responsive tweaks */
+    @media (min-width: 400px) {
+      .game-card__emoji { font-size: 40px; }
+      .game-card__name { font-size: 11px; }
+    }
+
+    @media (min-width: 500px) {
+      .game-card__emoji { font-size: 44px; }
+      .game-card__name { font-size: 12px; }
+      .game-card__face { border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       GAME HEADER
+       ============================================================ -->
+  <header class="game-header">
+    <div class="game-header__left">
+      <a href="index.html" class="game-header__back" aria-label="Back to home">←</a>
+      <div>
+        <div class="game-header__subtitle">AHIMSA KIDS GAME</div>
+        <div class="game-header__title">MATCH THE SYMBOL 🔗</div>
+      </div>
+    </div>
+    <button class="game-header__back" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+  </header>
+
+  <!-- ============================================================
+       STATS BAR (hidden until game starts)
+       ============================================================ -->
+  <div class="stats-bar hidden" id="stats-bar">
+    <div class="stat-pill">
+      <span class="stat-pill__icon">🎯</span>
+      <span id="stat-matches">0 / 0</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill__icon">👆</span>
+      <span id="stat-moves">0 moves</span>
+    </div>
+    <div class="stat-pill stat-pill--highlight">
+      <span class="stat-pill__icon">⏱️</span>
+      <span id="stat-timer">0:00</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       DIFFICULTY SELECTOR
+       ============================================================ -->
+  <div class="difficulty-screen" id="difficulty-screen">
+    <span class="difficulty-screen__icon">🔗</span>
+    <h1 class="difficulty-screen__title">MATCH THE SYMBOL</h1>
+    <p class="difficulty-screen__subtitle">Match each Tirthankara with their sacred Lanchhan symbol. Flip two cards at a time to find pairs!</p>
+
+    <div class="difficulty-options">
+      <div class="difficulty-card" data-level="easy">
+        <span class="difficulty-card__emoji">🌱</span>
+        <div class="difficulty-card__info">
+          <div class="difficulty-card__name">EASY</div>
+          <div class="difficulty-card__desc">6 pairs • 12 cards • Perfect for beginners</div>
+        </div>
+      </div>
+      <div class="difficulty-card" data-level="medium">
+        <span class="difficulty-card__emoji">🌿</span>
+        <div class="difficulty-card__info">
+          <div class="difficulty-card__name">MEDIUM</div>
+          <div class="difficulty-card__desc">8 pairs • 16 cards • A good challenge</div>
+        </div>
+      </div>
+      <div class="difficulty-card" data-level="hard">
+        <span class="difficulty-card__emoji">🔥</span>
+        <div class="difficulty-card__info">
+          <div class="difficulty-card__name">HARD</div>
+          <div class="difficulty-card__desc">12 pairs • 24 cards • For true champions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       GAME BOARD (populated by JS)
+       ============================================================ -->
+  <div class="game-container hidden" id="game-container">
+    <div class="game-board" id="game-board"></div>
+  </div>
+
+  <!-- ============================================================
+       WIN SCREEN
+       ============================================================ -->
+  <div class="win-screen" id="win-screen">
+    <div class="win-card">
+      <span class="win-card__emoji">🏆</span>
+      <div class="win-card__title">AMAZING JOB! ✨</div>
+      <div class="win-card__message">You matched all the Tirthankaras with their sacred symbols! You're a true Jain scholar!</div>
+      <div class="win-card__stats">
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-moves">0</div>
+          <div class="win-stat__label">Moves</div>
+        </div>
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-time">0:00</div>
+          <div class="win-stat__label">Time</div>
+        </div>
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-stars">⭐⭐⭐</div>
+          <div class="win-stat__label">Stars</div>
+        </div>
+      </div>
+      <div class="win-card__actions">
+        <button class="btn btn--dark btn--full" id="btn-play-again">PLAY AGAIN 🔄</button>
+        <button class="btn btn--mint btn--full" id="btn-change-level">CHANGE LEVEL 🎮</button>
+        <a href="index.html" class="btn btn--primary btn--full">BACK TO HOME 🏠</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti container -->
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- Theme JS (reuse) -->
+  <script src="js/theme.js"></script>
+
+  <script>
+    /* ============================================================
+       TIRTHANKARA DATA
+       ============================================================ */
+    const TIRTHANKARAS = [
+      { id: 1,  name: 'Rishabhdev',   symbol: '🐂', symbolName: 'Bull' },
+      { id: 2,  name: 'Ajitanath',    symbol: '🐘', symbolName: 'Elephant' },
+      { id: 3,  name: 'Sambhavanath', symbol: '🐴', symbolName: 'Horse' },
+      { id: 4,  name: 'Abhinandannath', symbol: '🐒', symbolName: 'Monkey' },
+      { id: 5,  name: 'Sumatinath',   symbol: '🦅', symbolName: 'Curlew' },
+      { id: 6,  name: 'Padmaprabha',  symbol: '🪷', symbolName: 'Lotus' },
+      { id: 7,  name: 'Suparshvanath', symbol: '✡️', symbolName: 'Swastika' },
+      { id: 8,  name: 'Chandraprabha', symbol: '🌙', symbolName: 'Moon' },
+      { id: 9,  name: 'Pushpadanta',  symbol: '🐊', symbolName: 'Crocodile' },
+      { id: 10, name: 'Sheetalnath',  symbol: '🌳', symbolName: 'Wishing Tree' },
+      { id: 11, name: 'Shreyansnath', symbol: '🦏', symbolName: 'Rhinoceros' },
+      { id: 12, name: 'Vasupujya',    symbol: '🦬', symbolName: 'Buffalo' },
+      { id: 13, name: 'Vimalanath',   symbol: '🐗', symbolName: 'Boar' },
+      { id: 14, name: 'Anantanath',   symbol: '🦔', symbolName: 'Porcupine' },
+      { id: 15, name: 'Dharmanath',   symbol: '⚡', symbolName: 'Thunderbolt' },
+      { id: 16, name: 'Shantinath',   symbol: '🦌', symbolName: 'Deer' },
+      { id: 17, name: 'Kunthunath',   symbol: '🐐', symbolName: 'Goat' },
+      { id: 18, name: 'Aranath',      symbol: '🐟', symbolName: 'Fish' },
+      { id: 19, name: 'Mallinath',    symbol: '🏺', symbolName: 'Water Pot' },
+      { id: 20, name: 'Munisuvrata',  symbol: '🐢', symbolName: 'Tortoise' },
+      { id: 21, name: 'Naminath',     symbol: '🪷', symbolName: 'Blue Lotus' },
+      { id: 22, name: 'Neminath',     symbol: '🐚', symbolName: 'Conch Shell' },
+      { id: 23, name: 'Parshvanath',  symbol: '🐍', symbolName: 'Serpent' },
+      { id: 24, name: 'Mahavir',      symbol: '🦁', symbolName: 'Lion' },
+    ];
+
+    /* ============================================================
+       GAME STATE
+       ============================================================ */
+    let currentLevel = 'easy';
+    let cards = [];
+    let flippedCards = [];
+    let matchedPairs = 0;
+    let totalPairs = 0;
+    let moves = 0;
+    let timerInterval = null;
+    let seconds = 0;
+    let isLocked = false; // prevent clicking during animation
+
+    const LEVELS = {
+      easy:   { pairs: 6,  cols: 'easy' },
+      medium: { pairs: 8,  cols: 'medium' },
+      hard:   { pairs: 12, cols: 'hard' },
+    };
+
+    /* ============================================================
+       DOM REFS
+       ============================================================ */
+    const difficultyScreen = document.getElementById('difficulty-screen');
+    const gameContainer = document.getElementById('game-container');
+    const gameBoard = document.getElementById('game-board');
+    const statsBar = document.getElementById('stats-bar');
+    const statMatches = document.getElementById('stat-matches');
+    const statMoves = document.getElementById('stat-moves');
+    const statTimer = document.getElementById('stat-timer');
+    const winScreen = document.getElementById('win-screen');
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    // Theme
+    initTheme();
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // Difficulty selection
+    document.querySelectorAll('.difficulty-card').forEach(card => {
+      card.addEventListener('click', () => {
+        currentLevel = card.dataset.level;
+        startGame();
+      });
+    });
+
+    // Win screen buttons
+    document.getElementById('btn-play-again').addEventListener('click', () => {
+      winScreen.classList.remove('visible');
+      startGame();
+    });
+
+    document.getElementById('btn-change-level').addEventListener('click', () => {
+      winScreen.classList.remove('visible');
+      showDifficultyScreen();
+    });
+
+    /* ============================================================
+       GAME LOGIC
+       ============================================================ */
+
+    function startGame() {
+      // Reset state
+      matchedPairs = 0;
+      moves = 0;
+      seconds = 0;
+      flippedCards = [];
+      isLocked = false;
+      clearInterval(timerInterval);
+
+      const level = LEVELS[currentLevel];
+      totalPairs = level.pairs;
+
+      // Pick random tirthankaras
+      const selected = shuffle([...TIRTHANKARAS]).slice(0, totalPairs);
+
+      // Create card pairs: one symbol card + one name card per tirthankara
+      cards = [];
+      selected.forEach(t => {
+        cards.push({
+          id: t.id,
+          type: 'symbol',
+          display: t.symbol,
+          label: t.symbolName,
+          pairId: t.id,
+        });
+        cards.push({
+          id: t.id,
+          type: 'name',
+          display: t.name,
+          label: `#${t.id}`,
+          pairId: t.id,
+        });
+      });
+
+      // Shuffle cards
+      cards = shuffle(cards);
+
+      // Update UI
+      updateStats();
+      renderBoard(level.cols);
+
+      // Show game
+      difficultyScreen.classList.add('hidden');
+      gameContainer.classList.remove('hidden');
+      statsBar.classList.remove('hidden');
+
+      // Start timer
+      timerInterval = setInterval(() => {
+        seconds++;
+        statTimer.textContent = formatTime(seconds);
+      }, 1000);
+    }
+
+    function renderBoard(colClass) {
+      gameBoard.className = `game-board game-board--${colClass}`;
+      gameBoard.innerHTML = '';
+
+      cards.forEach((card, index) => {
+        const el = document.createElement('div');
+        el.className = 'game-card';
+        el.dataset.index = index;
+
+        const isSymbol = card.type === 'symbol';
+
+        el.innerHTML = `
+          <div class="game-card__inner">
+            <div class="game-card__face game-card__back">
+              <span class="game-card__back-icon">🔗</span>
+              <span class="game-card__back-label">FLIP ME</span>
+            </div>
+            <div class="game-card__face game-card__front game-card__front--${card.type}">
+              <span class="game-card__emoji">${isSymbol ? card.display : ''}</span>
+              <span class="game-card__name">${isSymbol ? '' : card.display}</span>
+              <span class="game-card__label">${card.label}</span>
+            </div>
+          </div>
+        `;
+
+        el.addEventListener('click', () => flipCard(el, index));
+        gameBoard.appendChild(el);
+      });
+    }
+
+    function flipCard(el, index) {
+      // Guards
+      if (isLocked) return;
+      if (el.classList.contains('flipped') || el.classList.contains('matched')) return;
+      if (flippedCards.length >= 2) return;
+
+      // Flip
+      el.classList.add('flipped');
+      flippedCards.push({ el, index, card: cards[index] });
+
+      // Check for match when 2 cards are flipped
+      if (flippedCards.length === 2) {
+        moves++;
+        updateStats();
+
+        const [a, b] = flippedCards;
+
+        if (a.card.pairId === b.card.pairId && a.card.type !== b.card.type) {
+          // Match!
+          setTimeout(() => {
+            a.el.classList.add('matched');
+            b.el.classList.add('matched');
+            matchedPairs++;
+            updateStats();
+            flippedCards = [];
+
+            // Check win
+            if (matchedPairs === totalPairs) {
+              setTimeout(onWin, 500);
+            }
+          }, 400);
+        } else {
+          // No match — shake and flip back
+          isLocked = true;
+          setTimeout(() => {
+            a.el.classList.add('wrong');
+            b.el.classList.add('wrong');
+
+            setTimeout(() => {
+              a.el.classList.remove('flipped', 'wrong');
+              b.el.classList.remove('flipped', 'wrong');
+              flippedCards = [];
+              isLocked = false;
+            }, 600);
+          }, 500);
+        }
+      }
+    }
+
+    function onWin() {
+      clearInterval(timerInterval);
+
+      // Calculate stars
+      const minMoves = totalPairs; // perfect = 1 move per pair
+      let stars = '⭐';
+      if (moves <= minMoves + 4) stars = '⭐⭐⭐';
+      else if (moves <= minMoves + 8) stars = '⭐⭐';
+
+      // Update win screen
+      document.getElementById('win-moves').textContent = moves;
+      document.getElementById('win-time').textContent = formatTime(seconds);
+      document.getElementById('win-stars').textContent = stars;
+
+      // Show win screen with confetti
+      winScreen.classList.add('visible');
+      launchConfetti();
+    }
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+
+    function updateStats() {
+      statMatches.textContent = `${matchedPairs} / ${totalPairs}`;
+      statMoves.textContent = `${moves} moves`;
+    }
+
+    function formatTime(s) {
+      const min = Math.floor(s / 60);
+      const sec = s % 60;
+      return `${min}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function showDifficultyScreen() {
+      clearInterval(timerInterval);
+      gameContainer.classList.add('hidden');
+      statsBar.classList.add('hidden');
+      difficultyScreen.classList.remove('hidden');
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#FF69B4', '#98FF98', '#FFBC99', '#E8E4F3', '#FFD700', '#87CEEB'];
+
+      for (let i = 0; i < 60; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = (6 + Math.random() * 8) + 'px';
+        piece.style.height = (6 + Math.random() * 8) + 'px';
+        piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+        piece.style.animationDelay = (Math.random() * 1.5) + 's';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        container.appendChild(piece);
+      }
+
+      // Clean up after animation
+      setTimeout(() => { container.innerHTML = ''; }, 6000);
+    }
+  </script>
+</body>
+</html>
