@@ -255,20 +255,29 @@ function initBottomNav() {
   const heroCta = document.getElementById('hero-cta');
   const secondaryCta = document.getElementById('secondary-cta');
 
-  const scrollToTirthankaras = () => {
-    const learnSection = document.getElementById('tirthankaras');
-    if (learnSection) {
-      const y = learnSection.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
   if (heroCta) {
-    heroCta.addEventListener('click', scrollToTirthankaras);
+    heroCta.addEventListener('click', () => {
+      let targetId = 'tirthankaras';
+      if (typeof heroActiveIndex !== 'undefined') {
+        if (heroActiveIndex === 2) targetId = 'kashayas';
+        else if (heroActiveIndex === 3) targetId = 'watch';
+      }
+      const section = document.getElementById(targetId);
+      if (section) {
+        const y = section.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
   }
   
   if (secondaryCta) {
-    secondaryCta.addEventListener('click', scrollToTirthankaras);
+    secondaryCta.addEventListener('click', () => {
+      const section = document.getElementById('tirthankaras');
+      if (section) {
+        const y = section.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
   }
 
   // Update active nav item on scroll (scroll-spy)
