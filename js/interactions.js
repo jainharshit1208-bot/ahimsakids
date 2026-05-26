@@ -252,16 +252,23 @@ function initBottomNav() {
     });
   });
 
-  // Wire up Hero CTA button if it exists
   const heroCta = document.getElementById('hero-cta');
+  const secondaryCta = document.getElementById('secondary-cta');
+
+  const scrollToTirthankaras = () => {
+    const learnSection = document.getElementById('tirthankaras');
+    if (learnSection) {
+      const y = learnSection.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   if (heroCta) {
-    heroCta.addEventListener('click', () => {
-      const learnSection = document.getElementById('watch');
-      if (learnSection) {
-        const y = learnSection.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    });
+    heroCta.addEventListener('click', scrollToTirthankaras);
+  }
+  
+  if (secondaryCta) {
+    secondaryCta.addEventListener('click', scrollToTirthankaras);
   }
 
   // Update active nav item on scroll (scroll-spy)
