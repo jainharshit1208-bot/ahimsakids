@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Daily Kindness Tracker — Track your daily acts of kindness, build streaks, and become an Ahimsa Champion!">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Daily Kindness Tracker — Ahimsa Kids 💖</title>
+
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS (inline from tokens.css)
+       ============================================================ */
+    :root {
+      --bg-primary: #E8E4F3;
+      --bg-white: #FFFFFF;
+      --accent-pink: #FF69B4;
+      --accent-mint: #98FF98;
+      --accent-peach: #FFBC99;
+      --text-primary: #1A1A1A;
+      --text-secondary: rgba(26, 26, 26, 0.6);
+      --border-color: #000000;
+      --shadow-color: #000000;
+      --card-white: #FFFFFF;
+      --card-lavender: #E8E4F3;
+      --font-heading: 'Cabinet Grotesk', sans-serif;
+      --font-body: 'Satoshi', sans-serif;
+      --font-size-xs: 10px;
+      --font-size-sm: 12px;
+      --font-size-base: 14px;
+      --font-size-md: 16px;
+      --font-size-lg: 20px;
+      --font-size-xl: 24px;
+      --font-size-2xl: 28px;
+      --border: 2px solid var(--border-color);
+      --shadow: 4px 4px 0px 0px var(--shadow-color);
+      --shadow-hover: 1px 1px 0px 0px var(--shadow-color);
+      --shadow-lg: 6px 6px 0px 0px var(--shadow-color);
+      --radius-card: 40px;
+      --radius-btn: 16px;
+      --radius-pill: 24px;
+      --radius-squircle: 16px;
+      --transition-fast: 180ms ease;
+      --transition-base: 300ms ease;
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 12px;
+      --space-base: 16px;
+      --space-lg: 20px;
+      --space-xl: 24px;
+      --space-2xl: 32px;
+      --space-3xl: 40px;
+    }
+
+    [data-theme='dark'] {
+      --bg-primary: #1A1025;
+      --bg-white: #2A2035;
+      --text-primary: #F0E8F8;
+      --text-secondary: rgba(240, 232, 248, 0.6);
+      --border-color: rgba(255, 255, 255, 0.2);
+      --shadow-color: rgba(0, 0, 0, 0.3);
+      --card-white: #2A2035;
+      --card-lavender: #2D2240;
+      --accent-mint: #4AE07A;
+      --accent-peach: #FF9B6A;
+      --accent-pink: #FF85C8;
+    }
+
+    /* ============================================================
+       RESET
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 30%, #98FF98 70%, #ffeaa7 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      min-height: 100vh;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    [data-theme='dark'] body {
+      background: linear-gradient(135deg, #1A1025 0%, #2A2035 50%, #1a3d2a 100%);
+      background-size: 400% 400%;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -20px) scale(1.1); }
+      50% { transform: translate(-20px, 15px) scale(0.95); }
+      75% { transform: translate(15px, 25px) scale(1.05); }
+    }
+
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes slideUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes bounceIn { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes checkPop { 0% { transform: scale(0); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+    @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    @keyframes heartbeat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.2); } 30% { transform: scale(1); } 45% { transform: scale(1.1); } }
+    @keyframes streakGlow { 0%, 100% { box-shadow: 0 0 10px rgba(255, 105, 180, 0.3); } 50% { box-shadow: 0 0 25px rgba(255, 105, 180, 0.6); } }
+
+    /* ============================================================
+       BUTTON
+       ============================================================ */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+      padding: var(--space-base) var(--space-xl); border-radius: var(--radius-btn);
+      font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      border: var(--border); transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn:active { transform: translate(2px, 2px); box-shadow: var(--shadow-hover); }
+    .btn--dark { background: var(--text-primary); color: var(--bg-primary); box-shadow: var(--shadow); }
+    .btn--mint { background: var(--accent-mint); color: var(--text-primary); box-shadow: var(--shadow); }
+    .btn--primary { background: var(--card-white); color: var(--text-primary); box-shadow: var(--shadow); }
+    .btn--full { width: 100%; }
+    .btn--sm { padding: var(--space-sm) var(--space-base); font-size: var(--font-size-xs); }
+    .btn--pink { background: var(--accent-pink); color: white; box-shadow: var(--shadow); }
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
+    .game-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: var(--border);
+      padding: var(--space-base) var(--space-lg);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    [data-theme='dark'] .game-header { background: rgba(26, 16, 37, 0.85); }
+    .game-header__left { display: flex; align-items: center; gap: var(--space-md); }
+    .game-header__back {
+      width: 40px; height: 40px; border-radius: var(--radius-squircle);
+      background: var(--card-white); border: var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 18px; text-decoration: none; color: var(--text-primary); cursor: pointer;
+    }
+    .game-header__subtitle { font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; opacity: 0.5; letter-spacing: 0.1em; }
+    .game-header__title { font-family: var(--font-heading); font-size: var(--font-size-md); font-weight: 900; text-transform: uppercase; }
+
+    /* ============================================================
+       STREAK & STATS BAR
+       ============================================================ */
+    .streak-bar {
+      display: flex; align-items: center; justify-content: center; gap: var(--space-lg);
+      padding: var(--space-base) var(--space-lg);
+      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(8px);
+      border-bottom: var(--border);
+    }
+    [data-theme='dark'] .streak-bar { background: rgba(42, 32, 53, 0.6); }
+    .streak-item {
+      display: flex; align-items: center; gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-base);
+      background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(6px);
+      border: var(--border); border-radius: var(--radius-pill);
+      font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900;
+      white-space: nowrap;
+    }
+    [data-theme='dark'] .streak-item { background: rgba(42, 32, 53, 0.8); }
+    .streak-item--fire { animation: streakGlow 2s ease-in-out infinite; }
+    .streak-item__icon { font-size: 16px; }
+
+    /* ============================================================
+       MAIN CONTAINER
+       ============================================================ */
+    .container {
+      max-width: 500px; margin: 0 auto;
+      padding: var(--space-lg) var(--space-base);
+      padding-bottom: var(--space-3xl);
+    }
+
+    /* ============================================================
+       DATE HEADER
+       ============================================================ */
+    .date-header {
+      text-align: center; margin-bottom: var(--space-xl);
+      animation: slideUp 0.5s ease;
+    }
+    .date-header__day {
+      font-family: var(--font-heading); font-size: var(--font-size-2xl);
+      font-weight: 900; text-transform: uppercase; font-style: italic;
+    }
+    .date-header__date {
+      font-family: var(--font-body); font-size: var(--font-size-base);
+      color: var(--text-secondary); margin-top: var(--space-xs);
+    }
+    .date-header__emoji {
+      font-size: 48px; display: block; margin-bottom: var(--space-sm);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* ============================================================
+       TITLE BADGE
+       ============================================================ */
+    .title-badge {
+      display: inline-flex; align-items: center; gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-base);
+      background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(8px);
+      border: var(--border); border-radius: var(--radius-pill);
+      font-family: var(--font-heading); font-size: var(--font-size-xs);
+      font-weight: 900; text-transform: uppercase; margin-top: var(--space-sm);
+    }
+
+    /* ============================================================
+       PROGRESS RING
+       ============================================================ */
+    .progress-section {
+      background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-card); padding: var(--space-xl);
+      text-align: center; margin-bottom: var(--space-xl);
+      animation: slideUp 0.6s ease;
+    }
+    [data-theme='dark'] .progress-section { background: rgba(42, 32, 53, 0.7); border-color: rgba(255,255,255,0.15); }
+
+    .progress-ring-wrap {
+      position: relative; width: 140px; height: 140px; margin: 0 auto var(--space-base);
+    }
+    .progress-ring { transform: rotate(-90deg); }
+    .progress-ring__bg { fill: none; stroke: rgba(0,0,0,0.08); stroke-width: 10; }
+    [data-theme='dark'] .progress-ring__bg { stroke: rgba(255,255,255,0.1); }
+    .progress-ring__fill {
+      fill: none; stroke: var(--accent-pink); stroke-width: 10;
+      stroke-linecap: round; transition: stroke-dashoffset 0.8s ease;
+    }
+    .progress-ring__text {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: var(--font-heading); font-size: var(--font-size-xl);
+      font-weight: 900; line-height: 1;
+    }
+    .progress-ring__label {
+      font-family: var(--font-body); font-size: var(--font-size-xs);
+      color: var(--text-secondary); text-transform: uppercase; font-weight: 700;
+    }
+    .progress-subtitle {
+      font-family: var(--font-body); font-size: var(--font-size-sm);
+      color: var(--text-secondary); margin-top: var(--space-xs);
+    }
+
+    /* ============================================================
+       CATEGORY TABS
+       ============================================================ */
+    .category-tabs {
+      display: flex; gap: var(--space-sm); overflow-x: auto;
+      padding: var(--space-xs) 0; margin-bottom: var(--space-lg);
+      -ms-overflow-style: none; scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .category-tab {
+      padding: var(--space-sm) var(--space-base);
+      border: var(--border); border-radius: var(--radius-pill);
+      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(6px);
+      font-family: var(--font-heading); font-size: var(--font-size-xs);
+      font-weight: 900; text-transform: uppercase; cursor: pointer;
+      white-space: nowrap; transition: all var(--transition-fast);
+    }
+    [data-theme='dark'] .category-tab { background: rgba(42, 32, 53, 0.6); }
+    .category-tab:hover { transform: translateY(-2px); }
+    .category-tab--active {
+      background: var(--accent-pink); color: white;
+      box-shadow: var(--shadow);
+    }
+
+    /* ============================================================
+       KINDNESS CARDS
+       ============================================================ */
+    .kindness-list { display: flex; flex-direction: column; gap: var(--space-md); }
+
+    .kindness-card {
+      background: rgba(255, 255, 255, 0.65); backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-btn); padding: var(--space-base) var(--space-lg);
+      display: flex; align-items: center; gap: var(--space-base);
+      cursor: pointer; transition: all 0.3s ease;
+      animation: slideUp 0.4s ease backwards;
+    }
+    [data-theme='dark'] .kindness-card { background: rgba(42, 32, 53, 0.7); border-color: rgba(255,255,255,0.15); }
+    .kindness-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .kindness-card.completed {
+      background: rgba(152, 255, 152, 0.3); border-color: rgba(152, 255, 152, 0.5);
+    }
+    [data-theme='dark'] .kindness-card.completed { background: rgba(74, 224, 122, 0.15); border-color: rgba(74, 224, 122, 0.3); }
+
+    .kindness-card__check {
+      width: 32px; height: 32px; min-width: 32px; border-radius: 50%;
+      border: var(--border); background: var(--card-white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: all 0.3s ease;
+    }
+    .kindness-card.completed .kindness-card__check {
+      background: var(--accent-mint); border-color: #22c55e;
+      animation: checkPop 0.4s ease;
+    }
+
+    .kindness-card__emoji { font-size: 28px; min-width: 28px; }
+
+    .kindness-card__info { flex: 1; }
+    .kindness-card__title {
+      font-family: var(--font-heading); font-size: var(--font-size-sm);
+      font-weight: 900; text-transform: uppercase; margin-bottom: 2px;
+    }
+    .kindness-card.completed .kindness-card__title { text-decoration: line-through; opacity: 0.6; }
+    .kindness-card__desc {
+      font-family: var(--font-body); font-size: var(--font-size-xs);
+      color: var(--text-secondary); line-height: 1.4;
+    }
+    .kindness-card__points {
+      font-family: var(--font-heading); font-size: var(--font-size-xs);
+      font-weight: 900; color: var(--accent-pink);
+      padding: var(--space-xs) var(--space-sm);
+      background: rgba(255, 105, 180, 0.1); border-radius: var(--radius-pill);
+    }
+
+    /* stagger animation */
+    .kindness-card:nth-child(1) { animation-delay: 0s; }
+    .kindness-card:nth-child(2) { animation-delay: 0.05s; }
+    .kindness-card:nth-child(3) { animation-delay: 0.1s; }
+    .kindness-card:nth-child(4) { animation-delay: 0.15s; }
+    .kindness-card:nth-child(5) { animation-delay: 0.2s; }
+    .kindness-card:nth-child(6) { animation-delay: 0.25s; }
+
+    /* ============================================================
+       MOTIVATIONAL CARD
+       ============================================================ */
+    .motivation-card {
+      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-card); padding: var(--space-xl);
+      text-align: center; margin-top: var(--space-xl);
+    }
+    [data-theme='dark'] .motivation-card { background: rgba(42, 32, 53, 0.7); border-color: rgba(255,255,255,0.15); }
+    .motivation-card__emoji { font-size: 40px; margin-bottom: var(--space-sm); display: block; }
+    .motivation-card__text {
+      font-family: var(--font-heading); font-size: var(--font-size-base);
+      font-weight: 800; font-style: italic; line-height: 1.4;
+    }
+
+    /* ============================================================
+       CELEBRATION OVERLAY
+       ============================================================ */
+    .celebration {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200; padding: var(--space-xl);
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .celebration.visible { opacity: 1; pointer-events: all; }
+    .celebration__card {
+      background: var(--card-white); border: var(--border);
+      border-radius: var(--radius-card); box-shadow: var(--shadow-lg);
+      padding: var(--space-2xl); text-align: center; max-width: 360px; width: 100%;
+      animation: bounceIn 0.6s ease;
+    }
+    .celebration__emoji { font-size: 72px; display: block; margin-bottom: var(--space-base); }
+    .celebration__title {
+      font-family: var(--font-heading); font-size: var(--font-size-xl);
+      font-weight: 900; text-transform: uppercase; font-style: italic; margin-bottom: var(--space-sm);
+    }
+    .celebration__message {
+      font-family: var(--font-body); font-size: var(--font-size-base);
+      color: var(--text-secondary); margin-bottom: var(--space-lg); line-height: 1.5;
+    }
+    .celebration__badge {
+      display: inline-block; padding: var(--space-sm) var(--space-lg);
+      border: var(--border); border-radius: var(--radius-pill);
+      background: var(--accent-mint); font-family: var(--font-heading);
+      font-size: var(--font-size-md); font-weight: 900; text-transform: uppercase;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* ============================================================
+       HISTORY
+       ============================================================ */
+    .history-section {
+      margin-top: var(--space-xl);
+    }
+    .history-title {
+      font-family: var(--font-heading); font-size: var(--font-size-md);
+      font-weight: 900; text-transform: uppercase; margin-bottom: var(--space-base);
+      text-align: center;
+    }
+    .history-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--space-xs);
+      margin-bottom: var(--space-sm);
+    }
+    .history-day {
+      aspect-ratio: 1; border-radius: var(--space-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 700;
+      background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(0,0,0,0.08);
+    }
+    [data-theme='dark'] .history-day { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+    .history-day--completed { background: var(--accent-mint); border-color: #22c55e; }
+    [data-theme='dark'] .history-day--completed { background: rgba(74, 224, 122, 0.4); }
+    .history-day--today { border: 2px solid var(--accent-pink); font-weight: 900; }
+    .history-day--empty { opacity: 0.3; }
+    .history-legend {
+      display: flex; justify-content: center; gap: var(--space-lg);
+      font-family: var(--font-body); font-size: var(--font-size-xs); color: var(--text-secondary);
+    }
+    .history-legend span { display: flex; align-items: center; gap: var(--space-xs); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+    .legend-dot--done { background: var(--accent-mint); }
+    .legend-dot--miss { background: rgba(0,0,0,0.1); }
+
+    /* ============================================================
+       CONFETTI
+       ============================================================ */
+    .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 300; overflow: hidden; }
+    .confetti {
+      position: absolute; width: 10px; height: 10px; border-radius: 2px;
+      top: -10px; animation: confettiFall linear forwards;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (min-width: 400px) { .kindness-card__title { font-size: 13px; } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="game-header">
+    <div class="game-header__left">
+      <a href="index.html" class="game-header__back" aria-label="Back to home">&larr;</a>
+      <div>
+        <div class="game-header__subtitle">AHIMSA KIDS</div>
+        <div class="game-header__title">KINDNESS TRACKER 💖</div>
+      </div>
+    </div>
+    <button class="game-header__back" id="theme-toggle" aria-label="Toggle Dark Mode">&#x1F319;</button>
+  </header>
+
+  <!-- STREAK BAR -->
+  <div class="streak-bar" id="streak-bar">
+    <div class="streak-item" id="streak-display">
+      <span class="streak-item__icon">&#x1F525;</span>
+      <span id="streak-count">0 Day Streak</span>
+    </div>
+    <div class="streak-item">
+      <span class="streak-item__icon">&#x2B50;</span>
+      <span id="total-acts">0 Total Acts</span>
+    </div>
+    <div class="streak-item">
+      <span class="streak-item__icon">&#x1F3C6;</span>
+      <span id="best-streak">Best: 0</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+
+    <!-- Date Header -->
+    <div class="date-header">
+      <span class="date-header__emoji">&#x1F49D;</span>
+      <div class="date-header__day" id="day-name">Today</div>
+      <div class="date-header__date" id="date-string">Loading...</div>
+      <div class="title-badge" id="title-badge">&#x1F331; Kindness Beginner</div>
+    </div>
+
+    <!-- Progress Ring -->
+    <div class="progress-section">
+      <div class="progress-ring-wrap">
+        <svg class="progress-ring" width="140" height="140">
+          <circle class="progress-ring__bg" cx="70" cy="70" r="60"></circle>
+          <circle class="progress-ring__fill" id="progress-fill" cx="70" cy="70" r="60"
+                  stroke-dasharray="376.99" stroke-dashoffset="376.99"></circle>
+        </svg>
+        <div class="progress-ring__text">
+          <span id="progress-count">0/6</span>
+          <div class="progress-ring__label">Done</div>
+        </div>
+      </div>
+      <div class="progress-subtitle" id="progress-msg">Complete kind acts to fill your ring!</div>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs" id="category-tabs">
+      <button class="category-tab category-tab--active" data-cat="all">&#x1F49C; All</button>
+      <button class="category-tab" data-cat="people">&#x1F91D; People</button>
+      <button class="category-tab" data-cat="animals">&#x1F43E; Animals</button>
+      <button class="category-tab" data-cat="nature">&#x1F33F; Nature</button>
+      <button class="category-tab" data-cat="self">&#x1F9D8; Self</button>
+    </div>
+
+    <!-- Kindness Acts -->
+    <div class="kindness-list" id="kindness-list"></div>
+
+    <!-- Motivational Quote -->
+    <div class="motivation-card" id="motivation-card">
+      <span class="motivation-card__emoji">&#x1F338;</span>
+      <div class="motivation-card__text" id="motivation-text">"Every act of kindness is a step toward liberation."</div>
+    </div>
+
+    <!-- History Grid -->
+    <div class="history-section">
+      <div class="history-title">&#x1F4C5; This Month</div>
+      <div class="history-grid" id="history-grid"></div>
+      <div class="history-legend">
+        <span><span class="legend-dot legend-dot--done"></span> Completed</span>
+        <span><span class="legend-dot legend-dot--miss"></span> Missed</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CELEBRATION -->
+  <div class="celebration" id="celebration">
+    <div class="celebration__card">
+      <span class="celebration__emoji" id="celeb-emoji">&#x1F389;</span>
+      <div class="celebration__title" id="celeb-title">ALL DONE!</div>
+      <div class="celebration__message" id="celeb-message">You completed all your kindness acts today!</div>
+      <div class="celebration__badge" id="celeb-badge">&#x1F31F; KINDNESS CHAMPION</div>
+      <button class="btn btn--dark btn--full" onclick="document.getElementById('celebration').classList.remove('visible')">WONDERFUL! &#x1F60A;</button>
+    </div>
+  </div>
+
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- Theme JS -->
+  <script src="js/theme.js"></script>
+
+  <script>
+    /* ============================================================
+       KINDNESS ACTS DATA
+       ============================================================ */
+    const KINDNESS_ACTS = [
+      { id: 'compliment', emoji: '\u{1F60A}', title: 'Give a Compliment', desc: 'Say something nice to a friend or family member', points: 10, category: 'people' },
+      { id: 'help-chore', emoji: '\u{1F9F9}', title: 'Help with Chores', desc: 'Help your parents with a household task without being asked', points: 15, category: 'people' },
+      { id: 'share-food', emoji: '\u{1F34E}', title: 'Share Your Food', desc: 'Share your snack or lunch with someone', points: 15, category: 'people' },
+      { id: 'kind-words', emoji: '\u{1F4AC}', title: 'Speak Gently', desc: 'Use kind and gentle words all day \u2014 no yelling or harsh words', points: 20, category: 'self' },
+      { id: 'feed-animal', emoji: '\u{1F426}', title: 'Feed an Animal', desc: 'Leave water or food for birds, dogs, or other animals', points: 15, category: 'animals' },
+      { id: 'save-water', emoji: '\u{1F4A7}', title: 'Save Water', desc: 'Turn off the tap while brushing teeth or washing', points: 10, category: 'nature' },
+      { id: 'thank-you', emoji: '\u{1F64F}', title: 'Say Thank You', desc: 'Thank someone who helped you today \u2014 with genuine feeling', points: 10, category: 'people' },
+      { id: 'no-waste', emoji: '\u{267B}', title: 'Zero Food Waste', desc: 'Eat your full meal without wasting any food', points: 15, category: 'nature' },
+      { id: 'forgive', emoji: '\u{1F49B}', title: 'Forgive Someone', desc: 'Let go of anger and forgive someone who upset you', points: 20, category: 'self' },
+      { id: 'protect-insect', emoji: '\u{1F41B}', title: 'Protect a Tiny Life', desc: 'Carefully move an insect to safety instead of harming it', points: 20, category: 'animals' },
+      { id: 'plant-care', emoji: '\u{1FAB4}', title: 'Water a Plant', desc: 'Water a plant or tend to a garden', points: 10, category: 'nature' },
+      { id: 'listen', emoji: '\u{1F442}', title: 'Listen Patiently', desc: 'Listen to someone without interrupting', points: 15, category: 'self' },
+      { id: 'pickup-trash', emoji: '\u{1F5D1}', title: 'Pick Up Litter', desc: 'Pick up trash you see on the ground and put it in a bin', points: 15, category: 'nature' },
+      { id: 'smile', emoji: '\u{1F604}', title: 'Smile at Strangers', desc: 'Share warm smiles with people you pass today', points: 10, category: 'people' },
+      { id: 'quiet-time', emoji: '\u{1F54A}', title: 'Peaceful Quiet Time', desc: 'Sit quietly for 5 minutes and practice calm breathing', points: 15, category: 'self' },
+      { id: 'pet-gentle', emoji: '\u{1F43E}', title: 'Be Gentle with Pets', desc: 'Pet an animal gently and speak to it with love', points: 10, category: 'animals' },
+    ];
+
+    const MOTIVATIONAL_QUOTES = [
+      '"Every act of kindness is a step toward liberation." \u{1F338}',
+      '"Ahimsa is not just non-violence, it is active love." \u{1F49C}',
+      '"The soul that practices kindness shines the brightest." \u{2728}',
+      '"Small acts of compassion create ripples of peace." \u{1F30A}',
+      '"True strength is shown through gentleness." \u{1F54A}',
+      '"Kshama (forgiveness) is the ornament of the brave." \u{1F451}',
+      '"When you help others, you help your own soul grow." \u{1F331}',
+      '"Parasparopagraho Jivanam \u2014 Souls exist to help one another." \u{1F91D}',
+    ];
+
+    const TITLES = [
+      { min: 0, title: '\u{1F331} Kindness Beginner' },
+      { min: 20, title: '\u{1F33F} Kindness Sprout' },
+      { min: 50, title: '\u{1F33B} Kindness Bloom' },
+      { min: 100, title: '\u{2B50} Kindness Star' },
+      { min: 200, title: '\u{1F31F} Ahimsa Champion' },
+      { min: 350, title: '\u{1F451} Compassion Master' },
+      { min: 500, title: '\u{1F48E} Soul of Kindness' },
+    ];
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+    const STORAGE_KEY = 'ahimsa_kindness_tracker';
+    let state = loadState();
+    let activeCategory = 'all';
+
+    function getToday() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+      return { completedToday: {}, history: {}, totalActs: 0, currentStreak: 0, bestStreak: 0, lastDate: null };
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    initTheme();
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // Check if it is a new day
+    const today = getToday();
+    if (state.lastDate !== today) {
+      // Calculate streak
+      if (state.lastDate) {
+        const lastDate = new Date(state.lastDate);
+        const todayDate = new Date(today);
+        const diffDays = Math.round((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+        if (diffDays > 1) {
+          state.currentStreak = 0; // Streak broken
+        }
+      }
+      state.completedToday = {};
+      state.lastDate = today;
+      saveState();
+    }
+
+    // Randomly select 6 acts for today (seeded by date for consistency)
+    function getDailyActs() {
+      const seed = today.split('-').join('');
+      let s = parseInt(seed);
+      function seededRandom() {
+        s = (s * 9301 + 49297) % 233280;
+        return s / 233280;
+      }
+      const shuffled = [...KINDNESS_ACTS].sort(() => seededRandom() - 0.5);
+      return shuffled.slice(0, 6);
+    }
+
+    const dailyActs = getDailyActs();
+
+    // Set date display
+    const dateObj = new Date();
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    document.getElementById('day-name').textContent = days[dateObj.getDay()];
+    document.getElementById('date-string').textContent = `${months[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`;
+
+    // Set random motivation
+    document.getElementById('motivation-text').textContent = MOTIVATIONAL_QUOTES[Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length)];
+
+    // Category tabs
+    document.getElementById('category-tabs').addEventListener('click', (e) => {
+      const tab = e.target.closest('.category-tab');
+      if (!tab) return;
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('category-tab--active'));
+      tab.classList.add('category-tab--active');
+      activeCategory = tab.dataset.cat;
+      renderActs();
+    });
+
+    /* ============================================================
+       RENDER
+       ============================================================ */
+    function renderActs() {
+      const list = document.getElementById('kindness-list');
+      const filtered = activeCategory === 'all' ? dailyActs : dailyActs.filter(a => a.category === activeCategory);
+
+      list.innerHTML = filtered.map(act => {
+        const done = state.completedToday[act.id];
+        return `
+          <div class="kindness-card ${done ? 'completed' : ''}" data-id="${act.id}" onclick="toggleAct('${act.id}')">
+            <div class="kindness-card__check">${done ? '\u2713' : ''}</div>
+            <span class="kindness-card__emoji">${act.emoji}</span>
+            <div class="kindness-card__info">
+              <div class="kindness-card__title">${act.title}</div>
+              <div class="kindness-card__desc">${act.desc}</div>
+            </div>
+            <span class="kindness-card__points">+${act.points}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateProgress() {
+      const completed = Object.keys(state.completedToday).length;
+      const total = dailyActs.length;
+      const pct = completed / total;
+
+      // Progress ring
+      const circumference = 2 * Math.PI * 60;
+      const offset = circumference * (1 - pct);
+      document.getElementById('progress-fill').style.strokeDashoffset = offset;
+      document.getElementById('progress-count').textContent = `${completed}/${total}`;
+
+      // Progress message
+      const msgs = [
+        'Complete kind acts to fill your ring!',
+        'Great start! Keep going! \u{1F31F}',
+        'You are doing amazing! \u{1F4AA}',
+        'Halfway there! So proud of you! \u{1F60D}',
+        'Almost done! You are a kindness hero! \u{1F3C6}',
+        'One more to go! \u{1F525}',
+        'ALL COMPLETE! You are incredible! \u{1F389}'
+      ];
+      document.getElementById('progress-msg').textContent = msgs[Math.min(completed, msgs.length - 1)];
+
+      // Stats
+      document.getElementById('total-acts').textContent = `${state.totalActs} Total Acts`;
+      document.getElementById('streak-count').textContent = `${state.currentStreak} Day Streak`;
+      document.getElementById('best-streak').textContent = `Best: ${state.bestStreak}`;
+
+      // Streak fire animation
+      const streakEl = document.getElementById('streak-display');
+      if (state.currentStreak >= 3) {
+        streakEl.classList.add('streak-item--fire');
+      } else {
+        streakEl.classList.remove('streak-item--fire');
+      }
+
+      // Title badge
+      let title = TITLES[0].title;
+      for (const t of TITLES) {
+        if (state.totalActs >= t.min) title = t.title;
+      }
+      document.getElementById('title-badge').textContent = title;
+    }
+
+    function renderHistory() {
+      const grid = document.getElementById('history-grid');
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDay = new Date(year, month, 1).getDay();
+
+      let html = '';
+
+      // Day labels
+      const dayLabels = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+      html += dayLabels.map(d => `<div class="history-day history-day--empty" style="font-size:9px;opacity:0.5;">${d}</div>`).join('');
+
+      // Empty cells for offset
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="history-day history-day--empty"></div>';
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const isToday = dateStr === today;
+        const isCompleted = state.history[dateStr];
+        let cls = 'history-day';
+        if (isToday) cls += ' history-day--today';
+        if (isCompleted) cls += ' history-day--completed';
+        html += `<div class="${cls}">${d}</div>`;
+      }
+
+      grid.innerHTML = html;
+    }
+
+    /* ============================================================
+       ACTIONS
+       ============================================================ */
+    function toggleAct(id) {
+      if (state.completedToday[id]) {
+        // Undo
+        delete state.completedToday[id];
+        const act = KINDNESS_ACTS.find(a => a.id === id);
+        if (act) state.totalActs = Math.max(0, state.totalActs - 1);
+      } else {
+        // Complete
+        state.completedToday[id] = true;
+        state.totalActs++;
+      }
+
+      // Check if all done today
+      const completed = Object.keys(state.completedToday).length;
+      if (completed >= dailyActs.length) {
+        // Mark today in history
+        if (!state.history[today]) {
+          state.history[today] = true;
+          state.currentStreak++;
+          if (state.currentStreak > state.bestStreak) {
+            state.bestStreak = state.currentStreak;
+          }
+        }
+        // Show celebration after short delay
+        setTimeout(() => {
+          showCelebration();
+        }, 500);
+      } else {
+        // If we unchecked and no longer all done, remove from history
+        if (state.history[today] && completed < dailyActs.length) {
+          delete state.history[today];
+          state.currentStreak = Math.max(0, state.currentStreak - 1);
+        }
+      }
+
+      saveState();
+      renderActs();
+      updateProgress();
+      renderHistory();
+    }
+
+    function showCelebration() {
+      launchConfetti();
+      const celeb = document.getElementById('celebration');
+      celeb.classList.add('visible');
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#FF69B4', '#98FF98', '#FFBC99', '#FFD700', '#87CEEB', '#DDA0DD', '#FF6347', '#00CED1'];
+      for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + '%';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+        c.style.animationDelay = Math.random() * 1.5 + 's';
+        c.style.width = (Math.random() * 8 + 6) + 'px';
+        c.style.height = (Math.random() * 8 + 6) + 'px';
+        container.appendChild(c);
+      }
+      setTimeout(() => { container.innerHTML = ''; }, 4000);
+    }
+
+    /* ============================================================
+       BOOT
+       ============================================================ */
+    renderActs();
+    updateProgress();
+    renderHistory();
+  </script>
+</body>
+</html>

@@ -287,3 +287,37 @@
 .delay-5 {
   animation-delay: 0.5s;
 }
+
+
+/* -----------------------------------------------------------
+   11. KEYFRAMES — Section Backgrounds
+   Animated gradient flows and floating orb movements.
+   ----------------------------------------------------------- */
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.1); }
+  50% { transform: translate(-20px, 15px) scale(0.95); }
+  75% { transform: translate(15px, 25px) scale(1.05); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(255, 105, 180, 0.4); }
+}
+
+@keyframes subtleRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cardLift {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-4px) scale(1.02); }
+}

@@ -450,11 +450,60 @@
    below, and a decorative watermark in the corner.
    ============================================================ */
 
+.video-section {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 50%, #c2e9fb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 14s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.video-section::before,
+.video-section::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 10s ease-in-out infinite;
+}
+
+.video-section::before {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 70%);
+  top: -100px;
+  right: -60px;
+}
+
+.video-section::after {
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(251, 194, 235, 0.4), transparent 70%);
+  bottom: -80px;
+  left: -50px;
+  animation-delay: -5s;
+}
+
+.video-section .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.video-section .video-section__container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .video-section__container {
-  background: var(--card-white);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   padding: var(--space-lg);
   overflow: hidden;
   position: relative;
@@ -529,6 +578,40 @@
    Cards are fixed-width with scroll snapping for clean stops.
    ============================================================ */
 
+.tirthankaras {
+  background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 50%, #98FF98 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+  border-radius: 0;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  overflow: hidden;
+  position: relative;
+}
+
+.tirthankaras::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.3), transparent 70%);
+  top: -100px;
+  right: -50px;
+  border-radius: 50%;
+  animation: orbFloat 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.tirthankaras .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.tirthankaras .tirthankaras__carousel {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .tirthankaras__carousel {
   display: flex;
   gap: var(--space-base);
@@ -549,23 +632,25 @@
   min-width: 200px;
   max-width: 200px;
   scroll-snap-align: start;
-  background: var(--card-white);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   position: relative;
-  transition: transform var(--transition-fast),
-              box-shadow var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .tirthankara-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 215, 0, 0.6);
 }
 
 /* Numbered badge in top-right corner */
@@ -630,6 +715,40 @@
    background color tied to the passion it represents.
    ============================================================ */
 
+.kashayas {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 12s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.kashayas::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 105, 180, 0.25), transparent 70%);
+  bottom: -80px;
+  left: -60px;
+  border-radius: 50%;
+  animation: orbFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.kashayas .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.kashayas .kashayas__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .kashayas__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -637,38 +756,47 @@
 }
 
 .kashaya-card {
-  background: var(--card-white);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: var(--space-lg);
   text-align: center;
-  transition: transform var(--transition-fast),
-              box-shadow var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .kashaya-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
 }
 
 /* --- Kashaya Color Variants --- */
 
 .kashaya-card--anger {
-  background: #FFE4E1; /* Misty rose — anger/krodh */
+  background: rgba(255, 100, 100, 0.25);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 100, 100, 0.3);
 }
 
 .kashaya-card--pride {
-  background: #FFF3CD; /* Pale gold — pride/maan */
+  background: rgba(255, 215, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 215, 0, 0.3);
 }
 
 .kashaya-card--deceit {
-  background: #E8E4F3; /* Lavender — deceit/maya */
+  background: rgba(160, 120, 220, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(160, 120, 220, 0.3);
 }
 
 .kashaya-card--greed {
-  background: #D4EDDA; /* Pale green — greed/lobh */
+  background: rgba(80, 200, 120, 0.2);
+  backdrop-filter: blur(10px);
+  border-color: rgba(80, 200, 120, 0.3);
 }
 
 /* --- Kashaya Card Elements --- */
@@ -714,6 +842,58 @@
    titles, descriptions, and difficulty badges.
    ============================================================ */
 
+.games {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 14s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.games::before,
+.games::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: orbFloat 12s ease-in-out infinite;
+}
+
+.games::before {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(152, 255, 152, 0.3), transparent 70%);
+  top: -60px;
+  right: -40px;
+}
+
+.games::after {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 188, 153, 0.3), transparent 70%);
+  bottom: -80px;
+  left: -50px;
+  animation-delay: -6s;
+}
+
+.games .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.games .section-header__label,
+.games .section-header__title {
+  color: white;
+}
+
+.games .games__grid {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .games__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -721,22 +901,29 @@
 }
 
 .game-card {
-  background: var(--card-white);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: transform var(--transition-fast),
-              box-shadow var(--transition-fast);
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .game-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.game-card__desc {
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .game-card__icon {
@@ -768,9 +955,43 @@
 /* ============================================================
    9. FESTIVALS
    ============================================================
-   Horizontally scrollable festival cards with dashed borders
-   and warm off-white backgrounds.
+   Horizontally scrollable festival cards with glassmorphic
+   design and festive warm gradient background.
    ============================================================ */
+
+.festivals {
+  background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 16s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.festivals::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+  top: -100px;
+  left: -80px;
+  border-radius: 50%;
+  animation: orbFloat 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.festivals .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.festivals .festivals__scroll {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
 
 .festivals__scroll {
   display: flex;
@@ -788,20 +1009,21 @@
 .festival-card {
   min-width: 260px;
   max-width: 260px;
-  background: var(--festival-bg);
-  border: 2px dashed var(--border-color);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: var(--space-lg);
   display: flex;
   flex-direction: column;
-  transition: transform var(--transition-fast),
-              box-shadow var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .festival-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
 }
 
 .festival-card__badge {
@@ -837,15 +1059,51 @@
 /* ============================================================
    10. WISDOM / DAILY QUOTE
    ============================================================
-   A prominent quote card with gradient background,
-   large shadow, and swipeable dot indicators.
+   A prominent quote card with glassmorphic design
+   on a serene blue-lavender gradient background.
    ============================================================ */
 
+.wisdom {
+  background: linear-gradient(135deg, #a8edea 0%, #b8c6db 50%, #ddd6f3 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 18s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.wisdom::before {
+  content: '';
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 70%);
+  top: -80px;
+  right: -60px;
+  border-radius: 50%;
+  animation: orbFloat 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.wisdom .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.wisdom .wisdom__card {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .wisdom__card {
-  background: linear-gradient(135deg, #FFFFFF 0%, #E8E4F3 100%);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
   padding: var(--space-2xl);
   text-align: center;
   position: relative;
@@ -905,24 +1163,66 @@
 /* ============================================================
    11. COMMUNITY FEED
    ============================================================
-   Vertically stacked content cards with author info,
-   media blocks, and social actions (like, comment, share).
+   Vertically stacked content cards with glassmorphic design
+   on a fresh green-white gradient background.
    ============================================================ */
 
+.feed {
+  background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 50%, #e0f7e0 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 14s ease infinite;
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.feed::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent 70%);
+  bottom: -100px;
+  right: -80px;
+  border-radius: 50%;
+  animation: orbFloat 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.feed .section-header {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
 .feed-card {
-  background: var(--card-white);
-  border: var(--border);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-left: 5px solid var(--accent-mint);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: var(--space-lg);
   margin-bottom: var(--space-base);
-  transition: transform var(--transition-fast),
-              box-shadow var(--transition-fast);
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feed-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.feed-card:nth-child(3) {
+  border-left-color: var(--accent-peach);
+}
+
+.feed-card:nth-child(4) {
+  border-left-color: var(--accent-pink);
 }
 
 .feed-card__header {
@@ -987,7 +1287,77 @@
 
 
 /* ============================================================
-   12. RESPONSIVE — TABLET (≥ 768px)
+   12. FOOTER
+   ============================================================
+   Deep elegant dark footer with glassmorphic card.
+   ============================================================ */
+
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  max-width: 100%;
+  padding: var(--space-xl) var(--container-padding);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  color: white;
+}
+
+.footer .section-header__label,
+.footer .section-header__title {
+  color: white;
+}
+
+.footer .footer__card {
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.footer__text,
+.footer__copy {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.footer__tagline {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: var(--font-size-lg) !important;
+}
+
+.footer__card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-card);
+  padding: var(--space-xl);
+  overflow: hidden;
+}
+
+.footer__image {
+  border-radius: var(--radius-video);
+  overflow: hidden;
+  margin-bottom: var(--space-lg);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer__image img {
+  width: 100%;
+  display: block;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: var(--space-base) 0;
+}
+
+.footer__links .badge {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(152, 255, 152, 0.15);
+}
+
+
+/* ============================================================
+   13. RESPONSIVE — TABLET (≥ 768px)
    ============================================================
    Wider container, scaled-up typography and spacing.
    ============================================================ */

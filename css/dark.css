@@ -314,3 +314,98 @@
 [data-theme='dark'] .video-section__decor {
   opacity: 0.03;
 }
+
+
+/* -----------------------------------------------------------
+   19. SECTION BACKGROUNDS — Dark Gradient Overrides
+   Each section gets a darkened version of its gradient
+   while maintaining its unique color identity.
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .video-section {
+  background: linear-gradient(135deg, #2d1f0e 0%, #3a1a10 100%);
+}
+
+[data-theme='dark'] .tirthankaras {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2a1f15 50%, #1a3d2a 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .tirthankaras::before {
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
+}
+
+[data-theme='dark'] .tirthankara-card {
+  background: rgba(42, 32, 53, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .kashayas {
+  background: linear-gradient(135deg, #2d1f0e 0%, #3a1a10 50%, #3d1a1a 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .kashaya-card--anger {
+  background: rgba(255, 100, 100, 0.15);
+  border-color: rgba(255, 100, 100, 0.2);
+}
+
+[data-theme='dark'] .kashaya-card--pride {
+  background: rgba(255, 215, 0, 0.12);
+  border-color: rgba(255, 215, 0, 0.2);
+}
+
+[data-theme='dark'] .kashaya-card--deceit {
+  background: rgba(160, 120, 220, 0.15);
+  border-color: rgba(160, 120, 220, 0.2);
+}
+
+[data-theme='dark'] .kashaya-card--greed {
+  background: rgba(80, 200, 120, 0.12);
+  border-color: rgba(80, 200, 120, 0.2);
+}
+
+[data-theme='dark'] .games {
+  background: linear-gradient(135deg, #1a1035 0%, #2d1a45 50%, #35102a 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .game-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .festivals {
+  background: linear-gradient(135deg, #2d2510 0%, #3a1a10 50%, #3d102a 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .festival-card {
+  background: rgba(42, 32, 53, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .wisdom {
+  background: linear-gradient(135deg, #0e2a2a 0%, #1a2035 50%, #2d2240 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .wisdom__card {
+  background: rgba(42, 32, 53, 0.7);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-theme='dark'] .feed {
+  background: linear-gradient(135deg, #152a10 0%, #1a3520 50%, #1a2d1a 100%);
+  background-size: 200% 200%;
+}
+
+[data-theme='dark'] .feed-card {
+  background: rgba(42, 32, 53, 0.8);
+  border-color: rgba(255, 255, 255, 0.15);
+  border-left-color: var(--accent-mint);
+}
+
+[data-theme='dark'] .footer {
+  background: linear-gradient(135deg, #0a0a15 0%, #0e1525 50%, #0a2040 100%);
+}

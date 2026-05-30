@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Karma Challenge — Learn how actions create karma through fun interactive scenarios! A Jain educational game for kids.">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Karma Challenge ⚖️ — Ahimsa Kids</title>
+
+  <!-- Fonts from Fontshare -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <!-- Reuse base CSS -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dark.css">
+
+  <style>
+    /* ============================================================
+       KARMA CHALLENGE — Game Styles
+       ============================================================ */
+
+    body {
+      background: var(--bg-primary);
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* --- Game Header --- */
+    .game-header {
+      position: sticky;
+      top: 0;
+      background: var(--bg-primary);
+      border-bottom: var(--border);
+      padding: 12px var(--space-base);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: var(--z-header);
+    }
+
+    .game-header__left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .game-header__back {
+      width: 40px;
+      height: 40px;
+      border: var(--border);
+      border-radius: var(--radius-squircle);
+      background: var(--card-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      text-decoration: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .game-header__back:active {
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .game-header__subtitle {
+      font-family: var(--font-body);
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+    }
+
+    .game-header__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    /* --- Karma Meter Bar --- */
+    .karma-bar {
+      background: var(--card-white);
+      border-bottom: var(--border);
+      padding: var(--space-sm) var(--space-base);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .karma-bar__label {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xs);
+      font-weight: 900;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .karma-bar__track {
+      flex: 1;
+      height: 20px;
+      background: #f0f0f0;
+      border: var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .karma-bar__fill {
+      height: 100%;
+      width: 50%;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77);
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .karma-bar__fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: white;
+      border-radius: 3px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    }
+
+    .karma-bar__score {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      font-weight: 900;
+      min-width: 40px;
+      text-align: right;
+    }
+
+    /* --- Stats Bar --- */
+    .stats-bar {
+      display: flex;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-base);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .stats-bar::-webkit-scrollbar { display: none; }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-pill);
+      box-shadow: 2px 2px 0px 0px var(--shadow-color);
+      white-space: nowrap;
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .stat-pill__icon { font-size: 16px; }
+    .stat-pill--highlight { background: var(--accent-mint); }
+
+    /* --- Intro Screen --- */
+    .intro-screen {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-base);
+      text-align: center;
+    }
+
+    .intro-screen__icon {
+      font-size: 100px;
+      display: block;
+      margin-bottom: var(--space-lg);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .intro-screen__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-2xl);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: var(--space-sm);
+    }
+
+    .intro-screen__subtitle {
+      font-family: var(--font-body);
+      font-size: var(--font-size-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .intro-screen__rules {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+      padding: var(--space-lg);
+      text-align: left;
+      margin-bottom: var(--space-xl);
+    }
+
+    .intro-screen__rules h3 {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: var(--space-base);
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      font-size: var(--font-size-base);
+      line-height: 1.5;
+    }
+
+    .rule-item__icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* --- Scenario Card --- */
+    .scenario-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: var(--space-md) var(--space-base);
+      padding-bottom: var(--space-3xl);
+    }
+
+    .scenario-card {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .scenario-card__number {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xs);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.4;
+      margin-bottom: var(--space-sm);
+    }
+
+    .scenario-card__emoji {
+      font-size: 56px;
+      display: block;
+      text-align: center;
+      margin-bottom: var(--space-base);
+    }
+
+    .scenario-card__story {
+      font-family: var(--font-body);
+      font-size: var(--font-size-md);
+      font-weight: 500;
+      line-height: 1.7;
+      text-align: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .scenario-card__question {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-base);
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: var(--space-lg);
+      color: var(--accent-pink);
+    }
+
+    /* --- Choice Buttons --- */
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .choice-btn {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-btn);
+      box-shadow: var(--shadow);
+      padding: var(--space-base) var(--space-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--space-base);
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      line-height: 1.4;
+      width: 100%;
+    }
+
+    .choice-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .choice-btn:hover {
+      background: var(--bg-primary);
+    }
+
+    .choice-btn__letter {
+      width: 36px;
+      height: 36px;
+      border: var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      font-weight: 900;
+      flex-shrink: 0;
+      background: var(--bg-primary);
+    }
+
+    .choice-btn.selected-correct {
+      background: var(--accent-mint);
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+      pointer-events: none;
+    }
+
+    .choice-btn.selected-correct .choice-btn__letter {
+      background: #22c55e;
+      color: white;
+      border-color: #22c55e;
+    }
+
+    .choice-btn.selected-wrong {
+      background: var(--accent-peach);
+      transform: translate(2px, 2px);
+      box-shadow: var(--shadow-hover);
+      pointer-events: none;
+      animation: cardShake 0.5s ease;
+    }
+
+    .choice-btn.selected-wrong .choice-btn__letter {
+      background: #ef4444;
+      color: white;
+      border-color: #ef4444;
+    }
+
+    .choice-btn.revealed-correct {
+      background: var(--accent-mint);
+      border-color: #22c55e;
+      pointer-events: none;
+    }
+
+    .choice-btn.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    @keyframes cardShake {
+      0%, 100% { transform: translate(2px, 2px) translateX(0); }
+      20% { transform: translate(2px, 2px) translateX(-6px); }
+      40% { transform: translate(2px, 2px) translateX(6px); }
+      60% { transform: translate(2px, 2px) translateX(-4px); }
+      80% { transform: translate(2px, 2px) translateX(4px); }
+    }
+
+    /* --- Feedback Card --- */
+    .feedback-card {
+      margin-top: var(--space-lg);
+      border: var(--border);
+      border-radius: var(--radius-btn);
+      padding: var(--space-base) var(--space-lg);
+      animation: slideUp 0.4s ease;
+    }
+
+    .feedback-card--correct {
+      background: linear-gradient(135deg, #98FF98, #d4ffd4);
+    }
+
+    .feedback-card--wrong {
+      background: linear-gradient(135deg, #FFBC99, #ffe0cc);
+    }
+
+    .feedback-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+    }
+
+    .feedback-card__text {
+      font-family: var(--font-body);
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
+      opacity: 0.85;
+    }
+
+    .feedback-card__karma {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      font-weight: 900;
+      margin-top: var(--space-sm);
+    }
+
+    .next-btn {
+      margin-top: var(--space-lg);
+      width: 100%;
+    }
+
+    /* --- Win Screen --- */
+    .win-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: var(--space-xl);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .win-screen.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .win-card {
+      background: var(--card-white);
+      border: var(--border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2xl);
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+      animation: bounceIn 0.6s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .win-card__emoji {
+      font-size: 72px;
+      display: block;
+      margin-bottom: var(--space-base);
+    }
+
+    .win-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-xl);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-bottom: var(--space-sm);
+    }
+
+    .win-card__message {
+      font-family: var(--font-body);
+      font-size: var(--font-size-base);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+    }
+
+    .win-card__stats {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      margin-bottom: var(--space-xl);
+    }
+
+    .win-stat {
+      background: var(--card-lavender);
+      border: var(--border);
+      border-radius: var(--radius-btn);
+      padding: var(--space-sm) var(--space-base);
+      text-align: center;
+    }
+
+    .win-stat__value {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-lg);
+      font-weight: 900;
+    }
+
+    .win-stat__label {
+      font-size: var(--font-size-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .win-card__actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .win-card__karma-title {
+      font-family: var(--font-heading);
+      font-size: var(--font-size-sm);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: var(--space-xs);
+      opacity: 0.6;
+    }
+
+    .win-card__karma-badge {
+      display: inline-block;
+      padding: var(--space-sm) var(--space-lg);
+      border: var(--border);
+      border-radius: var(--radius-pill);
+      font-family: var(--font-heading);
+      font-size: var(--font-size-md);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: var(--space-lg);
+    }
+
+    .win-card__karma-badge--great {
+      background: var(--accent-mint);
+    }
+
+    .win-card__karma-badge--good {
+      background: #ffd93d;
+    }
+
+    .win-card__karma-badge--try {
+      background: var(--accent-peach);
+    }
+
+    /* --- Confetti --- */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 300;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg) scale(0.5); opacity: 0; }
+    }
+
+    /* --- Helpers --- */
+    .hidden { display: none !important; }
+
+    /* Responsive */
+    @media (min-width: 400px) {
+      .scenario-card__story { font-size: 17px; }
+    }
+
+    @media (min-width: 500px) {
+      .scenario-card { padding: var(--space-2xl); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       GAME HEADER
+       ============================================================ -->
+  <header class="game-header">
+    <div class="game-header__left">
+      <a href="index.html" class="game-header__back" aria-label="Back to home">←</a>
+      <div>
+        <div class="game-header__subtitle">AHIMSA KIDS GAME</div>
+        <div class="game-header__title">KARMA CHALLENGE ⚖️</div>
+      </div>
+    </div>
+    <button class="game-header__back" id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
+  </header>
+
+  <!-- ============================================================
+       KARMA METER (hidden until game starts)
+       ============================================================ -->
+  <div class="karma-bar hidden" id="karma-bar">
+    <span class="karma-bar__label">⚖️ Karma</span>
+    <div class="karma-bar__track">
+      <div class="karma-bar__fill" id="karma-fill"></div>
+    </div>
+    <span class="karma-bar__score" id="karma-score">0</span>
+  </div>
+
+  <!-- ============================================================
+       STATS BAR (hidden until game starts)
+       ============================================================ -->
+  <div class="stats-bar hidden" id="stats-bar">
+    <div class="stat-pill">
+      <span class="stat-pill__icon">📖</span>
+      <span id="stat-progress">1 / 10</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill__icon">✅</span>
+      <span id="stat-correct">0 correct</span>
+    </div>
+    <div class="stat-pill stat-pill--highlight">
+      <span class="stat-pill__icon">🔥</span>
+      <span id="stat-streak">0 streak</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       INTRO SCREEN
+       ============================================================ -->
+  <div class="intro-screen" id="intro-screen">
+    <span class="intro-screen__icon">⚖️</span>
+    <h1 class="intro-screen__title">KARMA CHALLENGE</h1>
+    <p class="intro-screen__subtitle">Every action has a consequence! Read fun scenarios and choose wisely. Will your karma rise or fall?</p>
+
+    <div class="intro-screen__rules">
+      <h3>📜 How to Play</h3>
+      <div class="rule-item">
+        <span class="rule-item__icon">📖</span>
+        <span>Read the story scenario carefully.</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-item__icon">🤔</span>
+        <span>Choose the action that creates the best karma.</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-item__icon">⚖️</span>
+        <span>Watch your Karma Meter rise with good choices!</span>
+      </div>
+      <div class="rule-item">
+        <span class="rule-item__icon">🌟</span>
+        <span>Complete all 10 scenarios to earn your Karma Title!</span>
+      </div>
+    </div>
+
+    <button class="btn btn--dark btn--full" id="btn-start">START CHALLENGE 🚀</button>
+  </div>
+
+  <!-- ============================================================
+       GAME CONTAINER (populated by JS)
+       ============================================================ -->
+  <div class="scenario-container hidden" id="game-container">
+    <div id="scenario-area"></div>
+  </div>
+
+  <!-- ============================================================
+       WIN SCREEN
+       ============================================================ -->
+  <div class="win-screen" id="win-screen">
+    <div class="win-card">
+      <span class="win-card__emoji" id="win-emoji">🏆</span>
+      <div class="win-card__title" id="win-title">AMAZING JOB! ✨</div>
+      <div class="win-card__message" id="win-message">You\'ve shown incredible wisdom and compassion!</div>
+      <div class="win-card__karma-title">YOUR KARMA TITLE</div>
+      <div class="win-card__karma-badge" id="win-badge">🌟 KARMA MASTER</div>
+      <div class="win-card__stats">
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-correct">0</div>
+          <div class="win-stat__label">Correct</div>
+        </div>
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-score">0</div>
+          <div class="win-stat__label">Karma</div>
+        </div>
+        <div class="win-stat">
+          <div class="win-stat__value" id="win-streak">0</div>
+          <div class="win-stat__label">Best Streak</div>
+        </div>
+      </div>
+      <div class="win-card__actions">
+        <button class="btn btn--dark btn--full" id="btn-play-again">PLAY AGAIN 🔄</button>
+        <a href="index.html" class="btn btn--primary btn--full">BACK TO HOME 🏠</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti -->
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- Theme JS -->
+  <script src="js/theme.js"></script>
+
+  <script>
+    /* ============================================================
+       SCENARIO DATA
+       ============================================================
+       Each scenario has:
+       - emoji: scene-setter illustration
+       - story: the situation
+       - question: what should you do?
+       - choices: array of options
+       - correct: index of correct choice (0-based)
+       - explanation: why this is the right answer
+       - karmaGain: points for correct answer
+       - karmaLoss: points lost for wrong answer
+       ============================================================ */
+
+    const SCENARIOS = [
+      {
+        emoji: '🐦',
+        story: 'You find a baby bird that has fallen from its nest. It looks scared and cold.',
+        question: 'What do you do?',
+        choices: [
+          'Gently pick it up and try to place it back in the nest',
+          'Ignore it and walk away',
+          'Poke it with a stick to see if it moves',
+        ],
+        correct: 0,
+        explanation: 'Showing compassion (दया) to all living beings is a core Jain value. Helping a helpless creature builds positive karma! 🌟',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🍎',
+        story: 'Your friend forgot their lunch at home and looks really hungry during break time.',
+        question: 'What would you do?',
+        choices: [
+          'Eat your lunch in front of them without sharing',
+          'Share half your lunch with your friend happily',
+          'Tell them they should have been more careful',
+        ],
+        correct: 1,
+        explanation: 'Sharing food (दान) is one of the greatest acts of kindness. The Tirthankaras taught us that charity creates wonderful karma! 🙏',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🐜',
+        story: 'While walking on a path, you notice a line of ants crossing. You could step over them or walk right through.',
+        question: 'What should you do?',
+        choices: [
+          'Stomp on them — they are just ants',
+          'Walk right through, you are in a hurry',
+          'Carefully step over the ants to let them pass safely',
+        ],
+        correct: 2,
+        explanation: 'Ahimsa (अहिंसा) means non-violence to ALL living beings — even the tiniest ant! Every life is precious in Jainism. 🕊️',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '😡',
+        story: 'A classmate says something mean about your drawing. You feel angry and want to say something hurtful back.',
+        question: 'What is the best response?',
+        choices: [
+          'Yell back louder to make them feel bad',
+          'Gossip about them to other classmates',
+          'Take a deep breath and respond calmly, or walk away',
+        ],
+        correct: 2,
+        explanation: 'Controlling anger (क्रोध) is overcoming one of the four Kashayas! Patience and forgiveness create powerful good karma. ☮️',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🎁',
+        story: 'You have two toys and your younger sibling has none. They look at your toys with big hopeful eyes.',
+        question: 'What would a compassionate person do?',
+        choices: [
+          'Give one of your toys to your sibling',
+          'Hide both toys so they can\'t see them',
+          'Say "These are mine, get your own!"',
+        ],
+        correct: 0,
+        explanation: 'Aparigraha (अपरिग्रह) means non-attachment. Sharing what we have brings joy to others AND builds beautiful karma! 💝',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '📝',
+        story: 'During a test, you see that your friend is copying answers from another student. The teacher does not notice.',
+        question: 'What is the right thing to do?',
+        choices: [
+          'Start copying too — everyone is doing it!',
+          'Quietly focus on your own work and do your honest best',
+          'Loudly announce it so everyone hears',
+        ],
+        correct: 1,
+        explanation: 'Satya (सत्य) and honesty are pillars of Jain ethics. Being truthful with yourself creates the purest karma! 📿',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🌿',
+        story: 'You see a beautiful flower in the park. You want to pluck it to take home.',
+        question: 'What should you do?',
+        choices: [
+          'Pluck the flower — it will look nice at home',
+          'Pull out the entire plant by its roots',
+          'Admire the flower where it is and leave it for others to enjoy',
+        ],
+        correct: 2,
+        explanation: 'Respect for all life (जीव दया), including plants, is a Jain teaching. The flower is alive and beautiful right where it is! 🌸',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '💰',
+        story: 'You find a wallet on the ground with money inside. Nobody is watching.',
+        question: 'What do you do?',
+        choices: [
+          'Keep the money — finders keepers!',
+          'Take the money and throw away the wallet',
+          'Try to find the owner or give it to a teacher or authority',
+        ],
+        correct: 2,
+        explanation: 'Asteya (अस्तेय) means non-stealing. Returning what belongs to others shows integrity and earns beautiful karma! ✨',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🏠',
+        story: 'Your mother asks you to help clean the house, but you really want to play video games.',
+        question: 'What would create good karma?',
+        choices: [
+          'Pretend you didn\'t hear and keep playing',
+          'Say "I\'ll do it later" and never actually help',
+          'Help your mother first, then play games after',
+        ],
+        correct: 2,
+        explanation: 'Seva (सेवा) — selfless service to family — is a beautiful act. Helping others before yourself creates wonderful karma! 🙏',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🤥',
+        story: 'You accidentally broke your neighbor\'s window while playing cricket. Nobody saw you do it.',
+        question: 'What should you do?',
+        choices: [
+          'Run away and hope nobody finds out',
+          'Blame it on someone else',
+          'Go to the neighbor, tell the truth, and offer to help fix it',
+        ],
+        correct: 2,
+        explanation: 'Truthfulness (सत्य) and taking responsibility for our actions is how we create the best karma. Honesty is always the bravest choice! 🦁',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🧹',
+        story: 'You see trash on the ground near a temple. Others are walking past it.',
+        question: 'What would you do?',
+        choices: [
+          'Walk past like everyone else',
+          'Pick up the trash and put it in a dustbin',
+          'Complain about who left it there',
+        ],
+        correct: 1,
+        explanation: 'Taking action for cleanliness and respecting sacred spaces shows initiative and compassion. Small acts of seva create big karma! 🌍',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '👦',
+        story: 'A new student joins your class. They look nervous and don\'t know anyone.',
+        question: 'How would you act?',
+        choices: [
+          'Ignore them — they\'ll figure it out',
+          'Walk up, introduce yourself, and invite them to sit with you',
+          'Whisper about them with your friends',
+        ],
+        correct: 1,
+        explanation: 'Maitri (मैत्री) — friendship and kindness towards all — is a beautiful Jain value. Welcoming others creates wonderful karma! 💛',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🍕',
+        story: 'You\'re very hungry and there is only one piece of pizza left. Your little sister is also hungry.',
+        question: 'What do you do?',
+        choices: [
+          'Grab it quickly before she can',
+          'Split it in half and share with your sister',
+          'Tell her she should have eaten faster',
+        ],
+        correct: 1,
+        explanation: 'Tyaga (त्याग) — sacrifice — is giving up our own comfort for others. Sharing equally builds the most beautiful karma! 🤝',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🕸️',
+        story: 'You notice a spider making a web in the corner of your room. It\'s not bothering anyone.',
+        question: 'What should you do?',
+        choices: [
+          'Squash the spider immediately',
+          'Spray insecticide on it',
+          'Leave it alone — it\'s a living being doing its work',
+        ],
+        correct: 2,
+        explanation: 'Jiv Daya (जीव दया) — compassion for all life — means letting creatures live in peace. Every soul is on its own spiritual journey! 🕊️',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+      {
+        emoji: '🎒',
+        story: 'Your friend is struggling to carry heavy bags after school. You finished packing already.',
+        question: 'What would you do?',
+        choices: [
+          'Walk ahead — not your problem',
+          'Offer to help carry one of their bags',
+          'Laugh and say "You packed too much!"',
+        ],
+        correct: 1,
+        explanation: 'Paraupkaar (परोपकार) — helping others selflessly — is how we put Jain values into action. Every kind act earns great karma! 🌟',
+        karmaGain: 15,
+        karmaLoss: 10,
+      },
+    ];
+
+    /* ============================================================
+       GAME STATE
+       ============================================================ */
+    let currentScenario = 0;
+    let karmaScore = 0;
+    let correctCount = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let gameScenarios = [];
+    let answered = false;
+    const TOTAL_SCENARIOS = 10;
+
+    /* ============================================================
+       DOM REFS
+       ============================================================ */
+    const introScreen = document.getElementById('intro-screen');
+    const gameContainer = document.getElementById('game-container');
+    const scenarioArea = document.getElementById('scenario-area');
+    const karmaBar = document.getElementById('karma-bar');
+    const karmaFill = document.getElementById('karma-fill');
+    const karmaScoreEl = document.getElementById('karma-score');
+    const statsBar = document.getElementById('stats-bar');
+    const statProgress = document.getElementById('stat-progress');
+    const statCorrect = document.getElementById('stat-correct');
+    const statStreak = document.getElementById('stat-streak');
+    const winScreen = document.getElementById('win-screen');
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    initTheme();
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    document.getElementById('btn-start').addEventListener('click', startGame);
+    document.getElementById('btn-play-again').addEventListener('click', () => {
+      winScreen.classList.remove('visible');
+      startGame();
+    });
+
+    /* ============================================================
+       GAME LOGIC
+       ============================================================ */
+
+    function startGame() {
+      currentScenario = 0;
+      karmaScore = 0;
+      correctCount = 0;
+      streak = 0;
+      bestStreak = 0;
+      answered = false;
+
+      // Pick 10 random scenarios
+      gameScenarios = shuffle([...SCENARIOS]).slice(0, TOTAL_SCENARIOS);
+
+      // Show game UI
+      introScreen.classList.add('hidden');
+      gameContainer.classList.remove('hidden');
+      karmaBar.classList.remove('hidden');
+      statsBar.classList.remove('hidden');
+
+      updateKarmaBar();
+      updateStats();
+      renderScenario();
+    }
+
+    function renderScenario() {
+      answered = false;
+      const s = gameScenarios[currentScenario];
+      const letters = ['A', 'B', 'C'];
+
+      scenarioArea.innerHTML = `
+        <div class="scenario-card" id="active-card">
+          <div class="scenario-card__number">Scenario ${currentScenario + 1} of ${TOTAL_SCENARIOS}</div>
+          <div class="scenario-card__emoji">${s.emoji}</div>
+          <div class="scenario-card__story">${s.story}</div>
+          <div class="scenario-card__question">${s.question}</div>
+          <div class="choices" id="choices">
+            ${s.choices.map((c, i) => `
+              <button class="choice-btn" data-index="${i}" onclick="selectChoice(${i})">
+                <span class="choice-btn__letter">${letters[i]}</span>
+                <span>${c}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div id="feedback-area"></div>
+        </div>
+      `;
+    }
+
+    function selectChoice(index) {
+      if (answered) return;
+      answered = true;
+
+      const s = gameScenarios[currentScenario];
+      const isCorrect = index === s.correct;
+      const buttons = document.querySelectorAll('.choice-btn');
+      const feedbackArea = document.getElementById('feedback-area');
+
+      // Disable all buttons
+      buttons.forEach(btn => btn.classList.add('disabled'));
+
+      // Highlight selected
+      if (isCorrect) {
+        buttons[index].classList.add('selected-correct');
+        karmaScore = Math.min(150, karmaScore + s.karmaGain);
+        correctCount++;
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+      } else {
+        buttons[index].classList.add('selected-wrong');
+        buttons[s.correct].classList.add('revealed-correct');
+        karmaScore = Math.max(0, karmaScore - s.karmaLoss);
+        streak = 0;
+      }
+
+      updateKarmaBar();
+      updateStats();
+
+      // Show feedback
+      feedbackArea.innerHTML = `
+        <div class="feedback-card ${isCorrect ? 'feedback-card--correct' : 'feedback-card--wrong'}">
+          <div class="feedback-card__title">${isCorrect ? '✅ Wonderful!' : '❌ Not quite...'}</div>
+          <div class="feedback-card__text">${s.explanation}</div>
+          <div class="feedback-card__karma">${isCorrect ? `+${s.karmaGain} Karma ⬆️` : `-${s.karmaLoss} Karma ⬇️`}</div>
+        </div>
+        <button class="btn btn--dark btn--full next-btn" onclick="nextScenario()">
+          ${currentScenario < TOTAL_SCENARIOS - 1 ? 'NEXT SCENARIO →' : 'SEE RESULTS 🏆'}
+        </button>
+      `;
+    }
+
+    function nextScenario() {
+      currentScenario++;
+      if (currentScenario >= TOTAL_SCENARIOS) {
+        showResults();
+      } else {
+        updateStats();
+        renderScenario();
+      }
+    }
+
+    function showResults() {
+      gameContainer.classList.add('hidden');
+      karmaBar.classList.add('hidden');
+      statsBar.classList.add('hidden');
+
+      // Determine karma title
+      let emoji, title, message, badgeText, badgeClass;
+      const pct = correctCount / TOTAL_SCENARIOS;
+
+      if (pct >= 0.9) {
+        emoji = '🏆';
+        title = 'KARMA MASTER! ✨';
+        message = 'Incredible! Your compassion and wisdom are truly inspiring. Lord Mahavir would be proud!';
+        badgeText = '🌟 KARMA MASTER';
+        badgeClass = 'win-card__karma-badge--great';
+      } else if (pct >= 0.7) {
+        emoji = '🌟';
+        title = 'GREAT JOB!';
+        message = 'You have a kind heart and strong values. Keep practicing ahimsa every day!';
+        badgeText = '💛 KARMA WARRIOR';
+        badgeClass = 'win-card__karma-badge--good';
+      } else if (pct >= 0.5) {
+        emoji = '😊';
+        title = 'GOOD EFFORT!';
+        message = 'You\'re learning! Every step towards compassion matters. Try again to improve!';
+        badgeText = '🌱 KARMA LEARNER';
+        badgeClass = 'win-card__karma-badge--good';
+      } else {
+        emoji = '💪';
+        title = 'KEEP TRYING!';
+        message = 'Learning about karma is a journey. Play again and discover the power of kind choices!';
+        badgeText = '🔰 KARMA SEEKER';
+        badgeClass = 'win-card__karma-badge--try';
+      }
+
+      document.getElementById('win-emoji').textContent = emoji;
+      document.getElementById('win-title').textContent = title;
+      document.getElementById('win-message').textContent = message;
+      document.getElementById('win-correct').textContent = correctCount + '/' + TOTAL_SCENARIOS;
+      document.getElementById('win-score').textContent = karmaScore;
+      document.getElementById('win-streak').textContent = bestStreak;
+
+      const badge = document.getElementById('win-badge');
+      badge.textContent = badgeText;
+      badge.className = 'win-card__karma-badge ' + badgeClass;
+
+      winScreen.classList.add('visible');
+      launchConfetti();
+    }
+
+    /* ============================================================
+       HELPERS
+       ============================================================ */
+
+    function updateKarmaBar() {
+      const pct = Math.min(100, (karmaScore / 150) * 100);
+      karmaFill.style.width = pct + '%';
+      karmaScoreEl.textContent = karmaScore;
+    }
+
+    function updateStats() {
+      statProgress.textContent = `${currentScenario + 1} / ${TOTAL_SCENARIOS}`;
+      statCorrect.textContent = `${correctCount} correct`;
+      statStreak.textContent = `${streak} streak`;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#FF69B4', '#98FF98', '#FFBC99', '#E8E4F3', '#FFD700', '#87CEEB'];
+
+      for (let i = 0; i < 60; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.width = (6 + Math.random() * 8) + 'px';
+        piece.style.height = (6 + Math.random() * 8) + 'px';
+        piece.style.animationDuration = (2 + Math.random() * 3) + 's';
+        piece.style.animationDelay = (Math.random() * 1.5) + 's';
+        piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        container.appendChild(piece);
+      }
+
+      setTimeout(() => { container.innerHTML = ''; }, 6000);
+    }
+  </script>
+</body>
+</html>

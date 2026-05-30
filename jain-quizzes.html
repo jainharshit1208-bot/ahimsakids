@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Jain Quizzes — Test your knowledge of Jain values, Tirthankaras, and teachings through fun interactive quizzes!">
+  <meta name="theme-color" content="#E8E4F3">
+  <title>Jain Quizzes — Ahimsa Kids 🧠</title>
+
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-primary: #E8E4F3;
+      --bg-white: #FFFFFF;
+      --accent-pink: #FF69B4;
+      --accent-mint: #98FF98;
+      --accent-peach: #FFBC99;
+      --text-primary: #1A1A1A;
+      --text-secondary: rgba(26, 26, 26, 0.6);
+      --border-color: #000000;
+      --shadow-color: #000000;
+      --card-white: #FFFFFF;
+      --card-lavender: #E8E4F3;
+      --font-heading: 'Cabinet Grotesk', sans-serif;
+      --font-body: 'Satoshi', sans-serif;
+      --font-size-xs: 10px; --font-size-sm: 12px; --font-size-base: 14px;
+      --font-size-md: 16px; --font-size-lg: 20px; --font-size-xl: 24px; --font-size-2xl: 28px;
+      --border: 2px solid var(--border-color);
+      --shadow: 4px 4px 0px 0px var(--shadow-color);
+      --shadow-hover: 1px 1px 0px 0px var(--shadow-color);
+      --shadow-lg: 6px 6px 0px 0px var(--shadow-color);
+      --radius-card: 40px; --radius-btn: 16px; --radius-pill: 24px; --radius-squircle: 16px;
+      --transition-fast: 180ms ease; --transition-base: 300ms ease;
+      --space-xs: 4px; --space-sm: 8px; --space-md: 12px; --space-base: 16px;
+      --space-lg: 20px; --space-xl: 24px; --space-2xl: 32px; --space-3xl: 40px;
+    }
+    [data-theme='dark'] {
+      --bg-primary: #1A1025; --bg-white: #2A2035;
+      --text-primary: #F0E8F8; --text-secondary: rgba(240, 232, 248, 0.6);
+      --border-color: rgba(255, 255, 255, 0.2); --shadow-color: rgba(0, 0, 0, 0.3);
+      --card-white: #2A2035; --card-lavender: #2D2240;
+      --accent-mint: #4AE07A; --accent-peach: #FF9B6A; --accent-pink: #FF85C8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 40%, #f093fb 70%, #fbc2eb 100%);
+      background-size: 400% 400%; animation: gradientShift 20s ease infinite;
+      min-height: 100vh; color: var(--text-primary); -webkit-font-smoothing: antialiased;
+    }
+    [data-theme='dark'] body {
+      background: linear-gradient(135deg, #1A1025 0%, #2d1a45 40%, #35102a 70%, #1a1a2e 100%);
+      background-size: 400% 400%;
+    }
+
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    @keyframes slideUp { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+    @keyframes bounceIn { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes timerPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(255,105,180,0.4); } 50% { box-shadow: 0 0 0 8px rgba(255,105,180,0); } }
+    @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    @keyframes correctFlash { 0% { background: rgba(152,255,152,0.5); } 100% { background: rgba(152,255,152,0.2); } }
+    @keyframes scoreFloat { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.5); } }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-sm);
+      padding: var(--space-base) var(--space-xl); border-radius: var(--radius-btn);
+      font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      border: var(--border); transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn:active { transform: translate(2px, 2px); box-shadow: var(--shadow-hover); }
+    .btn--dark { background: var(--text-primary); color: var(--bg-primary); box-shadow: var(--shadow); }
+    .btn--mint { background: var(--accent-mint); color: var(--text-primary); box-shadow: var(--shadow); }
+    .btn--primary { background: var(--card-white); color: var(--text-primary); box-shadow: var(--shadow); }
+    .btn--pink { background: var(--accent-pink); color: white; box-shadow: var(--shadow); }
+    .btn--full { width: 100%; }
+
+    /* HEADER */
+    .game-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: var(--border); padding: var(--space-base) var(--space-lg);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    [data-theme='dark'] .game-header { background: rgba(26,16,37,0.85); }
+    .game-header__left { display: flex; align-items: center; gap: var(--space-md); }
+    .game-header__back {
+      width: 40px; height: 40px; border-radius: var(--radius-squircle);
+      background: var(--card-white); border: var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 18px; text-decoration: none; color: var(--text-primary); cursor: pointer;
+    }
+    .game-header__subtitle { font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; opacity: 0.5; letter-spacing: 0.1em; }
+    .game-header__title { font-family: var(--font-heading); font-size: var(--font-size-md); font-weight: 900; text-transform: uppercase; }
+
+    /* STATS BAR */
+    .stats-bar {
+      display: flex; align-items: center; justify-content: center; gap: var(--space-md);
+      padding: var(--space-sm) var(--space-lg); flex-wrap: wrap;
+      background: rgba(255,255,255,0.5); backdrop-filter: blur(8px); border-bottom: var(--border);
+    }
+    [data-theme='dark'] .stats-bar { background: rgba(42,32,53,0.6); }
+    .stat-pill {
+      display: flex; align-items: center; gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-sm);
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(6px);
+      border: var(--border); border-radius: var(--radius-pill);
+      font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 900;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    [data-theme='dark'] .stat-pill { background: rgba(42,32,53,0.8); }
+    .stat-pill__icon { font-size: 14px; }
+    .stat-pill--timer { animation: timerPulse 1.5s ease-in-out infinite; }
+    .stat-pill--danger { background: rgba(255,100,100,0.3) !important; border-color: #ef4444 !important; }
+
+    /* CONTAINER */
+    .container { max-width: 500px; margin: 0 auto; padding: var(--space-lg) var(--space-base); padding-bottom: var(--space-3xl); }
+
+    /* ============================================================
+       INTRO SCREEN
+       ============================================================ */
+    .intro { text-align: center; animation: slideUp 0.5s ease; }
+    .intro__icon { font-size: 100px; display: block; margin-bottom: var(--space-lg); animation: float 3s ease-in-out infinite; }
+    .intro__title { font-family: var(--font-heading); font-size: var(--font-size-2xl); font-weight: 900; text-transform: uppercase; font-style: italic; margin-bottom: var(--space-sm); color: white; }
+    .intro__subtitle { font-family: var(--font-body); font-size: var(--font-size-base); color: rgba(255,255,255,0.8); margin-bottom: var(--space-xl); line-height: 1.6; }
+
+    .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-xl); }
+    .topic-card {
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.25); border-radius: var(--radius-btn);
+      padding: var(--space-lg) var(--space-base); text-align: center; cursor: pointer;
+      transition: all 0.3s ease; color: white;
+    }
+    .topic-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.5); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
+    .topic-card--active { background: rgba(255,255,255,0.3); border-color: white; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .topic-card__emoji { font-size: 36px; display: block; margin-bottom: var(--space-sm); }
+    .topic-card__title { font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900; text-transform: uppercase; margin-bottom: 2px; }
+    .topic-card__count { font-family: var(--font-body); font-size: var(--font-size-xs); opacity: 0.7; }
+
+    .high-score-card {
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255,0.2); border-radius: var(--radius-btn);
+      padding: var(--space-base); margin-bottom: var(--space-xl); color: white;
+    }
+    .high-score-card__title { font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 900; text-transform: uppercase; opacity: 0.6; margin-bottom: var(--space-xs); }
+    .high-score-card__row { display: flex; justify-content: space-between; align-items: center; }
+    .high-score-card__value { font-family: var(--font-heading); font-size: var(--font-size-lg); font-weight: 900; }
+    .high-score-card__label { font-size: var(--font-size-xs); opacity: 0.6; }
+
+    /* ============================================================
+       QUESTION SCREEN
+       ============================================================ */
+    .question-card {
+      background: rgba(255,255,255,0.7); backdrop-filter: blur(12px);
+      border: 2px solid rgba(255,255,255,0.5); border-radius: var(--radius-card);
+      padding: var(--space-xl); margin-bottom: var(--space-lg);
+      animation: slideUp 0.5s ease; position: relative; overflow: hidden;
+    }
+    [data-theme='dark'] .question-card { background: rgba(42,32,53,0.8); border-color: rgba(255,255,255,0.15); }
+    .question-card__number { font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.4; margin-bottom: var(--space-sm); }
+    .question-card__category {
+      display: inline-block; padding: 3px var(--space-sm);
+      font-family: var(--font-heading); font-size: var(--font-size-xs); font-weight: 900;
+      text-transform: uppercase; border-radius: var(--radius-pill); margin-bottom: var(--space-base);
+      background: rgba(255,105,180,0.15); color: var(--accent-pink); border: 1px solid rgba(255,105,180,0.3);
+    }
+    .question-card__emoji { font-size: 56px; display: block; text-align: center; margin-bottom: var(--space-base); }
+    .question-card__text {
+      font-family: var(--font-heading); font-size: var(--font-size-md); font-weight: 800;
+      line-height: 1.5; text-align: center; margin-bottom: var(--space-xl);
+    }
+
+    /* Timer bar */
+    .timer-bar { height: 4px; background: rgba(0,0,0,0.08); border-radius: 2px; margin-bottom: var(--space-lg); overflow: hidden; }
+    [data-theme='dark'] .timer-bar { background: rgba(255,255,255,0.1); }
+    .timer-bar__fill { height: 100%; background: var(--accent-pink); border-radius: 2px; transition: width 0.3s linear; }
+    .timer-bar__fill--warning { background: #ef4444; }
+
+    /* CHOICES */
+    .choices { display: flex; flex-direction: column; gap: var(--space-md); }
+    .choice-btn {
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(8px);
+      border: 2px solid rgba(255,255,255,0.5); border-radius: var(--radius-btn);
+      padding: var(--space-base) var(--space-lg); display: flex; align-items: center; gap: var(--space-base);
+      cursor: pointer; transition: all 0.2s ease; text-align: left;
+      font-family: var(--font-body); font-size: var(--font-size-base); font-weight: 500;
+      line-height: 1.4; width: 100%; color: var(--text-primary);
+    }
+    [data-theme='dark'] .choice-btn { background: rgba(42,32,53,0.6); border-color: rgba(255,255,255,0.15); }
+    .choice-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+    .choice-btn__letter {
+      width: 36px; height: 36px; min-width: 36px; border: var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900;
+      background: rgba(255,255,255,0.5);
+    }
+    [data-theme='dark'] .choice-btn__letter { background: rgba(42,32,53,0.6); }
+
+    .choice-btn.correct { background: rgba(152,255,152,0.4); border-color: #22c55e; pointer-events: none; }
+    .choice-btn.correct .choice-btn__letter { background: #22c55e; color: white; border-color: #22c55e; }
+    .choice-btn.wrong { background: rgba(255,100,100,0.3); border-color: #ef4444; pointer-events: none; animation: shake 0.5s ease; }
+    .choice-btn.wrong .choice-btn__letter { background: #ef4444; color: white; border-color: #ef4444; }
+    .choice-btn.disabled { pointer-events: none; opacity: 0.5; }
+    .choice-btn.reveal-correct { background: rgba(152,255,152,0.3); border-color: #22c55e; pointer-events: none; }
+
+    /* Feedback */
+    .feedback {
+      margin-top: var(--space-lg); border: var(--border); border-radius: var(--radius-btn);
+      padding: var(--space-base) var(--space-lg); animation: slideUp 0.4s ease;
+    }
+    .feedback--correct { background: linear-gradient(135deg, #98FF98, #d4ffd4); }
+    .feedback--wrong { background: linear-gradient(135deg, #FFBC99, #ffe0cc); }
+    .feedback__title { font-family: var(--font-heading); font-size: var(--font-size-md); font-weight: 900; text-transform: uppercase; margin-bottom: var(--space-xs); }
+    .feedback__text { font-family: var(--font-body); font-size: var(--font-size-sm); line-height: 1.5; opacity: 0.85; }
+    .feedback__score { font-family: var(--font-heading); font-size: var(--font-size-sm); font-weight: 900; margin-top: var(--space-sm); }
+
+    .next-btn { margin-top: var(--space-lg); width: 100%; }
+
+    /* Score popup */
+    .score-popup {
+      position: fixed; z-index: 150; font-family: var(--font-heading); font-size: var(--font-size-xl);
+      font-weight: 900; color: var(--accent-mint); pointer-events: none; animation: scoreFloat 1s ease forwards;
+    }
+
+    /* ============================================================
+       RESULTS SCREEN
+       ============================================================ */
+    .results { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center; z-index: 200; padding: var(--space-xl);
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .results.visible { opacity: 1; pointer-events: all; }
+    .results__card {
+      background: var(--card-white); border: var(--border); border-radius: var(--radius-card);
+      box-shadow: var(--shadow-lg); padding: var(--space-2xl); text-align: center;
+      max-width: 380px; width: 100%; animation: bounceIn 0.6s ease;
+    }
+    .results__emoji { font-size: 72px; display: block; margin-bottom: var(--space-base); }
+    .results__title { font-family: var(--font-heading); font-size: var(--font-size-xl); font-weight: 900; text-transform: uppercase; font-style: italic; margin-bottom: var(--space-sm); }
+    .results__message { font-family: var(--font-body); font-size: var(--font-size-base); color: var(--text-secondary); margin-bottom: var(--space-lg); line-height: 1.5; }
+    .results__grade {
+      display: inline-block; padding: var(--space-sm) var(--space-lg);
+      border: var(--border); border-radius: var(--radius-pill);
+      font-family: var(--font-heading); font-size: var(--font-size-md); font-weight: 900;
+      text-transform: uppercase; margin-bottom: var(--space-lg);
+    }
+    .results__grade--s { background: var(--accent-mint); }
+    .results__grade--a { background: #ffd93d; }
+    .results__grade--b { background: var(--accent-peach); }
+    .results__grade--c { background: var(--accent-pink); color: white; }
+
+    .results__stats { display: flex; gap: var(--space-md); justify-content: center; margin-bottom: var(--space-xl); flex-wrap: wrap; }
+    .result-stat { background: var(--card-lavender); border: var(--border); border-radius: var(--radius-btn); padding: var(--space-sm) var(--space-base); text-align: center; min-width: 70px; }
+    .result-stat__value { font-family: var(--font-heading); font-size: var(--font-size-lg); font-weight: 900; }
+    .result-stat__label { font-size: var(--font-size-xs); font-weight: 700; text-transform: uppercase; opacity: 0.6; }
+    .results__actions { display: flex; flex-direction: column; gap: var(--space-sm); }
+
+    .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 300; overflow: hidden; }
+    .confetti { position: absolute; width: 10px; height: 10px; border-radius: 2px; top: -10px; animation: confettiFall linear forwards; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="game-header">
+    <div class="game-header__left">
+      <a href="index.html" class="game-header__back" aria-label="Back to home">&larr;</a>
+      <div>
+        <div class="game-header__subtitle">AHIMSA KIDS GAME</div>
+        <div class="game-header__title">JAIN QUIZZES &#x1F9E0;</div>
+      </div>
+    </div>
+    <button class="game-header__back" id="theme-toggle" aria-label="Toggle Dark Mode">&#x1F319;</button>
+  </header>
+
+  <!-- STATS BAR (hidden until quiz starts) -->
+  <div class="stats-bar hidden" id="stats-bar">
+    <div class="stat-pill stat-pill--timer" id="timer-pill">
+      <span class="stat-pill__icon">&#x23F1;</span>
+      <span id="stat-timer">15s</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill__icon">&#x1F4D6;</span>
+      <span id="stat-progress">1 / 10</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill__icon">&#x2B50;</span>
+      <span id="stat-score">0 pts</span>
+    </div>
+    <div class="stat-pill">
+      <span class="stat-pill__icon">&#x1F525;</span>
+      <span id="stat-streak">0x</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- ============================================================
+         INTRO SCREEN
+         ============================================================ -->
+    <div class="intro" id="intro-screen">
+      <span class="intro__icon">&#x1F9E0;</span>
+      <h1 class="intro__title">JAIN QUIZZES</h1>
+      <p class="intro__subtitle">Test your knowledge of Jain values, Tirthankaras, festivals, and teachings. Choose a topic and challenge yourself!</p>
+
+      <div class="topic-grid" id="topic-grid">
+        <div class="topic-card topic-card--active" data-topic="all">
+          <span class="topic-card__emoji">&#x1F31F;</span>
+          <div class="topic-card__title">All Topics</div>
+          <div class="topic-card__count">27 questions</div>
+        </div>
+        <div class="topic-card" data-topic="tirthankaras">
+          <span class="topic-card__emoji">&#x1F64F;</span>
+          <div class="topic-card__title">Tirthankaras</div>
+          <div class="topic-card__count">8 questions</div>
+        </div>
+        <div class="topic-card" data-topic="values">
+          <span class="topic-card__emoji">&#x2638;</span>
+          <div class="topic-card__title">Jain Values</div>
+          <div class="topic-card__count">10 questions</div>
+        </div>
+        <div class="topic-card" data-topic="festivals">
+          <span class="topic-card__emoji">&#x1F38A;</span>
+          <div class="topic-card__title">Festivals</div>
+          <div class="topic-card__count">9 questions</div>
+        </div>
+      </div>
+
+      <div class="high-score-card" id="high-score-card">
+        <div class="high-score-card__title">&#x1F3C6; Your Best</div>
+        <div class="high-score-card__row">
+          <div>
+            <div class="high-score-card__value" id="hs-score">0</div>
+            <div class="high-score-card__label">High Score</div>
+          </div>
+          <div>
+            <div class="high-score-card__value" id="hs-streak">0</div>
+            <div class="high-score-card__label">Best Streak</div>
+          </div>
+          <div>
+            <div class="high-score-card__value" id="hs-played">0</div>
+            <div class="high-score-card__label">Games</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn--dark btn--full" id="btn-start">START QUIZ &#x1F680;</button>
+    </div>
+
+    <!-- ============================================================
+         QUIZ CONTAINER
+         ============================================================ -->
+    <div class="hidden" id="quiz-container">
+      <div class="timer-bar"><div class="timer-bar__fill" id="timer-fill"></div></div>
+      <div id="question-area"></div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results-screen">
+    <div class="results__card">
+      <span class="results__emoji" id="res-emoji">&#x1F3C6;</span>
+      <div class="results__title" id="res-title">QUIZ COMPLETE!</div>
+      <div class="results__message" id="res-message">Great effort!</div>
+      <div class="results__grade" id="res-grade">&#x1F31F; A+</div>
+      <div class="results__stats">
+        <div class="result-stat"><div class="result-stat__value" id="res-correct">0</div><div class="result-stat__label">Correct</div></div>
+        <div class="result-stat"><div class="result-stat__value" id="res-score">0</div><div class="result-stat__label">Score</div></div>
+        <div class="result-stat"><div class="result-stat__value" id="res-streak">0</div><div class="result-stat__label">Best Streak</div></div>
+        <div class="result-stat"><div class="result-stat__value" id="res-time">0s</div><div class="result-stat__label">Avg Time</div></div>
+      </div>
+      <div class="results__actions">
+        <button class="btn btn--dark btn--full" id="btn-retry">PLAY AGAIN &#x1F504;</button>
+        <a href="index.html" class="btn btn--primary btn--full">BACK TO HOME &#x1F3E0;</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <script src="js/theme.js"></script>
+  <script>
+    /* ============================================================
+       QUESTION BANK
+       ============================================================ */
+    const QUESTIONS = [
+      // --- TIRTHANKARAS ---
+      { topic: 'tirthankaras', emoji: '\u{1F981}', q: 'Who is the 24th and last Tirthankara?', choices: ['Adinath Ji', 'Parshvanath Ji', 'Mahavir Swami', 'Neminath Ji'], correct: 2, explain: 'Bhagwan Mahavir Swami is the 24th and last Tirthankara of the current time cycle. His symbol is the Lion.' },
+      { topic: 'tirthankaras', emoji: '\u{1F402}', q: 'What is the symbol (lanchhan) of Adinath Ji, the first Tirthankara?', choices: ['Lion', 'Elephant', 'Bull', 'Horse'], correct: 2, explain: 'Adinath Ji (Rishabhdev) has the Bull as his symbol. He is considered the first Tirthankara.' },
+      { topic: 'tirthankaras', emoji: '\u{1F40D}', q: 'Which Tirthankara is associated with the Snake symbol?', choices: ['Mahavir Swami', 'Neminath Ji', 'Parshvanath Ji', 'Shantinath Ji'], correct: 2, explain: 'Parshvanath Ji, the 23rd Tirthankara, has the Snake (Serpent) as his symbol.' },
+      { topic: 'tirthankaras', emoji: '\u{1F54A}', q: 'How many Tirthankaras are there in Jainism?', choices: ['12', '18', '24', '108'], correct: 2, explain: 'There are 24 Tirthankaras in the current time cycle of Jain cosmology.' },
+      { topic: 'tirthankaras', emoji: '\u{1F98C}', q: 'What is the symbol of Shantinath Ji, the 16th Tirthankara?', choices: ['Deer', 'Eagle', 'Tortoise', 'Fish'], correct: 0, explain: 'Shantinath Ji has the Deer as his symbol. His name means "Lord of Peace."' },
+
+      { topic: 'tirthankaras', emoji: '\u{1F418}', q: 'Which Tirthankara has the Elephant as their symbol?', choices: ['Ajitanath Ji', 'Sambhavanath Ji', 'Abhinandan Ji', 'Sumatinath Ji'], correct: 0, explain: 'Ajitanath Ji, the 2nd Tirthankara, has the Elephant as his symbol.' },
+      { topic: 'tirthankaras', emoji: '\u{2728}', q: 'Where was Bhagwan Mahavir born?', choices: ['Varanasi', 'Kundagram (Vaishali)', 'Rajgir', 'Ayodhya'], correct: 1, explain: 'Bhagwan Mahavir was born in Kundagram near Vaishali (modern-day Bihar, India) around 599 BCE.' },
+      { topic: 'tirthankaras', emoji: '\u{1F451}', q: 'What was Bhagwan Mahavir\'s childhood name?', choices: ['Siddhartha', 'Vardhamana', 'Arjuna', 'Neminath'], correct: 1, explain: 'Mahavir\'s birth name was Vardhamana, meaning "one who brings prosperity." He was later called Mahavir (Great Hero).' },
+
+
+      // --- JAIN VALUES ---
+      { topic: 'values', emoji: '\u{1F54A}', q: 'What does "Ahimsa" mean in Jainism?', choices: ['Meditation', 'Non-violence', 'Fasting', 'Prayer'], correct: 1, explain: 'Ahimsa means non-violence \u2014 not harming any living being through thoughts, words, or actions. It is the highest Jain principle.' },
+      { topic: 'values', emoji: '\u{1F4DC}', q: 'How many main vows (Mahavratas) do Jain monks follow?', choices: ['3', '5', '7', '10'], correct: 1, explain: 'Jain monks follow 5 Mahavratas: Ahimsa (non-violence), Satya (truth), Asteya (non-stealing), Brahmacharya (celibacy), and Aparigraha (non-attachment).' },
+      { topic: 'values', emoji: '\u{2696}', q: 'What is "Karma" in Jainism?', choices: ['Good luck', 'Subtle particles that attach to the soul due to actions', 'A type of prayer', 'A festival'], correct: 1, explain: 'In Jainism, Karma refers to fine particles that attach to the soul based on our actions, thoughts, and speech. Good actions attract good karma.' },
+      { topic: 'values', emoji: '\u{1F525}', q: 'What are the Four Kashayas (passions)?', choices: ['Earth, Water, Fire, Air', 'Anger, Pride, Deceit, Greed', 'Joy, Sorrow, Fear, Love', 'Birth, Life, Death, Rebirth'], correct: 1, explain: 'The Four Kashayas are Krodh (Anger), Maan (Pride), Maya (Deceit), and Lobh (Greed). Overcoming them leads to spiritual progress.' },
+      { topic: 'values', emoji: '\u{1F331}', q: 'What does "Aparigraha" mean?', choices: ['Non-violence', 'Truthfulness', 'Non-attachment/Non-possessiveness', 'Celibacy'], correct: 2, explain: 'Aparigraha means non-attachment or non-possessiveness \u2014 not being greedy and not hoarding more than you need.' },
+      { topic: 'values', emoji: '\u{1F4AC}', q: 'What does "Satya" mean?', choices: ['Peace', 'Truth', 'Kindness', 'Knowledge'], correct: 1, explain: 'Satya means truthfulness \u2014 always speaking the truth in a way that does not harm others.' },
+      { topic: 'values', emoji: '\u{1F91D}', q: 'What does "Parasparopagraho Jivanam" mean?', choices: ['Live and let live', 'Souls exist to help one another', 'Knowledge is power', 'Non-violence is the highest duty'], correct: 1, explain: 'This is the Jain motto meaning "Souls render service to one another" \u2014 emphasizing interdependence of all life.' },
+      { topic: 'values', emoji: '\u{270B}', q: 'What does the Jain symbol of the open palm represent?', choices: ['Greeting', 'Stop! Think before you act (Ahimsa)', 'Blessing', 'Surrender'], correct: 1, explain: 'The open palm with a wheel says "Stop" \u2014 think before you act and practice non-violence. The word in the wheel is "Ahimsa."' },
+      { topic: 'values', emoji: '\u{1F500}', q: 'What is "Anekantavada"?', choices: ['A fasting ritual', 'The doctrine of many-sidedness (multiple viewpoints)', 'A type of meditation', 'A Jain scripture'], correct: 1, explain: 'Anekantavada teaches that truth has multiple aspects. No single viewpoint captures the complete truth \u2014 we must respect all perspectives.' },
+      { topic: 'values', emoji: '\u{1F4A7}', q: 'Why do many Jains practice vegetarianism?', choices: ['For health reasons only', 'Because of Ahimsa \u2014 to avoid harming animals', 'It is a social custom', 'To save money'], correct: 1, explain: 'Jains practice vegetarianism as an expression of Ahimsa (non-violence) \u2014 to minimize harm to all living beings.' },
+
+      // --- FESTIVALS ---
+      { topic: 'festivals', emoji: '\u{1F389}', q: 'What is "Das Lakshan"?', choices: ['A new year celebration', 'A 10-day festival of self-reflection and forgiveness', 'A harvest festival', 'A temple inauguration'], correct: 1, explain: 'Das Lakshan is the most important Jain festival \u2014 10 days of fasting, self-reflection, prayer, and forgiveness. It ends with Kshamavani.' },
+      { topic: 'festivals', emoji: '\u{1F64F}', q: 'What does "Micchami Dukkadam" mean?', choices: ['Happy New Year', 'May my wrong actions be forgiven', 'Thank you', 'Praise the Lord'], correct: 1, explain: '"Micchami Dukkadam" means "May my wrong actions be forgiven." It is said on Kshamavani day to seek forgiveness from everyone.' },
+      { topic: 'festivals', emoji: '\u{1F382}', q: 'When is Mahavir Jayanti celebrated?', choices: ['On Diwali', 'On the 13th day of Chaitra month (March-April)', 'On New Year\'s Day', 'On the full moon of August'], correct: 1, explain: 'Mahavir Jayanti celebrates the birth of Bhagwan Mahavir on Chaitra Shukla Trayodashi (March-April).' },
+      { topic: 'festivals', emoji: '\u{1F56F}', q: 'Why do Jains celebrate Diwali?', choices: ['For the goddess Lakshmi', 'To mark Mahavir\'s attainment of Moksha (Nirvana)', 'For harvest season', 'To celebrate the new year only'], correct: 1, explain: 'Jains celebrate Diwali to mark the day Bhagwan Mahavir attained Moksha (liberation) at Pavapuri around 527 BCE.' },
+      { topic: 'festivals', emoji: '\u{1F49B}', q: 'What is Kshamavani?', choices: ['A type of fasting', 'The day of universal forgiveness', 'A temple festival', 'A scripture reading'], correct: 1, explain: 'Kshamavani is the beautiful day of universal forgiveness at the end of Das Lakshan, when everyone asks forgiveness from each other.' },
+
+      { topic: 'festivals', emoji: '\u{1F6D5}', q: 'What is "Abhishek" in Jainism?', choices: ['A type of food offering', 'The holy bathing ceremony of a Tirthankara idol', 'A prayer chant', 'A meditation technique'], correct: 1, explain: 'Abhishek is the sacred ritual of bathing a Tirthankara\'s idol with water, milk, and other auspicious substances.' },
+      { topic: 'festivals', emoji: '\u{1F4FF}', q: 'What is "Anant Chaturdashi"?', choices: ['The last day of Das Lakshan', 'A Jain new year', 'A type of meditation', 'A pilgrimage site'], correct: 0, explain: 'Anant Chaturdashi is the last and most important day of Das Lakshan, after which everyone practices forgiveness (Kshamavani).' },
+      { topic: 'festivals', emoji: '\u{1F3D4}', q: 'Shatrunjaya (Palitana) is famous for what?', choices: ['A Jain university', 'Having over 900 Jain temples on a hill', 'Being Mahavir\'s birthplace', 'A Jain museum'], correct: 1, explain: 'Shatrunjaya hill in Palitana, Gujarat has over 900 beautifully carved Jain temples \u2014 one of the holiest Jain pilgrimage sites.' },
+      { topic: 'festivals', emoji: '\u{1F9D1}\u{200D}\u{1F9B2}', q: 'What happens during a "Diksha" ceremony?', choices: ['A temple is inaugurated', 'A person renounces worldly life to become a monk/nun', 'An idol is installed', 'A festival begins'], correct: 1, explain: 'Diksha is the ceremony where a person renounces all worldly possessions and relationships to become a Jain monk or nun.' },
+    ];
+
+    const QUIZ_LENGTH = 10;
+    const TIME_PER_QUESTION = 15;
+
+    /* ============================================================
+       STATE
+       ============================================================ */
+    const STORAGE_KEY = 'ahimsa_jain_quiz';
+    let stats = loadStats();
+    let selectedTopic = 'all';
+    let quizQuestions = [];
+    let currentQ = 0;
+    let score = 0;
+    let correctCount = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let answered = false;
+    let timer = null;
+    let timeLeft = TIME_PER_QUESTION;
+    let totalTime = 0;
+
+    function loadStats() {
+      try { const s = localStorage.getItem(STORAGE_KEY); if (s) return JSON.parse(s); } catch(e) {}
+      return { highScore: 0, bestStreak: 0, gamesPlayed: 0 };
+    }
+    function saveStats() { localStorage.setItem(STORAGE_KEY, JSON.stringify(stats)); }
+
+    /* ============================================================
+       INIT
+       ============================================================ */
+    initTheme();
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+    // Topic selection
+    document.getElementById('topic-grid').addEventListener('click', (e) => {
+      const card = e.target.closest('.topic-card');
+      if (!card) return;
+      document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('topic-card--active'));
+      card.classList.add('topic-card--active');
+      selectedTopic = card.dataset.topic;
+    });
+
+    document.getElementById('btn-start').addEventListener('click', startQuiz);
+    document.getElementById('btn-retry').addEventListener('click', () => {
+      document.getElementById('results-screen').classList.remove('visible');
+      showIntro();
+    });
+
+    // Show high scores
+    updateHighScores();
+
+    /* ============================================================
+       GAME LOGIC
+       ============================================================ */
+    function showIntro() {
+      document.getElementById('intro-screen').classList.remove('hidden');
+      document.getElementById('quiz-container').classList.add('hidden');
+      document.getElementById('stats-bar').classList.add('hidden');
+      updateHighScores();
+    }
+
+    function updateHighScores() {
+      document.getElementById('hs-score').textContent = stats.highScore;
+      document.getElementById('hs-streak').textContent = stats.bestStreak;
+      document.getElementById('hs-played').textContent = stats.gamesPlayed;
+    }
+
+    function startQuiz() {
+      // Filter and shuffle questions
+      let pool = selectedTopic === 'all' ? [...QUESTIONS] : QUESTIONS.filter(q => q.topic === selectedTopic);
+      pool.sort(() => Math.random() - 0.5);
+      quizQuestions = pool.slice(0, QUIZ_LENGTH);
+
+      // Also shuffle choices for each question
+      quizQuestions = quizQuestions.map(q => {
+        const indexed = q.choices.map((c, i) => ({ text: c, origIdx: i }));
+        indexed.sort(() => Math.random() - 0.5);
+        const newCorrect = indexed.findIndex(item => item.origIdx === q.correct);
+        return { ...q, choices: indexed.map(i => i.text), correct: newCorrect };
+      });
+
+      currentQ = 0; score = 0; correctCount = 0; streak = 0; bestStreak = 0; answered = false; totalTime = 0;
+
+      document.getElementById('intro-screen').classList.add('hidden');
+      document.getElementById('quiz-container').classList.remove('hidden');
+      document.getElementById('stats-bar').classList.remove('hidden');
+
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      answered = false;
+      const q = quizQuestions[currentQ];
+      const letters = ['A', 'B', 'C', 'D'];
+
+      document.getElementById('stat-progress').textContent = `${currentQ + 1} / ${quizQuestions.length}`;
+      document.getElementById('stat-score').textContent = `${score} pts`;
+      document.getElementById('stat-streak').textContent = `${streak}x`;
+
+      const area = document.getElementById('question-area');
+      area.innerHTML = `
+        <div class="question-card">
+          <div class="question-card__number">Question ${currentQ + 1} of ${quizQuestions.length}</div>
+          <span class="question-card__category">${q.topic}</span>
+          <span class="question-card__emoji">${q.emoji}</span>
+          <div class="question-card__text">${q.q}</div>
+          <div class="choices" id="choices">
+            ${q.choices.map((c, i) => `
+              <button class="choice-btn" onclick="selectAnswer(${i})">
+                <span class="choice-btn__letter">${letters[i]}</span>
+                <span>${c}</span>
+              </button>
+            `).join('')}
+          </div>
+          <div id="feedback-area"></div>
+        </div>
+      `;
+
+      startTimer();
+    }
+
+    function startTimer() {
+      timeLeft = TIME_PER_QUESTION;
+      updateTimerDisplay();
+      const fill = document.getElementById('timer-fill');
+      fill.style.width = '100%';
+      fill.classList.remove('timer-bar__fill--warning');
+      const pill = document.getElementById('timer-pill');
+      pill.classList.remove('stat-pill--danger');
+
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft -= 0.1;
+        if (timeLeft <= 0) {
+          timeLeft = 0;
+          clearInterval(timer);
+          if (!answered) timeUp();
+        }
+        updateTimerDisplay();
+        const pct = (timeLeft / TIME_PER_QUESTION) * 100;
+        fill.style.width = pct + '%';
+        if (timeLeft <= 5) {
+          fill.classList.add('timer-bar__fill--warning');
+          pill.classList.add('stat-pill--danger');
+        }
+      }, 100);
+    }
+
+    function updateTimerDisplay() {
+      document.getElementById('stat-timer').textContent = Math.ceil(timeLeft) + 's';
+    }
+
+    function selectAnswer(idx) {
+      if (answered) return;
+      answered = true;
+      clearInterval(timer);
+
+      const q = quizQuestions[currentQ];
+      const isCorrect = idx === q.correct;
+      const btns = document.querySelectorAll('.choice-btn');
+
+      // Time bonus: faster answer = more points
+      const timeUsed = TIME_PER_QUESTION - timeLeft;
+      totalTime += timeUsed;
+
+      btns.forEach((btn, i) => {
+        if (i === idx && isCorrect) btn.classList.add('correct');
+        else if (i === idx && !isCorrect) btn.classList.add('wrong');
+        if (i === q.correct && !isCorrect) btn.classList.add('reveal-correct');
+        if (i !== idx && i !== q.correct) btn.classList.add('disabled');
+      });
+
+      if (isCorrect) {
+        correctCount++;
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        const timeBonus = Math.round(timeLeft * 2);
+        const streakBonus = Math.min(streak - 1, 5) * 5;
+        const points = 10 + timeBonus + streakBonus;
+        score += points;
+        showScorePopup(`+${points}`);
+      } else {
+        streak = 0;
+      }
+
+      document.getElementById('stat-score').textContent = `${score} pts`;
+      document.getElementById('stat-streak').textContent = `${streak}x`;
+
+      // Feedback
+      const fb = document.getElementById('feedback-area');
+      fb.innerHTML = `
+        <div class="feedback feedback--${isCorrect ? 'correct' : 'wrong'}">
+          <div class="feedback__title">${isCorrect ? '\u2705 Correct!' : '\u274C Incorrect!'}</div>
+          <div class="feedback__text">${q.explain}</div>
+          ${isCorrect ? `<div class="feedback__score">+${10 + Math.round(timeLeft * 2) + Math.min(streak - 1, 5) * 5} points (${streak}x streak!)</div>` : ''}
+        </div>
+        <button class="btn btn--dark btn--full next-btn" onclick="nextQuestion()">${currentQ < quizQuestions.length - 1 ? 'NEXT QUESTION \u27A1' : 'SEE RESULTS \u{1F3C6}'}</button>
+      `;
+    }
+
+    function timeUp() {
+      answered = true;
+      const q = quizQuestions[currentQ];
+      const timeUsed = TIME_PER_QUESTION;
+      totalTime += timeUsed;
+      streak = 0;
+
+      const btns = document.querySelectorAll('.choice-btn');
+      btns.forEach((btn, i) => {
+        if (i === q.correct) btn.classList.add('reveal-correct');
+        else btn.classList.add('disabled');
+      });
+
+      document.getElementById('stat-streak').textContent = `${streak}x`;
+
+      const fb = document.getElementById('feedback-area');
+      fb.innerHTML = `
+        <div class="feedback feedback--wrong">
+          <div class="feedback__title">\u23F0 Time\'s Up!</div>
+          <div class="feedback__text">${q.explain}</div>
+        </div>
+        <button class="btn btn--dark btn--full next-btn" onclick="nextQuestion()">${currentQ < quizQuestions.length - 1 ? 'NEXT QUESTION \u27A1' : 'SEE RESULTS \u{1F3C6}'}</button>
+      `;
+    }
+
+    function nextQuestion() {
+      currentQ++;
+      if (currentQ >= quizQuestions.length) {
+        showResults();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    function showResults() {
+      clearInterval(timer);
+      document.getElementById('stats-bar').classList.add('hidden');
+
+      // Update stats
+      stats.gamesPlayed++;
+      if (score > stats.highScore) stats.highScore = score;
+      if (bestStreak > stats.bestStreak) stats.bestStreak = bestStreak;
+      saveStats();
+
+      const pct = Math.round((correctCount / quizQuestions.length) * 100);
+      const avgTime = (totalTime / quizQuestions.length).toFixed(1);
+
+      // Grade
+      let grade, gradeClass, emoji, title, message;
+      if (pct >= 90) {
+        grade = '\u{1F31F} JAIN SCHOLAR'; gradeClass = 'results__grade--s'; emoji = '\u{1F3C6}';
+        title = 'INCREDIBLE!'; message = 'You have amazing knowledge of Jain teachings! Bhagwan Mahavir would be proud!';
+      } else if (pct >= 70) {
+        grade = '\u{2B50} WISDOM SEEKER'; gradeClass = 'results__grade--a'; emoji = '\u{1F929}';
+        title = 'GREAT JOB!'; message = 'Your understanding of Jain values is impressive! Keep learning!';
+      } else if (pct >= 50) {
+        grade = '\u{1F4DA} KEEN LEARNER'; gradeClass = 'results__grade--b'; emoji = '\u{1F60A}';
+        title = 'GOOD EFFORT!'; message = 'You are on the right path! Practice more to deepen your knowledge.';
+      } else {
+        grade = '\u{1F331} BEGINNING JOURNEY'; gradeClass = 'results__grade--c'; emoji = '\u{1F4AA}';
+        title = 'KEEP TRYING!'; message = 'Every great journey starts with a single step. Try again to learn more!';
+      }
+
+      document.getElementById('res-emoji').textContent = emoji;
+      document.getElementById('res-title').textContent = title;
+      document.getElementById('res-message').textContent = message;
+      const gradeEl = document.getElementById('res-grade');
+      gradeEl.textContent = grade;
+      gradeEl.className = 'results__grade ' + gradeClass;
+      document.getElementById('res-correct').textContent = `${correctCount}/${quizQuestions.length}`;
+      document.getElementById('res-score').textContent = score;
+      document.getElementById('res-streak').textContent = bestStreak;
+      document.getElementById('res-time').textContent = avgTime + 's';
+
+      document.getElementById('results-screen').classList.add('visible');
+      if (pct >= 70) launchConfetti();
+    }
+
+    function showScorePopup(text) {
+      const popup = document.createElement('div');
+      popup.className = 'score-popup';
+      popup.textContent = text;
+      popup.style.left = (Math.random() * 60 + 20) + '%';
+      popup.style.top = '40%';
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 1000);
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#FF69B4', '#98FF98', '#FFBC99', '#FFD700', '#87CEEB', '#DDA0DD', '#FF6347', '#00CED1'];
+      for (let i = 0; i < 60; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + '%';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+        c.style.animationDelay = Math.random() * 1.5 + 's';
+        c.style.width = (Math.random() * 8 + 6) + 'px';
+        c.style.height = (Math.random() * 8 + 6) + 'px';
+        container.appendChild(c);
+      }
+      setTimeout(() => { container.innerHTML = ''; }, 4000);
+    }
+  </script>
+</body>
+</html>
