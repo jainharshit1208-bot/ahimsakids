@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWisdom();         // interactions.js — daily wisdom rotation
   initKashayas();       // interactions.js — kashaya card expand
   initBottomNav();      // interactions.js — bottom nav + scroll-spy
+  initNavbar();         // interactions.js — navbar toggle + scroll-spy
   animateCounters();    // interactions.js — animate stat numbers
 
   /* --------------------------------------------------------

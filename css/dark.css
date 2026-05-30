@@ -86,6 +86,39 @@
   backdrop-filter: blur(10px);
 }
 
+/* -----------------------------------------------------------
+   3b. NAVBAR — Dark Mode
+   ----------------------------------------------------------- */
+
+[data-theme='dark'] .navbar {
+  background: rgba(26, 16, 37, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .navbar__link {
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .navbar__link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-pink);
+}
+
+[data-theme='dark'] .navbar__toggle-bar {
+  background: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  [data-theme='dark'] .navbar__menu {
+    background: rgba(26, 16, 37, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  [data-theme='dark'] .navbar__link:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
 
 /* -----------------------------------------------------------
    4. CARDS — Enhanced Border Visibility

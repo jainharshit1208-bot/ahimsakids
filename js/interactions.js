@@ -482,3 +482,82 @@ function updateHeroRoles() {
   }
 }
 
+
+/* ============================================================
+   7. NAVBAR — Toggle & Scroll-Spy
+   ============================================================ */
+
+/**
+ * Initialises the navbar:
+ * • Hamburger toggle opens/closes the mobile menu
+ * • Clicking a link scrolls smoothly and closes the menu
+ * • Scroll-spy highlights the current section's link
+ */
+function initNavbar() {
+  const toggle = document.getElementById('navbar-toggle');
+  const menu = document.getElementById('navbar-menu');
+  const links = document.querySelectorAll('.navbar__link');
+
+  if (!toggle || !menu) return;
+
+  // --- Hamburger toggle ---
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.classList.toggle('open');
+    menu.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', isOpen);
+  });
+
+  // --- Link click: smooth scroll + close menu ---
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        const headerH = document.querySelector('.header')?.offsetHeight || 60;
+        const navbarH = document.querySelector('.navbar')?.offsetHeight || 48;
+        const top = target.offsetTop - headerH - navbarH;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+
+      // Update active state
+      links.forEach(l => l.classList.remove('navbar__link--active'));
+      link.classList.add('navbar__link--active');
+
+      // Close mobile menu
+      toggle.classList.remove('open');
+      menu.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // --- Scroll-spy: highlight the link for the section in view ---
+  const sectionIds = Array.from(links).map(l => l.getAttribute('href').substring(1));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const headerH = document.querySelector('.header')?.offsetHeight || 60;
+      const navbarH = document.querySelector('.navbar')?.offsetHeight || 48;
+      const offset = headerH + navbarH + 80;
+      let current = '';
+
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - offset) {
+          current = section.id;
+        }
+      });
+
+      if (current) {
+        links.forEach(l => {
+          l.classList.toggle('navbar__link--active',
+            l.getAttribute('href') === '#' + current);
+        });
+      }
+      ticking = false;
+    });
+  });
+}

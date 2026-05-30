@@ -18,7 +18,7 @@
 .page {
   background: var(--bg-primary);
   min-height: 100vh;
-  padding-top: var(--header-height);
+  padding-top: calc(var(--header-height) + 48px);
   padding-bottom: calc(var(--bottom-nav-height) + 20px);
   font-family: var(--font-body);
   color: var(--text-primary);
@@ -120,6 +120,164 @@
 .header__btn:active {
   transform: translate(2px, 2px);
   box-shadow: var(--shadow-hover);
+}
+
+
+/* ============================================================
+   2b. NAVBAR
+   ============================================================
+   Sticky navigation bar below the header with glassmorphism.
+   Hamburger menu on mobile, horizontal links on desktop.
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: calc(var(--z-header) - 1);
+  background: rgba(232, 228, 243, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  padding: 0 var(--container-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar__menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar__link {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--text-primary);
+  padding: 8px 14px;
+  border-radius: 24px;
+  transition: all 0.25s ease;
+  position: relative;
+  white-space: nowrap;
+}
+
+.navbar__link:hover {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--accent-pink);
+  transform: translateY(-1px);
+}
+
+.navbar__link--active {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-peach));
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+
+.navbar__link--active:hover {
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 105, 180, 0.4);
+}
+
+/* Hamburger toggle — hidden on desktop */
+.navbar__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+
+.navbar__toggle-bar {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hamburger → X animation when open */
+.navbar__toggle.open .navbar__toggle-bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.navbar__toggle.open .navbar__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.navbar__toggle.open .navbar__toggle-bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ---- Mobile: hamburger + slide-down menu ---- */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: flex-end;
+    height: 44px;
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+
+  .navbar__menu {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: rgba(232, 228, 243, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    padding: 12px 0;
+    gap: 2px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+    padding: 0;
+  }
+
+  .navbar__menu.open {
+    max-height: 500px;
+    opacity: 1;
+    padding: 12px 0;
+  }
+
+  .navbar__link {
+    display: block;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  .navbar__link:hover {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 0;
+  }
+
+  .navbar__link--active {
+    border-radius: 0;
+    background: linear-gradient(135deg, var(--accent-pink), var(--accent-peach));
+  }
 }
 
 
