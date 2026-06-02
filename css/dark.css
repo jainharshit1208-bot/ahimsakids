@@ -439,6 +439,14 @@
   border-left-color: var(--accent-mint);
 }
 
-[data-theme='dark'] .footer {
-  background: linear-gradient(135deg, #0a0a15 0%, #0e1525 50%, #0a2040 100%);
+[data-theme='dark'] .site-footer {
+  background: linear-gradient(160deg, #063a3a 0%, #054540 40%, #085045 100%);
+}
+
+[data-theme='dark'] .site-footer__bottom {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='dark'] .site-footer__social-link {
+  background: rgba(255, 255, 255, 0.1);
 }
