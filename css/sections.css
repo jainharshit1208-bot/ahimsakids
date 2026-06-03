@@ -1493,8 +1493,9 @@
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: none;
+  box-shadow: none;
+  mix-blend-mode: multiply;
 }
 
 .site-footer__logo-text {
@@ -1594,7 +1595,8 @@
   height: 28px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: none;
+  mix-blend-mode: multiply;
 }
 
 .site-footer__bottom-right {
